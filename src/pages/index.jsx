@@ -17,7 +17,7 @@ export default function Home() {
             <div className="mb-20 text-center">
               <h4 className="text-grey20 text-2xl">
                 Whether you want to get job of your dreams or want to get paid
-                to help someone get there, palplug is the platform to help you
+                to help someone get there, PalPlug is the platform to help you
                 connect. Get early access below.
               </h4>
             </div>
