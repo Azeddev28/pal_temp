@@ -1,9 +1,12 @@
 import { NextJSIcon } from '@/Icons';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-// import VercelIcon from '../../public/vercel.svg';
+import { Modal } from '@/components/Modal';
+
+import { useState } from 'react';
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(true);
   return (
     <div className="px-12 font-semibold">
       <div className="py-44">
@@ -69,6 +72,25 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* Temporary */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        bannerImageSrc={
+          'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500'
+        }
+      >
+        <div className="p-10">
+          <div className="mb-8 text-center">
+            <h1 className="mb-4 text-3xl font-extrabold">Whats Up?</h1>
+            <p className="text-gray-600">Feeling sick? Have a Coffee</p>
+          </div>
+          <div className="space-y-4">
+            <Button className="w-full">Make a Coffee</Button>
+            <Button className="w-full">Make a Tee</Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
