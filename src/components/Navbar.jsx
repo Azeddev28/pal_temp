@@ -6,7 +6,7 @@ function NavBar() {
   return (
     <div className="bg-white shadow-grey10 shadow-sm">
       <nav className="flex justify-between items-center w-[92%]  mx-auto ">
-        <Link href={'/about'}>
+        <Link href={'/'}>
           <img
             className="w-16 cursor-pointer"
             src="https://cdn-icons-png.flaticon.com/512/5968/5968204.png"
