@@ -1,10 +1,8 @@
-import { NextJSIcon } from '@/Icons';
 import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
 import { Modal } from '@/components/Modal';
+import { Typography } from '@/components/Typography';
 
 import { useState } from 'react';
-
 
 export default function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,23 +12,30 @@ export default function Home() {
                 <div className="flex flex-row w-auto mb-14">
                     <div className="px-10 w-[42rem] body-font flex flex-col font-poppins py-10">
                         <div className="mb-8 text-center">
-                            <h1 className="mb-4 text-4xl font-bold text-brandBlue dark:text-brandBlue">
+                            <Typography
+                                variant={'h2'}
+                                className="mb-4 text-brandBlue dark:text-brandBlue"
+                            >
                                 Your spot is reserved! 🎉
-                            </h1>
+                            </Typography>
                         </div>
                         <div className="mb-10 text-center font-semibold">
-                            <h4 className="text-grey20 text-xl">
-                                You're on the list! We'll let you know when your spot to sign
-                                up is ready
-                            </h4>
+                            <Typography variant={'h5'} className="text-grey20 ">
+                                You're on the list! We'll let you know when your
+                                spot to sign up is ready
+                            </Typography>
                         </div>
                         <div className="mb-6 text-center font-semibold">
-                            <h4 className="text-grey40 text-xl">
-                                If you'd like to move up in line, sign up and complete your profile set up now
-                            </h4>
+                            <Typography variant={'h5'} className="text-grey40">
+                                If you'd like to move up in line, sign up and
+                                complete your profile set up now
+                            </Typography>
                         </div>
                         <div className="flex gap-4 justify-center">
-                            <Button className="w-[156px] h-[48px]" onClick={() => setIsModalOpen(true)}>
+                            <Button
+                                className="w-[156px] h-[48px]"
+                                onClick={() => setIsModalOpen(true)}
+                            >
                                 Sign up
                             </Button>
                         </div>
@@ -46,8 +51,15 @@ export default function Home() {
             >
                 <div className="p-10">
                     <div className="mb-8 text-center">
-                        <h1 className="mb-4 text-3xl font-extrabold">Whats Up?</h1>
-                        <p className="text-gray-600">Feeling sick? Have a Coffee</p>
+                        <Typography
+                            variant={'h3'}
+                            className="mb-4 font-extrabold"
+                        >
+                            Whats Up?
+                        </Typography>
+                        <Typography variant={'body'} className="text-gray-600">
+                            Feeling sick? Have a Coffee
+                        </Typography>
                     </div>
                     <div className="space-y-4">
                         <Button className="w-full">Make a Coffee</Button>
@@ -56,5 +68,5 @@ export default function Home() {
                 </div>
             </Modal>
         </div>
-    )
+    );
 }
