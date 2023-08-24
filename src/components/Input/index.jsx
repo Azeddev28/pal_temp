@@ -1,7 +1,10 @@
+const baseStyles =
+    'border border-solid border-grey10 rounded-md outline-none font-normal p-2 text-xs';
+const largeStyles = 'lg:p-3 lg:text-sm';
 const Input = ({ className, ...props }) => (
     <input
         {...props}
-        className={`border border-solid border-grey10 rounded-lg p-3 outline-none text-lg font-normal ${className}`}
+        className={`${baseStyles} ${largeStyles}  ${className}`}
     />
 );
 
