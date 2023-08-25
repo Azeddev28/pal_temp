@@ -8,7 +8,7 @@ const TAGS = {
     small: 'span',
 };
 
-const SIZES = {
+const CLASSES = {
     h1: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold',
     h2: 'text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold',
     h3: 'text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold',
@@ -19,10 +19,10 @@ const SIZES = {
 };
 
 const Typography = ({ variant, children, className, as }) => {
-    const sizeClasses = SIZES[variant];
+    const variantClasses = CLASSES[variant];
     const Tag = as ?? TAGS[variant];
 
-    return <Tag className={`${sizeClasses} ${className}`}>{children}</Tag>;
+    return <Tag className={`${variantClasses} ${className}`}>{children}</Tag>;
 };
 
 export { Typography };
