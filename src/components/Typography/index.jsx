@@ -6,6 +6,7 @@ const TAGS = {
     h5: 'h5',
     body: 'p',
     small: 'span',
+    'x-small': 'span',
 };
 
 const CLASSES = {
@@ -14,8 +15,9 @@ const CLASSES = {
     h3: 'text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold',
     h4: 'text-base sm:text-lg md:text-xl lg:text-2xl font-bold',
     h5: 'text-sm sm:text-base md:text-lg lg:text-xl font-bold',
-    body: 'text-sm md:text-base',
+    body: 'text-sm md:text-base lg:text-lg',
     small: 'text-xs md:text-sm',
+    'x-small': 'text-xs',
 };
 
 const Typography = ({ variant, children, className, as }) => {

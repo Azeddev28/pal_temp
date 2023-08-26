@@ -8,4 +8,5 @@ const Input = ({ className, ...props }) => (
     />
 );
 
+export * from './Radio';
 export { Input };

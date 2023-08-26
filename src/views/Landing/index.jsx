@@ -1,10 +1,17 @@
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import Image from 'next/image';
+import { useState } from 'react';
+
 import desktopImage from '../../../public/images/desktop.png';
 import { CompanyIconWidgetList } from './CompanyIconWidgetList';
+import { SignInModal } from './SignInModal';
 
 const Landing = () => {
+    const [modalsOpenStatus, setModalsOpenStatus] = useState({
+        signInModal: true,
+    });
+
     return (
         <div>
             <div className="py-8 md:pt-24 md:pb-12 lg:pt-40 lg:pb-16">
@@ -54,6 +61,15 @@ const Landing = () => {
                 </p>
                 <CompanyIconWidgetList />
             </div>
+            <SignInModal
+                isOpen={modalsOpenStatus.signInModal}
+                onClose={() =>
+                    setModalsOpenStatus({
+                        ...modalsOpenStatus,
+                        signInModal: false,
+                    })
+                }
+            />
         </div>
     );
 };

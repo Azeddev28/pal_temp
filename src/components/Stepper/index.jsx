@@ -4,7 +4,7 @@ const Stepper = ({
     activeStep,
     isFirstStep,
     isLastStep,
-    enableLine,
+    joinSteps,
     children,
 }) => {
     const containerRef = useRef();
@@ -15,22 +15,23 @@ const Stepper = ({
     }, [activeStep]);
 
     const activeLineWidth = useMemo(() => {
-        if (!enableLine) return;
+        if (!joinSteps) return;
         const { width } = containerRef?.current?.getBoundingClientRect();
         const widthPerStep = width / (children?.length - 1);
         return widthPerStep * activeStep;
-    }, [activeStep, containerRef?.current, enableLine]);
+    }, [activeStep, containerRef?.current, joinSteps]);
 
+    console.log({ joinSteps });
     return (
         <div
             ref={containerRef}
             className="w-full relative flex items-center justify-between"
         >
-            {enableLine && (
+            {joinSteps && (
                 <>
-                    <div className="absolute left-0 top-1/2 h-0.5 w-full -translate-y-1/2 bg-[#D9D9D9]" />
+                    <div className="z-10 absolute left-0 top-1/2 h-0.5 w-full -translate-y-1/2 bg-[#D9D9D9]" />
                     <div
-                        className="absolute left-0 top-1/2 h-0.5 w-full -translate-y-1/2 bg-brandBlue transition-all duration-500"
+                        className="z-20 absolute left-0 top-1/2 h-0.5 w-full -translate-y-1/2 bg-brandBlue transition-all duration-500"
                         style={{ width: `${activeLineWidth}px` }}
                     />
                 </>
@@ -38,8 +39,10 @@ const Stepper = ({
             {children?.map((child, index) => (
                 <div
                     key={index}
-                    className={`transition-colors duration-300 ${
-                        activeStep === index ? 'bg-brandBlue' : 'bg-[#D9D9D9]'
+                    className={`z-30 rounded-full transition-colors duration-300 ${
+                        index <= activeStep
+                            ? 'bg-brandBlue hover:bg-hoverBlue'
+                            : 'bg-[#D9D9D9]'
                     }`}
                 >
                     {child}
@@ -50,10 +53,7 @@ const Stepper = ({
 };
 
 const Step = ({ onClick, className, children }) => (
-    <div
-        onClick={onClick}
-        className={`rounded-full cursor-pointer ${className}`}
-    >
+    <div onClick={onClick} className={`cursor-pointer ${className}`}>
         {children}
     </div>
 );
