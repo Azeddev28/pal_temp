@@ -1,10 +1,14 @@
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import Image from 'next/image';
+
+import { useRouter } from 'next/router';
 import desktopImage from '../../../public/images/desktop.png';
 import { CompanyIconWidgetList } from './CompanyIconWidgetList';
 
 const Landing = () => {
+    const router = useRouter();
+
     return (
         <div>
             <div className="py-8 md:pt-24 md:pb-12 lg:pt-40 lg:pb-16">
@@ -39,7 +43,18 @@ const Landing = () => {
                                         type="email"
                                         placeholder="Enter your email"
                                     />
-                                    <Button className={'w-full md:w-fit'}>
+                                    <Button
+                                        className={'w-full md:w-fit'}
+                                        onClick={() => {
+                                            router.push(
+                                                {
+                                                    pathname: '/signup',
+                                                },
+                                                undefined,
+                                                { shallow: true }
+                                            );
+                                        }}
+                                    >
                                         Join waitlist
                                     </Button>
                                 </div>

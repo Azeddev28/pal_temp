@@ -1,4 +1,4 @@
-import Icons from '@/Icons';
+import * as Icons from '@/Icons';
 
 const IconWidget = ({ icon }) => {
     const Icon = Icons[icon];
