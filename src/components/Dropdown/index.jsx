@@ -6,35 +6,23 @@ import {
     Portal as SelectPortal,
     Root as SelectRoot,
     Trigger as SelectTrigger,
-    Value as SelectValue,
     Viewport as SelectViewport,
 } from '@radix-ui/react-select';
 import { useRef, useState } from 'react';
 import { Checkbox } from '../Input';
 import { Typography } from '../Typography';
 
-const Trigger = ({ isOpen, children, width }) => {
-    console.log({ isOpen });
-    return (
-        <SelectTrigger
-            className={`p-2 lg:p-4 border-2 border-solid rounded-lg ${
-                isOpen ? 'border-brandBlue' : 'border-theme-border'
-            }`}
-            style={{ width }}
-        >
-            <Typography variant={'body'} as="div">
-                {children}
-            </Typography>
-        </SelectTrigger>
-    );
-};
-
-const Value = ({ placeholder, children }) => (
-    <SelectValue placeholder={placeholder}>
-        <Typography variant={'body'} as={'span'}>
+const Trigger = ({ isOpen, children, width }) => (
+    <SelectTrigger
+        className={`p-2 lg:p-4 border-2 border-solid rounded-lg ${
+            isOpen ? 'border-brandBlue' : 'border-theme-border'
+        }`}
+        style={{ width }}
+    >
+        <Typography variant={'body'} as="div">
             {children}
         </Typography>
-    </SelectValue>
+    </SelectTrigger>
 );
 
 const Item = ({ children, value }) => (

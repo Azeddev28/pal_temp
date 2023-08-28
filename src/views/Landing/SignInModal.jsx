@@ -398,7 +398,7 @@ const SignUpForm = ({ onSubmit }) => {
                     setActiveStep(activeStep + 1);
                 }}
             >
-                Continue
+                {activeStep + 1 === STEP_COUNT ? 'Submit' : 'Continue'}
             </Button>
         </div>
     );
