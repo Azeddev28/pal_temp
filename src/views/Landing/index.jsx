@@ -1,16 +1,13 @@
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import Image from 'next/image';
-import { useState } from 'react';
 
+import { useRouter } from 'next/router';
 import desktopImage from '../../../public/images/desktop.png';
 import { CompanyIconWidgetList } from './CompanyIconWidgetList';
-import { SignInModal } from './SignInModal';
 
 const Landing = () => {
-    const [modalsOpenStatus, setModalsOpenStatus] = useState({
-        signInModal: true,
-    });
+    const router = useRouter();
 
     return (
         <div>
@@ -46,7 +43,18 @@ const Landing = () => {
                                         type="email"
                                         placeholder="Enter your email"
                                     />
-                                    <Button className={'w-full md:w-fit'}>
+                                    <Button
+                                        className={'w-full md:w-fit'}
+                                        onClick={() => {
+                                            router.push(
+                                                {
+                                                    pathname: '/signup',
+                                                },
+                                                undefined,
+                                                { shallow: true }
+                                            );
+                                        }}
+                                    >
                                         Join waitlist
                                     </Button>
                                 </div>
@@ -61,15 +69,6 @@ const Landing = () => {
                 </p>
                 <CompanyIconWidgetList />
             </div>
-            <SignInModal
-                isOpen={modalsOpenStatus.signInModal}
-                onClose={() =>
-                    setModalsOpenStatus({
-                        ...modalsOpenStatus,
-                        signInModal: false,
-                    })
-                }
-            />
         </div>
     );
 };

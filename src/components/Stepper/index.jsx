@@ -16,12 +16,11 @@ const Stepper = ({
 
     const activeLineWidth = useMemo(() => {
         if (!joinSteps) return;
-        const { width } = containerRef?.current?.getBoundingClientRect();
-        const widthPerStep = width / (children?.length - 1);
+        const rect = containerRef?.current?.getBoundingClientRect();
+        const widthPerStep = (rect?.width ?? 0) / (children?.length - 1);
         return widthPerStep * activeStep;
     }, [activeStep, containerRef?.current, joinSteps]);
 
-    console.log({ joinSteps });
     return (
         <div
             ref={containerRef}

@@ -4,7 +4,7 @@ const Modal = ({ isOpen, onClose, bannerImageSrc, children }) => {
     if (!isOpen) return null;
     return (
         <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 p-10">
-            <div className="max-h-full w-full max-w-xl overflow-y-auto rounded-xl bg-white sm:rounded-2xl">
+            <div className="max-h-full w-full max-w-xl overflow-y-auto rounded-xl bg-white sm:rounded-2xl scrollbar-hide">
                 <div className="w-full relative">
                     {onClose && (
                         <div className="flex absolute top-0 right-0">

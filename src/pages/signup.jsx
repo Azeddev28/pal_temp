@@ -1,6 +1,6 @@
 import { Button } from '@/components/Button';
-import { Modal } from '@/components/Modal';
 import { Typography } from '@/components/Typography';
+import { SignInModalForm } from '@/views/Landing/SignInModal';
 
 import { useState } from 'react';
 
@@ -42,31 +42,10 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <Modal
+            <SignInModalForm
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                bannerImageSrc={
-                    'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;w=500'
-                }
-            >
-                <div className="p-10">
-                    <div className="mb-8 text-center">
-                        <Typography
-                            variant={'h3'}
-                            className="mb-4 font-extrabold"
-                        >
-                            Whats Up?
-                        </Typography>
-                        <Typography variant={'body'} className="text-gray-600">
-                            Feeling sick? Have a Coffee
-                        </Typography>
-                    </div>
-                    <div className="space-y-4">
-                        <Button className="w-full">Make a Coffee</Button>
-                        <Button className="w-full">Make a Tee</Button>
-                    </div>
-                </div>
-            </Modal>
+            />
         </div>
     );
 }
