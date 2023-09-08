@@ -1,4 +1,5 @@
 import { CheckCircleFilledIcon, WarningIcon } from '@/Icons';
+import { forwardRef } from 'react';
 import { Typography } from '../Typography';
 
 const STATUS_INPUT_BORDER = {
@@ -22,7 +23,7 @@ const STATUS_ICON = {
 const HelperText = ({ text, colorClass, renderIcon }) => {
     const icon = renderIcon?.();
     return (
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 items-center">
             {icon}
             <Typography
                 variant={'x-small'}
@@ -49,58 +50,64 @@ const renderHelperTextPerStatus = (status, text) => {
     );
 };
 
-const Text = ({
-    placeholder,
-    label,
-    id,
-    helperText,
-    message,
-    status,
-    disabled,
-    display,
-    ...rest
-}) => {
-    const baseClasses =
-        ' hover:bg-[#F5F8FF] active:border-[#8bb4ff] active:bg-[#F5F8FF] focus:border-brandBlue focus:bg-white hover:bg-[#F5F8FF]';
-    let inputClasses = '';
-    if (disabled) {
-        inputClasses = 'border-theme-border';
-    } else if (display) {
-        inputClasses = 'border-theme-border bg-theme-border';
-    } else if (status) {
-        inputClasses = `${STATUS_INPUT_BORDER[status]} ${baseClasses}`;
-    } else {
-        inputClasses = `border-theme-border ${baseClasses}`;
-    }
-    return (
-        <div className="flex flex-col gap-2">
-            <label htmlFor={id} className="flex flex-col gap-2">
-                {label && (
-                    <Typography
-                        variant={'body'}
-                        as={'span'}
-                        className={`font-semibold ${
-                            disabled ? 'text-grey20' : ''
-                        }`}
-                    >
-                        {label}
-                    </Typography>
+const Text = forwardRef(
+    (
+        {
+            placeholder,
+            label,
+            id,
+            helperText,
+            message,
+            status,
+            disabled,
+            display,
+            ...rest
+        },
+        ref
+    ) => {
+        const baseClasses =
+            ' hover:bg-[#F5F8FF] active:border-[#8bb4ff] active:bg-[#F5F8FF] focus:border-brandBlue focus:bg-white hover:bg-[#F5F8FF]';
+        let inputClasses = '';
+        if (disabled) {
+            inputClasses = 'border-theme-border';
+        } else if (display) {
+            inputClasses = 'border-theme-border bg-theme-border';
+        } else if (status) {
+            inputClasses = `${STATUS_INPUT_BORDER[status]} ${baseClasses}`;
+        } else {
+            inputClasses = `border-theme-border ${baseClasses}`;
+        }
+        return (
+            <div className="flex flex-col gap-2">
+                <label htmlFor={id} className="flex flex-col gap-2">
+                    {label && (
+                        <Typography
+                            variant={'body'}
+                            as={'span'}
+                            className={`font-semibold ${
+                                disabled ? 'text-grey20' : ''
+                            }`}
+                        >
+                            {label}
+                        </Typography>
+                    )}
+                    <input
+                        {...rest}
+                        ref={ref}
+                        disabled={disabled || display}
+                        id={id}
+                        placeholder={placeholder}
+                        type="text"
+                        className={`p-3 bg-white border-2 border-solid rounded-lg outline-none ${inputClasses}`}
+                    />
+                </label>
+                {renderHelperTextPerStatus(
+                    !disabled && !display ? status : undefined,
+                    helperText
                 )}
-                <input
-                    {...rest}
-                    disabled={disabled || display}
-                    id={id}
-                    placeholder={placeholder}
-                    type="text"
-                    className={`p-3 bg-white border-2 border-solid rounded-lg outline-none ${inputClasses}`}
-                />
-            </label>
-            {renderHelperTextPerStatus(
-                !disabled && !display ? status : undefined,
-                helperText
-            )}
-        </div>
-    );
-};
+            </div>
+        );
+    }
+);
 
 export { Text };

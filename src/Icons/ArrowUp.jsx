@@ -9,9 +9,9 @@ const ArrowUp = (props) => (
         <path
             d="M10.3999 9.79999L7.7999 7.19999L5.1999 9.79999"
             stroke="#005382"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
         />
     </svg>
 );

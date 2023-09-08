@@ -15,7 +15,7 @@ const Landing = () => {
                 <div className="flex flex-col md:flex-row md:gap-10 lg:gap-16 xl:justify-between">
                     <div className="order-1 md:order-2 md:w-1/2">
                         <div className="flex justify-end items-center h-full">
-                            <Image src={desktopImage} />
+                            <Image src={desktopImage} alt="..." />
                         </div>
                     </div>
                     <div className="order-2 md:order-1 md:w-1/2">
