@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { Typography } from '../Typography';
 
 const innerCircleStyles =
@@ -5,9 +6,10 @@ const innerCircleStyles =
 const baseStyles =
     'relative cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-solid border-carbon rounded-full bg-white appearance-none checked:border-blue-60';
 
-const Radio = ({ id, label, ...rest }) => (
+const Radio = forwardRef(({ id, label, ...rest }, ref) => (
     <label className="flex items-center gap-2" htmlFor={id}>
         <input
+            ref={ref}
             {...rest}
             type="radio"
             className={`${baseStyles} ${innerCircleStyles}`}
@@ -18,6 +20,6 @@ const Radio = ({ id, label, ...rest }) => (
             </Typography>
         )}
     </label>
-);
+));
 
 export { Radio };

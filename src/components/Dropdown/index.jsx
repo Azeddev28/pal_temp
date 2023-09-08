@@ -1,42 +1,38 @@
 import { ArrowDisabledIcon, ArrowDownIcon, ArrowUpIcon } from '@/Icons';
 import {
+    Portal,
     Content as SelectContent,
     Item as SelectItem,
-    ItemText as SelectItemText,
-    Portal as SelectPortal,
     Root as SelectRoot,
     Trigger as SelectTrigger,
     Viewport as SelectViewport,
+    Value,
 } from '@radix-ui/react-select';
-import { useRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import { Checkbox } from '../Input';
 import { Typography } from '../Typography';
 
-const Trigger = ({ isOpen, children, width }) => (
+const Trigger = forwardRef(({ isOpen, children, width }, forwardedRef) => (
     <SelectTrigger
         className={`p-2 lg:p-4 border-2 border-solid rounded-lg ${
             isOpen ? 'border-brandBlue' : 'border-theme-border'
         }`}
         style={{ width }}
+        ref={forwardedRef}
     >
         <Typography variant={'body'} as="div">
             {children}
         </Typography>
     </SelectTrigger>
-);
+));
 
 const Item = ({ children, value }) => (
-    <SelectItem value={value} asChild>
-        <div className="flex flex-row gap-3 p-4 bg-white cursor-pointer items-center hover:bg-brandSecondaryBlue">
-            {children}
-        </div>
+    <SelectItem
+        value={value}
+        className="flex flex-row gap-3 p-4 bg-white cursor-pointer items-center hover:bg-brandSecondaryBlue"
+    >
+        {children}
     </SelectItem>
-);
-
-const ItemText = ({ children }) => (
-    <SelectItemText>
-        <Typography variant={'body'}>{children}</Typography>
-    </SelectItemText>
 );
 
 const Content = ({ children, width }) => (
@@ -64,62 +60,76 @@ const renderArrowIcon = (isOpen, isDisabled) => {
     );
 };
 
-const Dropdown = ({
-    width,
-    options = [],
-    selectedKey,
-    onChange,
-    isOpen,
-    onOpenChange,
-    disabled,
-    placeholder,
-}) => {
-    const triggerRef = useRef();
-    const [open, setOpen] = useState(!!isOpen);
-    const handleOpenChange = (open) => {
-        setOpen(open);
-        onOpenChange?.(open);
-    };
-    const handleSelection = (key) => {
-        if (!onChange) return;
-        const selectedOption = options.find((option) => option.key === key);
-        onChange(selectedOption);
-    };
-    const rect = triggerRef.current?.getBoundingClientRect();
+const Dropdown = forwardRef(
+    (
+        {
+            width,
+            options = [],
+            selectedKey,
+            onChange,
+            isOpen,
+            onOpenChange,
+            disabled,
+            placeholder,
+        },
+        forwardedRef
+    ) => {
+        const containerRef = useRef();
+        const [open, setOpen] = useState(!!isOpen);
+        const handleOpenChange = (open) => {
+            setOpen(open);
+            onOpenChange?.(open);
+        };
+        const handleSelection = (key) => {
+            if (!onChange) return;
+            const selectedOption = options.find((option) => option.key === key);
+            if (!selectedOption) return;
+            onChange(selectedOption);
+        };
+        const contentWidth =
+            containerRef.current?.getBoundingClientRect().width;
 
-    return (
-        <SelectRoot
-            disabled={disabled}
-            value={selectedKey}
-            open={open}
-            onOpenChange={handleOpenChange}
-            onValueChange={handleSelection}
-        >
-            <Trigger isOpen={open} width={width}>
-                <div
-                    ref={triggerRef}
-                    className="flex flex-row justify-between items-center"
+        return (
+            <div ref={containerRef}>
+                <SelectRoot
+                    disabled={disabled}
+                    value={selectedKey}
+                    open={open}
+                    onOpenChange={handleOpenChange}
+                    onValueChange={handleSelection}
                 >
-                    <Value placeholder={placeholder}>{selectedKey}</Value>
-                    {renderArrowIcon(open, disabled)}
-                </div>
-            </Trigger>
-            <SelectPortal>
-                <Content width={rect?.width ? rect.width + 33 : undefined}>
-                    <Viewport width={rect?.width ? rect.width + 33 : undefined}>
-                        {options.map((option, index) => (
-                            <Item key={index} value={option.key}>
-                                <Checkbox
-                                    defaultChecked={selectedKey === option.key}
-                                />
-                                <ItemText>{option.key}</ItemText>
-                            </Item>
-                        ))}
-                    </Viewport>
-                </Content>
-            </SelectPortal>
-        </SelectRoot>
-    );
-};
+                    <Trigger isOpen={open} width={width} ref={forwardedRef}>
+                        <div className="flex flex-row justify-between items-center">
+                            <Value placeholder={placeholder}>
+                                {selectedKey}
+                            </Value>
+                            {renderArrowIcon(open, disabled)}
+                        </div>
+                    </Trigger>
+                    <Portal>
+                        <Content width={contentWidth}>
+                            <Viewport>
+                                {options.map((option, index) => (
+                                    <Item key={index} value={option.key}>
+                                        <Checkbox
+                                            defaultChecked={
+                                                selectedKey === option.key
+                                            }
+                                        />
+                                        {/* <ItemText> */}
+                                        <Typography variant={'body'}>
+                                            {option.key}
+                                        </Typography>
+                                        {/* </ItemText> */}
+                                    </Item>
+                                ))}
+                            </Viewport>
+                        </Content>
+                    </Portal>
+                </SelectRoot>
+            </div>
+        );
+    }
+);
 
 export { Dropdown };
