@@ -1,12 +1,12 @@
 import { Dropdown } from '@/components/Dropdown';
-import { Radio, Text } from '@/components/Input';
+import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const Step1 = () => {
     const [showAnotherGender, setShowAnotherGender] = useState(false);
-    const { register, formState } = useFormContext();
+    const { register, formState, watch } = useFormContext();
 
     return (
         <div className="pt-12 pb-64">
@@ -46,8 +46,10 @@ const Step1 = () => {
 
                     {showAnotherGender && (
                         <div className="w-full">
-                            <Text
+                            <Input
                                 {...register('anotherGender')}
+                                type="text"
+                                value={watch('anotherGender')}
                                 status={
                                     !!formState.errors['anotherGender']?.message
                                         ? 'error'
@@ -142,7 +144,8 @@ const Step3 = () => {
                 </Typography>
             </div>
             <div className="pt-[75px] pb-40 flex flex-col gap-6">
-                <Text
+                <Input
+                    type="text"
                     {...register('firstName')}
                     id="first-name"
                     value={watch('firstName')}
@@ -155,7 +158,8 @@ const Step3 = () => {
                     }
                     helperText={formState.errors.firstName?.message}
                 />
-                <Text
+                <Input
+                    type="text"
                     {...register('lastName')}
                     id="last-name"
                     value={watch('lastName')}
