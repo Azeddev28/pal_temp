@@ -1,1 +1,1 @@
-export * from './IconWidget';
+export * from './LogoWidget';

@@ -15,7 +15,6 @@ const StepForm = () => {
     const [isLastStep, setIsLastStep] = useState(false);
     const methods = useForm({
         mode: 'onChange',
-        reValidateMode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
 
@@ -33,6 +32,8 @@ const StepForm = () => {
     const FormStep = Steps[activeStep];
 
     const onSubmit = async () => {
+        // temporary
+        localStorage.setItem('isLoggedIn', true);
         router.push('/congratulations', undefined, { shallow: true });
     };
     return (
