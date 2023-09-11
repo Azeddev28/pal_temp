@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Steps } from './Steps';
+import { STEP_COUNT, Steps } from './Steps';
 import { Welcome } from './Welcome';
 import { schema } from './schema';
 
@@ -18,16 +18,19 @@ const StepForm = () => {
         resolver: yupResolver(schema[activeStep]),
     });
 
-    const stepsList = Object.keys(Steps).map((_, index) => (
-        <Step
-            key={index}
-            onClick={() => {
-                if (!methods.formState.isValid && index > activeStep) return;
-                setActiveStep(index);
-            }}
-            className="w-4 h-4"
-        />
-    ));
+    const stepsList = Array(STEP_COUNT)
+        .fill(0)
+        .map((_, index) => (
+            <Step
+                key={index}
+                onClick={() => {
+                    if (!methods.formState.isValid && index > activeStep)
+                        return;
+                    setActiveStep(index);
+                }}
+                className="w-4 h-4"
+            />
+        ));
 
     const FormStep = Steps[activeStep];
 
@@ -39,11 +42,7 @@ const StepForm = () => {
     return (
         <div className="p-10">
             <div className="flex flex-row w-52 mx-auto">
-                <Stepper
-                    joinSteps={true}
-                    activeStep={activeStep}
-                    isLastStep={() => setIsLastStep(true)}
-                >
+                <Stepper activeStep={activeStep} isLastStep={setIsLastStep}>
                     {stepsList}
                 </Stepper>
             </div>
@@ -56,7 +55,15 @@ const StepForm = () => {
                         className={'w-full'}
                         onClick={() => {
                             if (isLastStep) return;
-                            setActiveStep(activeStep + 1);
+                            if (
+                                methods.watch('purpose') ===
+                                    "I'm looking for a plug" &&
+                                activeStep === 3
+                            ) {
+                                setActiveStep(6);
+                            } else {
+                                setActiveStep(activeStep + 1);
+                            }
                         }}
                     >
                         {isLastStep ? 'Submit' : 'Continue'}

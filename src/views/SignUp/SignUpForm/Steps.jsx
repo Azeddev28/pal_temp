@@ -200,8 +200,8 @@ const Step4 = () => {
                 <Radio
                     {...register('purpose')}
                     id="looking-for-a-palplug"
-                    value="I'm looking for a palplug"
-                    label="I'm looking for a palplug"
+                    value="I'm looking for a plug"
+                    label="I'm looking for a plug"
                 />
             </div>
         </div>
@@ -406,6 +406,7 @@ const Step8 = () => {
     );
 };
 
+export const STEP_COUNT = 6;
 export const Steps = {
     0: Step1,
     1: Step2,
