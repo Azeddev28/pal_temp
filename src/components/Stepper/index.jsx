@@ -10,8 +10,8 @@ const Stepper = ({
     const containerRef = useRef();
 
     useEffect(() => {
-        if (activeStep === children?.length - 1) isLastStep?.();
-        else if (activeStep === 0) isFirstStep?.();
+        isLastStep?.(activeStep === children?.length - 1);
+        isFirstStep?.(activeStep === 0);
     }, [activeStep]);
 
     const activeLineWidth = useMemo(() => {
@@ -39,7 +39,7 @@ const Stepper = ({
                 <div
                     key={index}
                     className={`z-30 rounded-full transition-colors duration-300 ${
-                        index <= activeStep
+                        index === activeStep
                             ? 'bg-brandBlue hover:bg-hoverBlue'
                             : 'bg-[#D9D9D9]'
                     }`}
