@@ -12,6 +12,7 @@ import { schema } from './schema';
 
 const StepForm = () => {
     const router = useRouter();
+    const [stepNumber, setStepNumber] = useState(0);
     const [activeStep, setActiveStep] = useState(0);
     const methods = useForm({
         mode: 'onChange',
@@ -20,17 +21,7 @@ const StepForm = () => {
 
     const stepsList = Array(STEP_COUNT)
         .fill(0)
-        .map((_, index) => (
-            <Step
-                key={index}
-                onClick={() => {
-                    if (!methods.formState.isValid && index > activeStep)
-                        return;
-                    setActiveStep(index);
-                }}
-                className="w-4 h-4"
-            />
-        ));
+        .map((_, index) => <Step key={index} className="w-4 h-4" />);
 
     const isLastStep = typeof STEPS[activeStep].next === 'undefined';
 
@@ -42,6 +33,7 @@ const StepForm = () => {
 
     const onContinue = () => {
         if (isLastStep) return;
+        setStepNumber((prev) => prev + 1);
         const step = STEPS[activeStep];
         if (step.type === STEP_TYPE.Conditional) {
             const fieldValue = methods.watch(step.next.fieldName);
@@ -55,7 +47,7 @@ const StepForm = () => {
     return (
         <div className="p-10">
             <div className="flex flex-row w-52 mx-auto">
-                <Stepper activeStep={activeStep}>{stepsList}</Stepper>
+                <Stepper activeStep={stepNumber}>{stepsList}</Stepper>
             </div>
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
