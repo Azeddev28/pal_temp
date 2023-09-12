@@ -5,14 +5,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { STEP_COUNT, Steps } from './Steps';
+
 import { Welcome } from './Welcome';
+import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
 
 const StepForm = () => {
     const router = useRouter();
     const [activeStep, setActiveStep] = useState(0);
-    const [isLastStep, setIsLastStep] = useState(false);
     const methods = useForm({
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
@@ -32,19 +32,30 @@ const StepForm = () => {
             />
         ));
 
-    const FormStep = Steps[activeStep];
+    const isLastStep = typeof STEPS[activeStep].next === 'undefined';
 
     const onSubmit = async () => {
         // temporary
         localStorage.setItem('isLoggedIn', true);
         router.push('/congratulations', undefined, { shallow: true });
     };
+
+    const onContinue = () => {
+        if (isLastStep) return;
+        const step = STEPS[activeStep];
+        if (step.type === STEP_TYPE.Conditional) {
+            const fieldValue = methods.watch(step.next.fieldName);
+            setActiveStep(step.next.branch[fieldValue]);
+        } else {
+            setActiveStep(step.next);
+        }
+    };
+
+    const FormStep = STEPS[activeStep].render;
     return (
         <div className="p-10">
             <div className="flex flex-row w-52 mx-auto">
-                <Stepper activeStep={activeStep} isLastStep={setIsLastStep}>
-                    {stepsList}
-                </Stepper>
+                <Stepper activeStep={activeStep}>{stepsList}</Stepper>
             </div>
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -53,18 +64,7 @@ const StepForm = () => {
                         type={isLastStep ? 'submit' : 'button'}
                         disabled={!methods.formState.isValid}
                         className={'w-full'}
-                        onClick={() => {
-                            if (isLastStep) return;
-                            if (
-                                methods.watch('purpose') ===
-                                    "I'm looking for a plug" &&
-                                activeStep === 3
-                            ) {
-                                setActiveStep(6);
-                            } else {
-                                setActiveStep(activeStep + 1);
-                            }
-                        }}
+                        onClick={onContinue}
                     >
                         {isLastStep ? 'Submit' : 'Continue'}
                     </Button>
