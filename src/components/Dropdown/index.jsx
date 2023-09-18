@@ -74,12 +74,21 @@ const Dropdown = forwardRef(
         },
         forwardedRef
     ) => {
+        const [page, setPage] = useState(1);
         const containerRef = useRef();
         const [open, setOpen] = useState(!!isOpen);
+        console.log(page * 200);
+
         const handleOpenChange = (open) => {
             setOpen(open);
             onOpenChange?.(open);
+            setPage(1);
         };
+
+        const handleShowMore = () => {
+            setPage((prev) => prev + 1);
+        };
+
         const handleSelection = (key) => {
             if (!onChange) return;
             const selectedOption = options.find((option) => option.key === key);
@@ -109,20 +118,29 @@ const Dropdown = forwardRef(
                     <Portal>
                         <Content width={contentWidth}>
                             <Viewport>
-                                {options.map((option, index) => (
-                                    <Item key={index} value={option.key}>
-                                        <Checkbox
-                                            defaultChecked={
-                                                selectedKey === option.key
-                                            }
-                                        />
-                                        {/* <ItemText> */}
-                                        <Typography variant={'body'}>
-                                            {option.key}
-                                        </Typography>
-                                        {/* </ItemText> */}
-                                    </Item>
-                                ))}
+                                {options
+                                    .slice(0, page * 200)
+                                    .map((option, index) => (
+                                        <Item key={index} value={option.key}>
+                                            <Checkbox
+                                                defaultChecked={
+                                                    selectedKey === option.key
+                                                }
+                                            />
+                                            <Typography variant={'body'}>
+                                                {option.key}
+                                            </Typography>
+                                        </Item>
+                                    ))}
+
+                                <div
+                                    onClick={handleShowMore}
+                                    className="flex justify-center items-center text-brandBlue p-4 cursor-pointer bg-white hover:bg-brandSecondaryBlue"
+                                >
+                                    <Typography variant={'body'}>
+                                        Show More
+                                    </Typography>
+                                </div>
                             </Viewport>
                         </Content>
                     </Portal>

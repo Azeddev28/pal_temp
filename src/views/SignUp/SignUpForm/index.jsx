@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
@@ -51,7 +52,9 @@ const StepForm = () => {
             </div>
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
-                    <FormStep />
+                    <StepContextProvider>
+                        <FormStep />
+                    </StepContextProvider>
                     <Button
                         type={isLastStep ? 'submit' : 'button'}
                         disabled={!methods.formState.isValid}
