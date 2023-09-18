@@ -2,7 +2,7 @@ import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
 
 import { useState } from 'react';
-import { SignUpModalForm } from './SignUpForm';
+import { SignInModal } from './SignInModal';
 
 const SignUp = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,10 +42,11 @@ const SignUp = () => {
                     </div>
                 </div>
             </div>
-            <SignUpModalForm
+            {/* <SignUpModalForm
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-            />
+            /> */}
+            <SignInModal />
         </div>
     );
 };

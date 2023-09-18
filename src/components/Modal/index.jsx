@@ -1,4 +1,5 @@
 import { CloseFilledIcon } from '@/Icons';
+import Image from 'next/image';
 
 const Modal = ({ isOpen, onClose, bannerImageSrc, children }) => {
     if (!isOpen) return null;
@@ -18,7 +19,7 @@ const Modal = ({ isOpen, onClose, bannerImageSrc, children }) => {
                     )}
                     {bannerImageSrc && (
                         <div className="flex items-center justify-center w-full h-full">
-                            <img
+                            <Image
                                 src={bannerImageSrc}
                                 className="w-full h-auto max-h-96 object-cover object-center"
                                 alt="modal-banner-image"
