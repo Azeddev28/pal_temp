@@ -77,7 +77,6 @@ const Dropdown = forwardRef(
         const [page, setPage] = useState(1);
         const containerRef = useRef();
         const [open, setOpen] = useState(!!isOpen);
-        console.log(page * 200);
 
         const handleOpenChange = (open) => {
             setOpen(open);

@@ -73,7 +73,6 @@ const Step2 = () => {
     const [countries, isLoadingCountries] = useStep('countries');
     const [languages, isLoadingLanguages] = useStep('languages');
 
-    // console.log({ countries, languages });
     const { register, setValue, watch } = useFormContext();
 
     const countryOptions = useMemo(() => {
@@ -91,13 +90,6 @@ const Step2 = () => {
             value: language.code,
         }));
     }, [languages]);
-
-    console.log({
-        countryOptions,
-        languageOptions,
-        lang: watch('language'),
-        cont: watch('country'),
-    });
 
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {
