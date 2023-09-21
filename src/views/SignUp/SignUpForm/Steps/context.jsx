@@ -5,19 +5,19 @@ const StepContext = createContext();
 
 const StepContextProvider = ({ children }) => {
     const { data: companies, isLoading: isLoadingCompanies } = useQuery([
-        '/api/companies/companies-list/',
+        'companiesList',
     ]);
 
     const { data: industries, isLoading: isLoadingIndustries } = useQuery([
-        '/api/companies/industries-list/',
+        'industriesList',
     ]);
 
     const { data: countries, isLoading: isLoadingCountries } = useQuery([
-        '/api/locations/countries-list/',
+        'countriesList',
     ]);
 
     const { data: languages, isLoading: isLoadingLanguages } = useQuery([
-        '/api/locations/languages-list/',
+        'languagesList',
     ]);
 
     // step# : context/data

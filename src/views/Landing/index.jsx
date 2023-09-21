@@ -18,9 +18,7 @@ const emailSchema = yup.object().shape({
 });
 
 const Landing = () => {
-    const { mutateAsync: joinWaitList } = useMutation(
-        '/api/users/join-waitlist/'
-    );
+    const { mutateAsync: joinWaitList } = useMutation('joinWaitlist');
     const router = useRouter();
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',

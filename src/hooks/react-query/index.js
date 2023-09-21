@@ -1,50 +1,42 @@
-import { axiosClient } from '@/http';
+import { request } from '@/http';
+import { getRoute } from '@/server';
 import {
     useMutation as rqUseMutation,
     useQuery as rqUseQuery,
 } from '@tanstack/react-query';
 
-const useQuery = ([endpointPath, query], options = {}) => {
-    if (!endpointPath) throw new Error('Query endpoint not provided');
+const useQuery = ([routeKey, query], options = {}) => {
+    const route = getRoute(routeKey);
+
+    if (!route) throw new Error('Invalid routeKey provided');
 
     return rqUseQuery({
-        queryKey: endpointPath,
+        queryKey: [routeKey],
         queryFn: () =>
-            axiosClient
-                .get(endpointPath, {
-                    data: query ? JSON.stringify(query) : undefined,
-                })
-                .then((response) => JSON.parse(response.data)),
+            request({
+                url: route,
+                method: 'get',
+                data: query,
+            }).then((response) => JSON.parse(response.data)),
         ...options,
     });
 };
 
-const request = ({ url, data, method }) => {
-    const stringifiedData = JSON.stringify(data);
-    switch (method) {
-        case 'delete':
-            return axiosClient.delete(url, { data: stringifiedData });
-        case 'put':
-            return axiosClient.put(url, stringifiedData);
-        case 'patch':
-            return axiosClient.patch(url, stringifiedData);
-        default:
-            return axiosClient.post(url, stringifiedData);
-    }
-};
+const useMutation = (routeKey, options = {}) => {
+    const route = getRoute(routeKey);
 
-const useMutation = (endpointPath, options = {}) => {
-    if (!endpointPath) throw new Error('Mutation endpoint not provided');
+    if (!route) throw new Error('Invalid routeKey provided');
 
-    const { method, ...rest } = options;
+    const { method = 'post', ...rest } = options;
+
+    if (method === 'get')
+        throw new Error('GET is not a valid HTTP method for useMutation hook');
 
     const mutationFn = (data) => {
-        request({ url: endpointPath, data, method }).then(
-            (response) => response.data
-        );
+        request({ url: route, data, method }).then((response) => response.data);
     };
     return rqUseMutation({
-        mutationKey: endpointPath,
+        mutationKey: [routeKey],
         mutationFn,
         ...rest,
     });

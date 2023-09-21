@@ -17,33 +17,48 @@ const getWidthBySize = (size) => {
     }
 };
 
+const getTextJustifyClass = (textPosition) => {
+    switch (textPosition) {
+        case 'left':
+            return 'justify-start';
+        case 'right':
+            return 'justify-end';
+        case 'center':
+            return 'justify-center';
+    }
+};
+
 const Button = ({
     children,
-    className,
-    disabled,
-    size,
-    style,
+    className = '',
+    disabled = false,
+    textPosition = 'center', // "left"  | "right" | "center"
+    size = '', // "sm" | "md" | "lg"
+    style = {},
     icon,
-    ...props
+    ...restProps
 }) => {
-    const Icon = ICONS[icon ?? ''];
+    const Icon = ICONS[icon] || null;
 
+    // Calculate button width based on size
+    const buttonStyle = {
+        ...style,
+        width: size ? getWidthBySize(size) : style.width,
+    };
+
+    // Define classes based on conditions
+    const buttonClasses = `${baseStyles} ${baseLargeStyles} ${
+        disabled ? disabledStyles : activeStyles
+    } ${className}`;
+
+    const textJustifyClass = getTextJustifyClass(textPosition);
     return (
-        <button
-            {...props}
-            style={{
-                ...style,
-                width: size ? getWidthBySize(size) : style?.width,
-            }}
-            className={`${baseStyles} ${baseLargeStyles} ${
-                disabled ? disabledStyles : activeStyles
-            } ${className}`}
-        >
+        <button {...restProps} style={buttonStyle} className={buttonClasses}>
             {Icon && <Icon className="w-6 h-6" />}
-
-            {children}
+            <span className={`flex w-full ${textJustifyClass}`}>
+                {children}
+            </span>
         </button>
     );
 };
-
 export { Button };

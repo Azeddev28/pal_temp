@@ -7,6 +7,7 @@ const GoogleButton = () => (
                 backgroundColor: '#5186EC',
                 width: '100%',
             }}
+            textPosition="left"
             icon="GoogleIcon"
         >
             Sign in with Google
@@ -21,6 +22,7 @@ const LinkedInButton = () => (
                 backgroundColor: '#0A66C2',
                 width: '100%',
             }}
+            textPosition="left"
             icon="LinkedInIcon"
         >
             Sign in with LinkedIn
@@ -35,6 +37,7 @@ const GithubButton = () => (
                 backgroundColor: '#1B1817',
                 width: '100%',
             }}
+            textPosition="left"
             icon="GithubIcon"
         >
             Sign in with Github

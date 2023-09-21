@@ -1,11 +1,17 @@
-import { Axios } from 'axios';
+const request = ({ url, data, method }) => {
+    const stringifiedData = data ? JSON.stringify(data) : undefined;
+    switch (method) {
+        case 'delete':
+            return axiosClient.delete(url, { params: stringifiedData });
+        case 'put':
+            return axiosClient.put(url, stringifiedData);
+        case 'patch':
+            return axiosClient.patch(url, stringifiedData);
+        case 'post':
+            return axiosClient.post(url, stringifiedData);
+        default:
+            return axiosClient.get(url, { params: stringifiedData });
+    }
+};
 
-const axiosClient = new Axios({
-    baseURL: 'http://103.98.213.146', 
-    // process.env.NEXT_PUBLIC_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-export { axiosClient };
+export { request };
