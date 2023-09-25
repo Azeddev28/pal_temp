@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { useMutation } from '@/hooks/react-query';
 import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
@@ -13,6 +14,7 @@ import { schema } from './schema';
 
 const StepForm = () => {
     const router = useRouter();
+    const { mutateAsync } = useMutation('profileRegister');
     const [stepNumber, setStepNumber] = useState(0);
     const [activeStep, setActiveStep] = useState(0);
     const methods = useForm({
@@ -26,9 +28,8 @@ const StepForm = () => {
 
     const isLastStep = typeof STEPS[activeStep].next === 'undefined';
 
-    const onSubmit = async () => {
-        // temporary
-        localStorage.setItem('isLoggedIn', true);
+    const onSubmit = async (formData) => {
+        mutateAsync(formData);
         router.push('/congratulations', undefined, { shallow: true });
     };
 
@@ -38,7 +39,8 @@ const StepForm = () => {
         const step = STEPS[activeStep];
         if (step.type === STEP_TYPE.Conditional) {
             const fieldValue = methods.watch(step.next.fieldName);
-            setActiveStep(step.next.branch[fieldValue]);
+            const nextStep = step.next.branch[fieldValue];
+            setActiveStep(nextStep);
         } else {
             setActiveStep(step.next);
         }

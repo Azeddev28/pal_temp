@@ -7,6 +7,7 @@ const ROUTES = {
     countriesList: `${SERVER_URL}/api/locations/countries-list/`,
     industriesList: `${SERVER_URL}/api/locations/languages-list/`,
     joinWaitlist: `${SERVER_URL}/api/users/join-waitlist/`,
+    profileRegister: `${SERVER_URL}/api/users/profile-register/`,
 };
 
 export const getRoute = (routeKey) => ROUTES[routeKey];

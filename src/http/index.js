@@ -1,3 +1,5 @@
+import { axiosClient } from './axios';
+
 const request = ({ url, data, method }) => {
     const stringifiedData = data ? JSON.stringify(data) : undefined;
     switch (method) {
