@@ -14,43 +14,63 @@ import { schema } from './schema';
 
 const StepForm = () => {
     const router = useRouter();
-    const { mutateAsync } = useMutation('profileRegister');
-    const [stepNumber, setStepNumber] = useState(0);
+    const { mutateAsync: registerProfile } = useMutation('profileRegister');
     const [activeStep, setActiveStep] = useState(0);
+    const [visitedSteps, setVisitedSteps] = useState([activeStep]);
+
     const methods = useForm({
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
 
-    const stepsList = Array(STEP_COUNT)
-        .fill(0)
-        .map((_, index) => <Step key={index} className="w-4 h-4" />);
+    const isLastStep = typeof STEPS[activeStep]?.next === 'undefined';
 
-    const isLastStep = typeof STEPS[activeStep].next === 'undefined';
+    const getNextStep = () => {
+        const step = STEPS[activeStep];
+        if (step.type === STEP_TYPE.Linear) return step.next;
+        const fieldValue = methods.watch(step.next.fieldName);
+        const nextStep = step.next.branch[fieldValue];
+        return nextStep;
+    };
 
     const onSubmit = async (formData) => {
-        mutateAsync(formData);
-        router.push('/congratulations', undefined, { shallow: true });
+        const email = router.query.email;
+        try {
+            await registerProfile({ ...formData, email });
+            router.push('/congratulations', undefined, { shallow: true });
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     const onContinue = () => {
         if (isLastStep) return;
-        setStepNumber((prev) => prev + 1);
-        const step = STEPS[activeStep];
-        if (step.type === STEP_TYPE.Conditional) {
-            const fieldValue = methods.watch(step.next.fieldName);
-            const nextStep = step.next.branch[fieldValue];
-            setActiveStep(nextStep);
-        } else {
-            setActiveStep(step.next);
-        }
+        const nextStep = getNextStep();
+        const isAleadyVisitedStep = visitedSteps.includes(nextStep);
+        if (!isAleadyVisitedStep) setVisitedSteps([...visitedSteps, nextStep]);
+        setActiveStep(nextStep);
     };
 
     const FormStep = STEPS[activeStep].render;
     return (
         <div className="p-10">
             <div className="flex flex-row w-52 mx-auto">
-                <Stepper activeStep={stepNumber}>{stepsList}</Stepper>
+                <Stepper activeStep={visitedSteps.indexOf(activeStep)}>
+                    {Array(STEP_COUNT)
+                        .fill(0)
+                        .map((_, index) => (
+                            <Step
+                                onClick={
+                                    typeof visitedSteps[index] !== 'undefined'
+                                        ? () =>
+                                              setActiveStep(visitedSteps[index])
+                                        : undefined
+                                }
+                                key={index}
+                                className="w-4 h-4"
+                            />
+                        ))}
+                </Stepper>
             </div>
             <FormProvider {...methods}>
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -71,7 +91,7 @@ const StepForm = () => {
     );
 };
 
-const SignUpModalForm = ({ isOpen, onClose }) => {
+const ProfileModalForm = ({ isOpen, onClose }) => {
     const [showSignUpForm, setShowSignUpForm] = useState(false);
 
     return (
@@ -84,4 +104,4 @@ const SignUpModalForm = ({ isOpen, onClose }) => {
     );
 };
 
-export { SignUpModalForm };
+export { ProfileModalForm };
