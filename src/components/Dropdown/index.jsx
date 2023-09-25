@@ -131,15 +131,16 @@ const Dropdown = forwardRef(
                                             </Typography>
                                         </Item>
                                     ))}
-
-                                <div
-                                    onClick={handleShowMore}
-                                    className="flex justify-center items-center text-brandBlue p-4 cursor-pointer bg-white hover:bg-brandSecondaryBlue"
-                                >
-                                    <Typography variant={'body'}>
-                                        Show More
-                                    </Typography>
-                                </div>
+                                {options?.length !== 0 && (
+                                    <div
+                                        onClick={handleShowMore}
+                                        className="flex justify-center items-center text-brandBlue p-4 cursor-pointer bg-white hover:bg-brandSecondaryBlue"
+                                    >
+                                        <Typography variant={'body'}>
+                                            Show More
+                                        </Typography>
+                                    </div>
+                                )}
                             </Viewport>
                         </Content>
                     </Portal>

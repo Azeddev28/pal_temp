@@ -20,7 +20,6 @@ const StepContextProvider = ({ children }) => {
         'languagesList',
     ]);
 
-    // step# : context/data
     const context = {
         companies: [companies, isLoadingCompanies],
         industries: [industries, isLoadingIndustries],

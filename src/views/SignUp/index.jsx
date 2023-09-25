@@ -4,7 +4,7 @@ import { Typography } from '@/components/Typography';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { SignInModal } from './SignInModal';
-import { SignUpModalForm } from './SignUpForm';
+import { ProfileModalForm } from './SignUpForm';
 
 const SignUp = () => {
     const router = useRouter();
@@ -12,7 +12,7 @@ const SignUp = () => {
     const isSignedIn = !!router.query?.signedIn;
     const renderModal = () =>
         isSignedIn ? (
-            <SignUpModalForm
+            <ProfileModalForm
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
