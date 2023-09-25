@@ -1,11 +1,24 @@
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
 
+import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { SignInModal } from './SignInModal';
 import { SignUpModalForm } from './SignUpForm';
 
 const SignUp = () => {
+    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const isSignedIn = !!router.query?.signedIn;
+    const renderModal = () =>
+        isSignedIn ? (
+            <SignUpModalForm
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
+        ) : (
+            <SignInModal />
+        );
     return (
         <div className="flex items-center justify-center h-screen">
             <div className="py-44">
@@ -42,10 +55,7 @@ const SignUp = () => {
                     </div>
                 </div>
             </div>
-            <SignUpModalForm
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            />
+            {renderModal()}
         </div>
     );
 };

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
+import { useMutation } from '@/hooks/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -17,6 +18,7 @@ const emailSchema = yup.object().shape({
 });
 
 const Landing = () => {
+    const { mutateAsync: joinWaitList } = useMutation('joinWaitlist');
     const router = useRouter();
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
@@ -26,17 +28,22 @@ const Landing = () => {
         resolver: yupResolver(emailSchema),
     });
 
-    const onSubmit = async () => {
-        router.push(
-            {
-                pathname: '/signup',
-                query: {
-                    email: watch('email'),
+    const onSubmit = async ({ email }) => {
+        try {
+            await joinWaitList({ email });
+            router.push(
+                {
+                    pathname: '/signup',
+                    query: {
+                        email,
+                    },
                 },
-            },
-            undefined,
-            { shallow: true }
-        );
+                undefined,
+                { shallow: true }
+            );
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     return (

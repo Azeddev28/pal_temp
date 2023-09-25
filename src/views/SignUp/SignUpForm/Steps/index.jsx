@@ -1,8 +1,9 @@
 import { Dropdown } from '@/components/Dropdown';
 import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useStep } from './context';
 
 const Step1 = () => {
     const [showAnotherGender, setShowAnotherGender] = useState(false);
@@ -69,21 +70,34 @@ const Step1 = () => {
 };
 
 const Step2 = () => {
+    const [countries, isLoadingCountries] = useStep('countries');
+    const [languages, isLoadingLanguages] = useStep('languages');
+
     const { register, setValue, watch } = useFormContext();
+
+    const countryOptions = useMemo(() => {
+        if (!countries) return [];
+        return countries.map((country) => ({
+            key: country.name,
+            value: country.code,
+        }));
+    }, [countries]);
+
+    const languageOptions = useMemo(() => {
+        if (!languages) return [];
+        return languages.map((language) => ({
+            key: language.name,
+            value: language.code,
+        }));
+    }, [languages]);
+
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {
             shouldValidate: true,
             shouldDirty: true,
         });
-    const countries = [
-        { key: 'United States', value: 'United States' },
-        { key: 'Japan', value: 'Japan' },
-    ];
-    const languages = [
-        { key: 'English(US)', value: 'English(US)' },
-        { key: 'Japanese', value: 'Japanese' },
-    ];
-    console.log({ language: watch('language'), country: watch('country') });
+
+    if (isLoadingCountries || isLoadingLanguages) return null;
     return (
         <div className="pt-16">
             <div className="mb-12">
@@ -100,15 +114,14 @@ const Step2 = () => {
                     width={'100%'}
                     placeholder="Choose your language"
                     onChange={(option) => {
-                        console.log({ option });
                         handleDropDownChange('language', option.value);
                     }}
                     selectedKey={
-                        languages.find(
+                        languageOptions.find(
                             (language) => language.value === watch('language')
                         )?.key
                     }
-                    options={languages}
+                    options={languageOptions}
                 />
                 <Dropdown
                     {...register('country')}
@@ -118,11 +131,11 @@ const Step2 = () => {
                         handleDropDownChange('country', option.value)
                     }
                     selectedKey={
-                        countries.find(
+                        countryOptions.find(
                             (country) => country.value === watch('country')
                         )?.key
                     }
-                    options={countries}
+                    options={countryOptions}
                 />
             </div>
         </div>
@@ -132,7 +145,6 @@ const Step2 = () => {
 const Step3 = () => {
     const { register, watch, formState } = useFormContext();
 
-    console.log({ firstName: watch('firstName'), lastName: watch('lastName') });
     return (
         <div className="pt-16">
             <div className="mb-12">
@@ -209,19 +221,24 @@ const Step4 = () => {
 };
 
 const Step5 = () => {
+    const [companies, isLoading] = useStep('companies');
     const { register, setValue, watch } = useFormContext();
+
+    const companyOptions = useMemo(() => {
+        if (!companies) return [];
+        return companies.map((company) => ({
+            key: company.name,
+            value: company.id,
+        }));
+    }, [companies]);
 
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {
             shouldValidate: true,
             shouldDirty: true,
         });
-    const companies = [
-        { key: 'Google', value: 'google' },
-        { key: 'Meta', value: 'meta' },
-        { key: 'Amazon', value: 'amazon' },
-        { key: 'Netflix', value: 'netflix' },
-    ];
+
+    if (isLoading) return null;
     return (
         <div className="pt-16">
             <div className="mb-12">
@@ -241,11 +258,11 @@ const Step5 = () => {
                     }
                     placeholder={'Select your company'}
                     selectedKey={
-                        companies.find(
+                        companyOptions.find(
                             (company) => company.value === watch('company')
                         )?.key
                     }
-                    options={companies}
+                    options={companyOptions}
                 />
             </div>
         </div>
@@ -253,7 +270,16 @@ const Step5 = () => {
 };
 
 const Step6 = () => {
+    const [industries, isLoading] = useStep('industries');
     const { register, setValue, watch } = useFormContext();
+
+    const industryOptions = useMemo(() => {
+        if (!industries) return [];
+        return industries.map((industry) => ({
+            key: industry.name,
+            value: industry.id,
+        }));
+    }, [industries]);
 
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {
@@ -261,16 +287,7 @@ const Step6 = () => {
             shouldDirty: true,
         });
 
-    const industries = [
-        { key: 'Tech', value: 'tech' },
-        { key: 'Commerce', value: 'commerce' },
-        { key: 'Medicine', value: 'medicine' },
-        {
-            key: 'Engineering',
-            value: 'engineering',
-        },
-    ];
-
+    if (isLoading) return null;
     return (
         <div className="pt-16">
             <div className="mb-12">
@@ -290,11 +307,11 @@ const Step6 = () => {
                     }
                     placeholder={'Select your industry'}
                     selectedKey={
-                        industries.find(
+                        industryOptions.find(
                             (industry) => industry.value === watch('industry')
                         )?.key
                     }
-                    options={industries}
+                    options={industryOptions}
                 />
             </div>
         </div>
