@@ -1,5 +1,5 @@
 import { LogoWidget } from '@/components/Misc';
-import useIsMobile from '@/hooks/use-is-mobile';
+import { useIsMobile } from '@/hooks/use-is-mobile';
 import airbnbLogo from '../../../public/images/company-logos/Airbnb.png';
 import discordLogo from '../../../public/images/company-logos/Discord.png';
 import figmaLogo from '../../../public/images/company-logos/Figma.png';

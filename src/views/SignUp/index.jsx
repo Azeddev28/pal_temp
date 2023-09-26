@@ -1,23 +1,25 @@
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
-
-import { useRouter } from 'next/router';
+import { useSession } from '@/hooks/use-session';
 import { useState } from 'react';
+import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
-import { ProfileModalForm } from './SignUpForm';
 
 const SignUp = () => {
-    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const isSignedIn = !!router.query?.signedIn;
+    const { data: session } = useSession();
+
     const renderModal = () =>
-        isSignedIn ? (
-            <ProfileModalForm
+        !!session ? (
+            <ProfileFormModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
         ) : (
-            <SignInModal />
+            <SignInModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         );
     return (
         <div className="flex items-center justify-center h-screen">

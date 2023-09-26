@@ -7,18 +7,22 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { useMutation } from '@/hooks/react-query';
+import { useUserProfile } from '@/hooks/use-user-profile';
+import { updateProfile } from '@/providers/user-profile/creators';
 import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
 
 const StepForm = () => {
+    const { profile, dispatch } = useUserProfile();
     const router = useRouter();
     const { mutateAsync: registerProfile } = useMutation('profileRegister');
     const [activeStep, setActiveStep] = useState(0);
     const [visitedSteps, setVisitedSteps] = useState([activeStep]);
 
     const methods = useForm({
+        defaultValues: profile,
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
@@ -34,9 +38,9 @@ const StepForm = () => {
     };
 
     const onSubmit = async (formData) => {
-        const email = router.query.email;
         try {
-            await registerProfile({ ...formData, email });
+            await registerProfile({ ...formData, email: profile.email });
+            dispatch(updateProfile({ ...formData, email: profile.email }));
             router.push('/congratulations', undefined, { shallow: true });
         } catch (e) {
             console.error(e);
@@ -91,7 +95,7 @@ const StepForm = () => {
     );
 };
 
-const ProfileModalForm = ({ isOpen, onClose }) => {
+const ProfileFormModal = ({ isOpen, onClose }) => {
     const [showSignUpForm, setShowSignUpForm] = useState(false);
 
     return (
@@ -104,4 +108,4 @@ const ProfileModalForm = ({ isOpen, onClose }) => {
     );
 };
 
-export { ProfileModalForm };
+export { ProfileFormModal };
