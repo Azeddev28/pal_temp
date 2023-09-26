@@ -1,13 +1,28 @@
+import { useSession } from '@/hooks/use-session';
+import { useUserProfile } from '@/hooks/use-user-profile';
+import { updateProfile } from '@/providers/user-profile/creators';
 import { SignUp } from '@/views/SignUp';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-const Page = () => {
-    const router = useRouter();
+export const getServerSideProps = async (ctx) => {
+    const { session, ...queryParams } = ctx.query;
+    return {
+        props: {
+            queryParams,
+            session,
+        },
+    };
+};
+
+const Page = ({ queryParams, session }) => {
+    const { dispatch } = useUserProfile();
+    const { update: updateSession } = useSession();
+
     useEffect(() => {
-        if (!router?.query || !!!router.query.email)
-            router?.replace('/', undefined, { shallow: true });
+        updateSession(session);
+        dispatch(updateProfile(queryParams));
     }, []);
+
     return <SignUp />;
 };
 

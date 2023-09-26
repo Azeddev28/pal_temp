@@ -2,6 +2,8 @@
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { useMutation } from '@/hooks/react-query';
+import { useUserProfile } from '@/hooks/use-user-profile';
+import { updateEmail } from '@/providers/user-profile/creators';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -19,6 +21,7 @@ const emailSchema = yup.object().shape({
 
 const Landing = () => {
     const { mutateAsync: joinWaitList } = useMutation('joinWaitlist');
+    const { dispatch } = useUserProfile();
     const router = useRouter();
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
@@ -31,16 +34,8 @@ const Landing = () => {
     const onSubmit = async ({ email }) => {
         try {
             await joinWaitList({ email });
-            router.push(
-                {
-                    pathname: '/signup',
-                    query: {
-                        email,
-                    },
-                },
-                undefined,
-                { shallow: true }
-            );
+            dispatch(updateEmail(email));
+            router.push({ pathname: '/signup' }, undefined, { shallow: true });
         } catch (e) {
             console.error(e);
         }

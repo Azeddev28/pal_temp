@@ -1,5 +1,7 @@
 import Layout from '@/components/layout';
 import { CustomQueryClientProvider } from '@/providers/react-query';
+import { SessionProvider } from '@/providers/session';
+import { UserProfileProvider } from '@/providers/user-profile';
 import { Poppins } from 'next/font/google';
 import '../../styles/globals.css';
 
@@ -12,12 +14,16 @@ const poppins = Poppins({
 function MyApp({ Component, pageProps }) {
     return (
         <div>
-            <CustomQueryClientProvider>
-                <main className={poppins.className}>
-                    <Layout />
-                    <Component {...pageProps} />
-                </main>
-            </CustomQueryClientProvider>
+            <SessionProvider>
+                <UserProfileProvider>
+                    <CustomQueryClientProvider>
+                        <main className={poppins.className}>
+                            <Layout />
+                            <Component {...pageProps} />
+                        </main>
+                    </CustomQueryClientProvider>
+                </UserProfileProvider>
+            </SessionProvider>
         </div>
     );
 }
