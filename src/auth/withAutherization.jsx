@@ -1,12 +1,13 @@
+import { useSession } from '@/hooks/use-session';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-// This is temporary athentication logic
 const withAutherization = (Component) => {
     return () => {
+        const { data: session } = useSession();
         const router = useRouter();
         useEffect(() => {
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const isLoggedIn = !!session;
             if (!isLoggedIn) router.replace('/', undefined, { shallow: true });
         }, []);
 
