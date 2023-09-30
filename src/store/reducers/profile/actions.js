@@ -1,4 +1,4 @@
-import { createAction } from '../utils';
+import { generateActionCreator } from '../../helpers';
 
 import {
     UPDATE_ANOTHER_GENDER,
@@ -15,18 +15,18 @@ import {
     UPDATE_PURPOSE,
 } from './types';
 
-export const updateEmail = createAction(UPDATE_EMAIL);
-export const updateGender = createAction(UPDATE_GENDER);
-export const updateAnotherGender = createAction(UPDATE_ANOTHER_GENDER);
-export const updateLanguage = createAction(UPDATE_LANGUAGE);
-export const updateCountry = createAction(UPDATE_COUNTRY);
-export const updateFirstName = createAction(UPDATE_FIRST_NAME);
-export const updateLastName = createAction(UPDATE_LAST_NAME);
-export const updatePurpose = createAction(UPDATE_PURPOSE);
-export const updateCompany = createAction(UPDATE_COMPANY);
-export const updateIndustry = createAction(UPDATE_INDUSRTY);
-export const updateJobTitle = createAction(UPDATE_JOB_TITLE);
-export const updateInterestedJobTitle = createAction(
+export const updateEmail = generateActionCreator(UPDATE_EMAIL);
+export const updateGender = generateActionCreator(UPDATE_GENDER);
+export const updateAnotherGender = generateActionCreator(UPDATE_ANOTHER_GENDER);
+export const updateLanguage = generateActionCreator(UPDATE_LANGUAGE);
+export const updateCountry = generateActionCreator(UPDATE_COUNTRY);
+export const updateFirstName = generateActionCreator(UPDATE_FIRST_NAME);
+export const updateLastName = generateActionCreator(UPDATE_LAST_NAME);
+export const updatePurpose = generateActionCreator(UPDATE_PURPOSE);
+export const updateCompany = generateActionCreator(UPDATE_COMPANY);
+export const updateIndustry = generateActionCreator(UPDATE_INDUSRTY);
+export const updateJobTitle = generateActionCreator(UPDATE_JOB_TITLE);
+export const updateInterestedJobTitle = generateActionCreator(
     UPDATE_INTERESTED_JOB_TITLE
 );
 
