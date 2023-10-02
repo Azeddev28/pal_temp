@@ -1,3 +1,5 @@
+import { generateActionCreator } from '../../helpers';
+
 import {
     UPDATE_ANOTHER_GENDER,
     UPDATE_COMPANY,
@@ -11,11 +13,7 @@ import {
     UPDATE_LANGUAGE,
     UPDATE_LAST_NAME,
     UPDATE_PURPOSE,
-} from './actions';
-
-function generateActionCreator(type) {
-    return (payload) => ({ type, payload });
-}
+} from './types';
 
 export const updateEmail = generateActionCreator(UPDATE_EMAIL);
 export const updateGender = generateActionCreator(UPDATE_GENDER);
