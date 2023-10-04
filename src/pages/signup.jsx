@@ -10,7 +10,7 @@ export const getServerSideProps = async (ctx) => {
     return {
         props: {
             queryParams,
-            session,
+            session: session ?? '',
         },
     };
 };
