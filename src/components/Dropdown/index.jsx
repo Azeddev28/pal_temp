@@ -8,8 +8,8 @@ import {
     Viewport as SelectViewport,
     Value,
 } from '@radix-ui/react-select';
-import { forwardRef, useRef, useState } from 'react';
-import { Checkbox } from '../Input';
+import { forwardRef, useMemo, useRef, useState } from 'react';
+import { Checkbox, Input } from '../Input';
 import { Typography } from '../Typography';
 
 const Trigger = forwardRef(({ isOpen, children, width }, forwardedRef) => (
@@ -46,7 +46,7 @@ const Content = ({ children, width }) => (
 );
 
 const Viewport = ({ children, width }) => (
-    <SelectViewport className="max-h-72 rounded-xl" style={{ width }}>
+    <SelectViewport className="max-h-72 rounded-xl bg-white" style={{ width }}>
         {children}
     </SelectViewport>
 );
@@ -75,8 +75,21 @@ const Dropdown = forwardRef(
         forwardedRef
     ) => {
         const [page, setPage] = useState(1);
+        const [search, setSearch] = useState('');
         const containerRef = useRef();
         const [open, setOpen] = useState(!!isOpen);
+
+        const searchedOptions = useMemo(
+            () =>
+                search !== ''
+                    ? options.filter((option) =>
+                          option.key
+                              .toLowerCase()
+                              .includes(search.toLowerCase())
+                      )
+                    : options,
+            [search, options]
+        );
 
         const handleOpenChange = (open) => {
             setOpen(open);
@@ -94,6 +107,9 @@ const Dropdown = forwardRef(
             if (!selectedOption) return;
             onChange(selectedOption);
         };
+
+        const handleSearch = (e) => setSearch(e.target.value);
+
         const contentWidth =
             containerRef.current?.getBoundingClientRect().width;
 
@@ -117,8 +133,16 @@ const Dropdown = forwardRef(
                     <Portal>
                         <Content width={contentWidth}>
                             <Viewport>
-                                {options
-                                    .slice(0, page * 200)
+                                <div className="mx-auto p-4">
+                                    <Input
+                                        type="text"
+                                        placeholder="Search for..."
+                                        value={search}
+                                        onChange={handleSearch}
+                                    />
+                                </div>
+                                {searchedOptions
+                                    ?.slice(0, page * 200)
                                     .map((option, index) => (
                                         <Item key={index} value={option.key}>
                                             <Checkbox
@@ -131,7 +155,7 @@ const Dropdown = forwardRef(
                                             </Typography>
                                         </Item>
                                     ))}
-                                {options?.length !== 0 && (
+                                {searchedOptions?.length !== 0 && (
                                     <div
                                         onClick={handleShowMore}
                                         className="flex justify-center items-center text-brandBlue p-4 cursor-pointer bg-white hover:bg-brandSecondaryBlue"
