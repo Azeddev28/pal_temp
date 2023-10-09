@@ -5,7 +5,7 @@ const SessionContext = createContext();
 const SessionProvider = ({ children, session }) => {
     const [data, setData] = useState(session);
     useEffect(() => {
-        const eventSource = new EventSource('/api/auth', {
+        const eventSource = new EventSource('/api/sse', {
             withCredentials: true,
         });
 
