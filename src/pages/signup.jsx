@@ -27,7 +27,7 @@ const Page = ({ queryParams, session }) => {
 
     useEffect(() => {
         if (!profile.email && !queryParams?.email) redirectToHome();
-        updateSession(session);
+        if (session) updateSession(session);
         dispatch(updateProfile(queryParams));
         clearQueryParams();
     }, []);
