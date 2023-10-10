@@ -2,9 +2,12 @@ import Layout from '@/components/layout';
 import { CustomQueryClientProvider } from '@/providers/react-query';
 import { SessionProvider } from '@/providers/session';
 import { UserProfileProvider } from '@/providers/user-profile';
-import store from '@/store';
 import { Poppins } from 'next/font/google';
 import { Provider } from 'react-redux';
+import { wrapper } from "../store/store";
+import { PersistGate } from "redux-persist/integration/react";
+
+
 
 import '../../styles/globals.css';
 // Subsets are really important. CHECK BELOW FOR MORE INFO
@@ -13,21 +16,26 @@ const poppins = Poppins({
     subsets: ['latin'],
 });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, ...pageProps }) {
+    const { store, props } = wrapper.useWrappedStore(pageProps);
     return (
         <div>
-            <Provider store={store}>
-                <SessionProvider>
-                    <UserProfileProvider>
-                        <CustomQueryClientProvider>
-                            <main className={poppins.className}>
-                                <Layout />
-                                <Component {...pageProps} />
-                            </main>
-                        </CustomQueryClientProvider>
-                    </UserProfileProvider>
-                </SessionProvider>
-            </Provider>
+            {/* Hacky way of making state persist both client and server side */}
+            {/* TODO: Look for a better way to share state */}
+            <PersistGate persistor={store.__persistor} loading={<div>Loading</div>}>
+                <Provider store={store}>
+                    <SessionProvider>
+                        <UserProfileProvider>
+                            <CustomQueryClientProvider>
+                                <main className={poppins.className}>
+                                    <Layout />
+                                    <Component {...pageProps} />
+                                </main>
+                            </CustomQueryClientProvider>
+                        </UserProfileProvider>
+                    </SessionProvider>
+                </Provider>
+            </PersistGate>
         </div>
     );
 }

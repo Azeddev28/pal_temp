@@ -11,6 +11,26 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import desktopImage from '../../../public/images/desktop.png';
 import { CompanyLogoWidgetList } from './CompanyLogoWidgetList';
+import { selectAuthState, setAuthState } from "../../store/authSlice";
+import { wrapper } from "../../store/store"
+import { useDispatch, useSelector } from "react-redux";
+
+
+export const getServerSideProps = wrapper.getServerSideProps(
+    (store) =>
+        async ({ params }) => {
+            // we can set the initial state from here
+
+            await store.dispatch(setAuthState(false));
+            console.log("State on server", store.getState());
+            return {
+                props: {
+                    authState: false,
+                },
+            };
+        }
+);
+
 
 const emailSchema = yup.object().shape({
     email: yup
