@@ -1,20 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { AppState } from "./store";
-import { HYDRATE } from "next-redux-wrapper";
+import { createSlice } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 // Initial state
 const initialState = {
     authState: false,
+    accessToken: null,
+    isUserRegistered: false,
+    firstName: '',
+    lastName: '',
+    email: '',
 };
 
 // Actual Slice
 export const authSlice = createSlice({
-    name: "auth",
+    name: 'auth',
     initialState,
     reducers: {
         // Action to set the authentication status
         setAuthState(state, action) {
             state.authState = action.payload;
+        },
+        setEventMessage(state, action) {
+            state.firstName = action.payload.first_name;
+            state.email = action.payload.email;
+            state.lastName = action.payload.last_name;
+            state.accessToken = action.payload.access_token;
+            state.isUserRegistered = action.payload.access_token ? true : false;
         },
     },
 
@@ -29,7 +40,7 @@ export const authSlice = createSlice({
     },
 });
 
-export const { setAuthState } = authSlice.actions;
+export const { setAuthState, setEventMessage } = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;
 

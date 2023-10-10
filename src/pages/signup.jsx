@@ -1,6 +1,5 @@
 import { useSession } from '@/hooks/use-session';
 import { useUserProfile } from '@/hooks/use-user-profile';
-import { updateProfile } from '@/providers/user-profile/creators';
 import { SignUp } from '@/views/SignUp';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -28,7 +27,7 @@ const Page = ({ queryParams, session }) => {
     useEffect(() => {
         if (!profile.email && !queryParams?.email) redirectToHome();
         if (session) updateSession(session);
-        dispatch(updateProfile(queryParams));
+        // dispatch(updateProfile(queryParams));
         clearQueryParams();
     }, []);
 

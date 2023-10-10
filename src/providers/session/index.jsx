@@ -1,8 +1,11 @@
+import { setEventMessage } from '@/store/authSlice';
 import { createContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const SessionContext = createContext();
 
 const SessionProvider = ({ children, session }) => {
+    const dispatch = useDispatch();
     const [data, setData] = useState(session);
     useEffect(() => {
         const eventSource = new EventSource('/api/sse', {
@@ -13,6 +16,7 @@ const SessionProvider = ({ children, session }) => {
             if (event.data) {
                 const eventMessage = event.data.split('Message:');
                 window.sessionStorage.setItem('message', eventMessage[1]);
+                dispatch(setEventMessage(JSON.parse(eventMessage[1])));
             }
             // close connection on receiving token
             if (event.data && event.data.includes('token')) {

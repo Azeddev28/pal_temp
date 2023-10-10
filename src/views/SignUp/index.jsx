@@ -1,14 +1,17 @@
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
 
 const SignUp = () => {
+    const { isUserRegistered } = useSelector((state) => {
+        return state.auth;
+    });
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [message, setMessage] = useState(null);
     const renderModal = () =>
-        message && message.isUserRegistered ? (
+        isUserRegistered ? (
             <ProfileFormModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
@@ -19,16 +22,6 @@ const SignUp = () => {
                 onClose={() => setIsModalOpen(false)}
             />
         );
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const messageFromSessionStorage =
-                window.sessionStorage.getItem('message');
-            if (messageFromSessionStorage) {
-                const parsedMessage = JSON.parse(messageFromSessionStorage);
-                setMessage(parsedMessage);
-            }
-        }
-    }, []);
     return (
         <div className="flex items-center justify-center h-screen">
             <div className="py-44">
