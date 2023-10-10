@@ -10,6 +10,10 @@ const SessionProvider = ({ children, session }) => {
         });
 
         eventSource.onmessage = (event) => {
+            if (event.data) {
+                const eventMessage = event.data.split('Message:');
+                window.sessionStorage.setItem('message', eventMessage[1]);
+            }
             // close connection on receiving token
             if (event.data && event.data.includes('token')) {
                 const token = event.data.split('token: ')[1];

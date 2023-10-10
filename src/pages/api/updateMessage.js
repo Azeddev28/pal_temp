@@ -1,10 +1,10 @@
 import { client } from '@/utils';
 
 export default (req, res) => {
-    if (req.method === 'GET') {
+    if (req.method === 'POST') {
         if (client) {
-            const randomValue = Math.random().toFixed(2);
-            client.write(`data: Random Value: ${randomValue}\n\n`);
+            const objToSend = { isUserRegistered: req.body.isUserRegistered };
+            client.write(`data: Message: ${JSON.stringify(objToSend)}\n\n`);
         }
         const response = {
             message: 'Message updated successfully',

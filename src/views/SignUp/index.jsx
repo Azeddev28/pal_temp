@@ -1,16 +1,14 @@
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
-import { useSession } from '@/hooks/use-session';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
 
 const SignUp = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { data: session } = useSession();
-
+    const [message, setMessage] = useState(null);
     const renderModal = () =>
-        !!session ? (
+        message && message.isUserRegistered ? (
             <ProfileFormModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
@@ -21,6 +19,16 @@ const SignUp = () => {
                 onClose={() => setIsModalOpen(false)}
             />
         );
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const messageFromSessionStorage =
+                window.sessionStorage.getItem('message');
+            if (messageFromSessionStorage) {
+                const parsedMessage = JSON.parse(messageFromSessionStorage);
+                setMessage(parsedMessage);
+            }
+        }
+    }, []);
     return (
         <div className="flex items-center justify-center h-screen">
             <div className="py-44">
