@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { authSlice } from "./authSlice";
-import { createWrapper } from "next-redux-wrapper";
+import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -19,26 +19,23 @@ const makeConfiguredStore = () =>
         devTools: true,
     });
 
-export const makeStore = () => {
-    const isServer = typeof window === "undefined";
-    if (isServer) {
-        return makeConfiguredStore();
+
+const masterReducer = (state, action) => {
+    if (action.type === HYDRATE) {
+        const nextState = {
+            ...state, // use previous state
+        }
+        return nextState;
     } else {
-        // we need it only on client side
-        const persistConfig = {
-            key: "nextjs",
-            whitelist: ["auth"], // make sure it does not clash with server keys
-            storage,
-        };
-        const persistedReducer = persistReducer(persistConfig, rootReducer);
-        let store = configureStore({
-            reducer: persistedReducer,
-            devTools: process.env.NODE_ENV !== "production",
-        });
-        store.__persistor = persistStore(store); // Nasty hack
-        return store;
+    return rootReducer(state, action)
     }
+}
+
+export const makeStore = () => {
+    return configureStore({
+        reducer: masterReducer,
+    });
 };
 
 
-export const wrapper = createWrapper(makeStore);
+export const wrapper = createWrapper(makeStore, { debug: true });

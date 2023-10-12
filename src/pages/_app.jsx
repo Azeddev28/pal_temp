@@ -8,7 +8,6 @@ import { wrapper } from "../store/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 
-
 import '../../styles/globals.css';
 // Subsets are really important. CHECK BELOW FOR MORE INFO
 const poppins = Poppins({
@@ -22,22 +21,18 @@ function MyApp({ Component, ...pageProps }) {
         <div>
             {/* Hacky way of making state persist both client and server side */}
             {/* TODO: Look for a better way to share state */}
-            <PersistGate persistor={store.__persistor} loading={<div>Loading</div>}>
-                <Provider store={store}>
-                    <SessionProvider>
-                        <UserProfileProvider>
-                            <CustomQueryClientProvider>
-                                <main className={poppins.className}>
-                                    <Layout />
-                                    <Component {...pageProps} />
-                                </main>
-                            </CustomQueryClientProvider>
-                        </UserProfileProvider>
-                    </SessionProvider>
-                </Provider>
-            </PersistGate>
+                <SessionProvider>
+                    <UserProfileProvider>
+                        <CustomQueryClientProvider>
+                            <main className={poppins.className}>
+                                <Layout />
+                                <Component {...pageProps} />
+                            </main>
+                        </CustomQueryClientProvider>
+                    </UserProfileProvider>
+                </SessionProvider>
         </div>
     );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
