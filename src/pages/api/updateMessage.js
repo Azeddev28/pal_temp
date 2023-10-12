@@ -1,8 +1,12 @@
+import { setEventMessage } from '@/store/authSlice';
+import { makeStore } from '@/store/store';
 import { client } from '@/utils';
 
 export default (req, res) => {
     if (req.method === 'POST') {
-        if (client) {
+        const store = makeStore();
+        if (client && store) {
+            store.dispatch(setEventMessage({ ...req.body }));
             client.write(
                 `data: Message: ${JSON.stringify({ ...req.body })}\n\n`
             );

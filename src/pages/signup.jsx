@@ -2,7 +2,6 @@ import { useSession } from '@/hooks/use-session';
 import { useUserProfile } from '@/hooks/use-user-profile';
 import { SignUp } from '@/views/SignUp';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 export const getServerSideProps = async (ctx) => {
     const { session, ...queryParams } = ctx.query;
@@ -24,12 +23,12 @@ const Page = ({ queryParams, session }) => {
     const redirectToHome = () =>
         router.replace('/', undefined, { shallow: true });
 
-    useEffect(() => {
-        if (!profile.email && !queryParams?.email) redirectToHome();
-        if (session) updateSession(session);
-        // dispatch(updateProfile(queryParams));
-        clearQueryParams();
-    }, []);
+    // useEffect(() => {
+    //     if (!profile.email && !queryParams?.email) redirectToHome();
+    //     if (session) updateSession(session);
+    //     // dispatch(updateProfile(queryParams));
+    //     clearQueryParams();
+    // }, []);
 
     return <SignUp />;
 };
