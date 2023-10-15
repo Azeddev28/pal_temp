@@ -1,7 +1,10 @@
 import { Button } from '@/components/Button';
 
 const GoogleButton = () => (
-    <a href="http://103.98.213.146/api/authentication/google-register?callbackURL=http://localhost:3003/">
+    <a
+        href="http://103.98.213.146/api/authentication/google-register?callbackURL=http://localhost:3003/"
+        target="_blank"
+    >
         <Button
             style={{
                 backgroundColor: '#5186EC',
