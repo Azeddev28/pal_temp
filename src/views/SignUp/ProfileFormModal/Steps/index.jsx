@@ -3,7 +3,6 @@ import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { useStep } from './context';
 
 const Step1 = () => {
@@ -144,8 +143,7 @@ const Step2 = () => {
 };
 
 const Step3 = () => {
-    const { register, watch, formState } = useFormContext();
-    const { firstName, lastName } = useSelector((state) => state.auth);
+    const { register, watch, formState, setValue } = useFormContext();
     return (
         <div className="pt-16">
             <div className="mb-12">

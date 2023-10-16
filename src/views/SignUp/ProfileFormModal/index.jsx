@@ -9,12 +9,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useMutation } from '@/hooks/react-query';
 import { useUserProfile } from '@/hooks/use-user-profile';
 import { updateProfile } from '@/providers/user-profile/creators';
+import { useSelector } from 'react-redux';
 import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
 
 const StepForm = () => {
+    const { firstName, lastName, email } = useSelector((state) => state.auth);
     const { profile, dispatch } = useUserProfile();
     const router = useRouter();
     const { mutateAsync: registerProfile } = useMutation('profileRegister');
@@ -22,7 +24,7 @@ const StepForm = () => {
     const [visitedSteps, setVisitedSteps] = useState([activeStep]);
 
     const methods = useForm({
-        defaultValues: profile,
+        defaultValues: { ...profile, firstName, lastName, email },
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
