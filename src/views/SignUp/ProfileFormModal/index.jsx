@@ -1,14 +1,13 @@
+import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
+import { useMutation } from '@/hooks/react-query';
+import { useUserProfile } from '@/hooks/use-user-profile';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-
-import { useMutation } from '@/hooks/react-query';
-import { useUserProfile } from '@/hooks/use-user-profile';
-import { updateProfile } from '@/providers/user-profile/creators';
 import { useSelector } from 'react-redux';
 import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
@@ -16,7 +15,9 @@ import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
 
 const StepForm = () => {
-    const { firstName, lastName, email } = useSelector((state) => state.auth);
+    const { firstName, lastName, email, accessToken } = useSelector(
+        (state) => state.auth
+    );
     const { profile, dispatch } = useUserProfile();
     const router = useRouter();
     const { mutateAsync: registerProfile } = useMutation('profileRegister');
@@ -41,9 +42,19 @@ const StepForm = () => {
 
     const onSubmit = async (formData) => {
         try {
-            await registerProfile({ ...formData, email: profile.email });
-            dispatch(updateProfile({ ...formData, email: profile.email }));
-            router.push('/congratulations', undefined, { shallow: true });
+            const headers = {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
+            };
+            const data = postRequest(
+                'http://103.98.213.146/api/users/profile-register/',
+                { ...formData, email: profile.email },
+                headers
+            );
+            console.log('🚀 ~ file: index.jsx:47 ~ onSubmit ~ data:', data);
+            // await registerProfile({ ...formData, email: profile.email });
+            // dispatch(updateProfile({ ...formData, email: profile.email }));
+            // router.push('/congratulations', undefined, { shallow: true });
         } catch (e) {
             console.error(e);
         }
