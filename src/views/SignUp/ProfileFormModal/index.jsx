@@ -47,7 +47,7 @@ const StepForm = () => {
                 Authorization: `Bearer ${accessToken}`,
             };
             const data = postRequest(
-                'http://103.98.213.146/api/users/profile-register/',
+                '/api/users/profile-register/',
                 { ...formData, email: profile.email },
                 headers
             );

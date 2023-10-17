@@ -1,4 +1,6 @@
+import { SERVER_URL } from '@/server';
 import axios from 'axios';
+
 export const setAuthToken = (token) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
@@ -13,8 +15,9 @@ const failedResponse = (error) => {
     return Promise.reject(error);
 };
 export const getRequest = (route, data) => {
+    const completeRoute = `${SERVER_URL}${route}`;
     return axios
-        .get(route, data)
+        .get(completeRoute, data)
         .then((response) => {
             return response.data;
         })
@@ -24,8 +27,9 @@ export const getRequest = (route, data) => {
 };
 
 export const postRequest = (route, data, headers) => {
+    const completeRoute = `${SERVER_URL}${route}`;
     return axios
-        .post(route, data, {
+        .post(completeRoute, data, {
             headers: headers,
         })
         .then((response) => {
@@ -37,8 +41,9 @@ export const postRequest = (route, data, headers) => {
 };
 
 export const deleteRequest = (route, data) => {
+    const completeRoute = `${SERVER_URL}${route}`;
     return axios
-        .delete(route, data)
+        .delete(completeRoute, data)
         .then((response) => {
             return response.data;
         })
@@ -48,8 +53,9 @@ export const deleteRequest = (route, data) => {
 };
 
 export const putRequest = (route, data) => {
+    const completeRoute = `${SERVER_URL}${route}`;
     return axios
-        .put(route, data)
+        .put(completeRoute, data)
         .then((response) => {
             return response;
         })
