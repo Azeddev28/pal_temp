@@ -66,18 +66,21 @@ const Input = forwardRef(
         },
         ref
     ) => {
-        const baseClasses =
-            ' hover:bg-[#F5F8FF] active:border-[#8bb4ff] active:bg-[#F5F8FF] focus:border-brandBlue focus:bg-white hover:bg-[#F5F8FF]';
-        let inputClasses = '';
-        if (disabled) {
-            inputClasses = 'border-theme-border';
-        } else if (display) {
-            inputClasses = 'border-theme-border bg-theme-border';
-        } else if (status) {
-            inputClasses = `${STATUS_INPUT_BORDER[status]} ${baseClasses}`;
-        } else {
-            inputClasses = `border-theme-border ${baseClasses}`;
-        }
+        const baseClasses = `w-full p-3 bg-white border-2 border-solid rounded-lg outline-none ${
+            !!status ? STATUS_INPUT_BORDER[status] : ''
+        } ${!!display ? 'bg-theme-border' : ''}`;
+        const hoverClasses = 'hover:bg-[#F5F8FF]';
+        const activeClasses = `${
+            !!status
+                ? `active:${STATUS_INPUT_BORDER[status]}`
+                : 'active:border-[#8bb4ff]'
+        } active:bg-[#F5F8FF]`;
+        const focusClasses = `${
+            !!status
+                ? `focus:${STATUS_INPUT_BORDER[status]}`
+                : 'focus:border-brandBlue'
+        } focus:bg-white`;
+
         return (
             <div style={{ width }} className="flex flex-col gap-2">
                 <label htmlFor={id} className="w-full flex flex-col gap-2">
@@ -98,7 +101,9 @@ const Input = forwardRef(
                         disabled={disabled || display}
                         id={id}
                         placeholder={placeholder}
-                        className={`w-full p-3 bg-white border-2 border-solid rounded-lg outline-none ${inputClasses}`}
+                        className={`${baseClasses} ${hoverClasses} ${activeClasses} ${focusClasses} ${
+                            !!disabled || display ? 'pointer-events-none' : ''
+                        }`}
                     />
                 </label>
                 {renderHelperTextPerStatus(
