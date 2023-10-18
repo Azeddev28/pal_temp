@@ -46,15 +46,29 @@ const StepForm = () => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             };
-            const data = postRequest(
+            postRequest(
                 '/api/users/profile-register/',
-                { ...formData, email: profile.email },
+                {
+                    first_name: formData.firstName,
+                    last_name: formData.lastName,
+                    country: formData.country,
+                    email: formData.email,
+                    another_gender: formData.anotherGender,
+                    company: formData.company,
+                    gender: formData.gender,
+                    industry: formData.industry,
+                    interested_job_title: formData.interestedJobTitle,
+                    job_title: formData.jobTitle,
+                    language: formData.language,
+                    role:
+                        formData.purpose === "I'm looking for a plug"
+                            ? 'Pal'
+                            : 'Plug',
+                },
                 headers
             );
-            console.log('🚀 ~ file: index.jsx:47 ~ onSubmit ~ data:', data);
-            // await registerProfile({ ...formData, email: profile.email });
-            // dispatch(updateProfile({ ...formData, email: profile.email }));
-            // router.push('/congratulations', undefined, { shallow: true });
+            dispatch(updateProfile({ ...formData, email: profile.email }));
+            router.push('/congratulations', undefined, { shallow: true });
         } catch (e) {
             console.error(e);
         }

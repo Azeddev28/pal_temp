@@ -227,7 +227,7 @@ const Step5 = () => {
         if (!companies) return [];
         return companies.map((company) => ({
             key: company.name,
-            value: company.id,
+            value: company.uuid,
         }));
     }, [companies]);
 
@@ -276,7 +276,7 @@ const Step6 = () => {
         if (!industries) return [];
         return industries.map((industry) => ({
             key: industry.name,
-            value: industry.id,
+            value: industry.uuid,
         }));
     }, [industries]);
 
