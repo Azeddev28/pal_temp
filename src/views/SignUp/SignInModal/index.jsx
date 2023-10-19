@@ -1,5 +1,5 @@
 import { Modal } from '@/components/Modal';
-import illustrationBoxImage from '../../../../public/images/illustration-box.jpg';
+import illustrationBoxImage from '../../../../public/images/illustration-box.webp';
 import { GithubButton, GoogleButton, LinkedInButton } from './Buttons';
 
 const SignInModal = ({ isOpen, onClose }) => {
