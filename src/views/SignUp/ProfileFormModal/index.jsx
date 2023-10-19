@@ -42,32 +42,29 @@ const StepForm = () => {
 
     const onSubmit = async (formData) => {
         try {
+            const dataToSend = {
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                country: formData.country,
+                email: formData.email,
+                another_gender: formData.anotherGender,
+                company: formData.company,
+                gender: formData.gender,
+                industry: formData.industry,
+                interested_job_title: formData.interestedJobTitle,
+                job_title: formData.jobTitle,
+                language: formData.language,
+                role:
+                    formData.purpose === "I'm looking for a plug"
+                        ? 'Pal'
+                        : 'Plug',
+            };
             const headers = {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             };
-            postRequest(
-                '/api/users/profile-register/',
-                {
-                    first_name: formData.firstName,
-                    last_name: formData.lastName,
-                    country: formData.country,
-                    email: formData.email,
-                    another_gender: formData.anotherGender,
-                    company: formData.company,
-                    gender: formData.gender,
-                    industry: formData.industry,
-                    interested_job_title: formData.interestedJobTitle,
-                    job_title: formData.jobTitle,
-                    language: formData.language,
-                    role:
-                        formData.purpose === "I'm looking for a plug"
-                            ? 'Pal'
-                            : 'Plug',
-                },
-                headers
-            );
-            dispatch(updateProfile({ ...formData, email: profile.email }));
+            postRequest('/api/users/profile-register/', dataToSend, headers);
+            dispatch(updateProfile(dataToSend));
             router.push('/congratulations', undefined, { shallow: true });
         } catch (e) {
             console.error(e);
