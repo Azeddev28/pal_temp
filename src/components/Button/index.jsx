@@ -1,10 +1,9 @@
 import * as ICONS from '@/Icons';
 
 const baseStyles =
-    'flex gap-4 h-fit items-center tracking-wide transition-colors duration-200 text-white whitespace-nowrap rounded-md font-semibold text-xs px-6 py-2';
+    'flex gap-4 h-fit items-center tracking-wide transition-colors duration-200 text-white whitespace-nowrap rounded-md font-semibold text-sm px-6 py-3';
 const activeStyles = 'bg-brandBlue hover:bg-hoverBlue active:bg-pressedBlue';
 const disabledStyles = 'bg-disabledBlue cursor-none pointer-events-none';
-const baseLargeStyles = 'lg:py-3 lg:text-sm';
 
 const getWidthBySize = (size) => {
     switch (size) {
@@ -47,7 +46,7 @@ const Button = ({
     };
 
     // Define classes based on conditions
-    const buttonClasses = `${baseStyles} ${baseLargeStyles} ${
+    const buttonClasses = `${baseStyles} ${
         disabled ? disabledStyles : activeStyles
     } ${className}`;
 
