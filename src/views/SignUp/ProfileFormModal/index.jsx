@@ -64,7 +64,6 @@ const StepForm = () => {
                 Authorization: `Bearer ${accessToken}`,
             };
             postRequest('/api/users/profile-register/', dataToSend, headers);
-            dispatch(updateProfile(dataToSend));
             router.push('/congratulations', undefined, { shallow: true });
         } catch (e) {
             console.error(e);
