@@ -204,14 +204,14 @@ const Step4 = () => {
                 <Radio
                     {...register('purpose')}
                     id="be-a-palplug"
-                    value="I want to be a plug"
+                    value="Plug"
                     label="I want to be a plug"
                 />
 
                 <Radio
                     {...register('purpose')}
                     id="looking-for-a-palplug"
-                    value="I'm looking for a plug"
+                    value="Pal"
                     label="I'm looking for a plug"
                 />
             </div>

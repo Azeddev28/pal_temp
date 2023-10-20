@@ -52,10 +52,7 @@ const StepForm = () => {
                 interested_job_title: formData.interestedJobTitle,
                 job_title: formData.jobTitle,
                 language: formData.language,
-                role:
-                    formData.purpose === "I'm looking for a plug"
-                        ? 'Pal'
-                        : 'Plug',
+                role: formData.purpose,
             };
             const headers = {
                 'Content-Type': 'application/json',
