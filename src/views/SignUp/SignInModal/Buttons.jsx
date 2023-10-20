@@ -1,8 +1,9 @@
 import { Button } from '@/components/Button';
+import { SERVER_URL } from '@/server';
 
 const GoogleButton = () => (
     <a
-        href="http://103.98.213.146/api/authentication/google-register?callbackURL=http://localhost:3003/"
+        href={`${SERVER_URL}/api/authentication/google-register`}
         target="_blank"
     >
         <Button
