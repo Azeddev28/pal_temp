@@ -2,7 +2,6 @@ import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
-import { useMutation } from '@/hooks/react-query';
 import { useUserProfile } from '@/hooks/use-user-profile';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -18,9 +17,8 @@ const StepForm = () => {
     const { firstName, lastName, email, accessToken } = useSelector(
         (state) => state.auth
     );
-    const { profile, dispatch } = useUserProfile();
+    const { profile } = useUserProfile();
     const router = useRouter();
-    const { mutateAsync: registerProfile } = useMutation('profileRegister');
     const [activeStep, setActiveStep] = useState(0);
     const [visitedSteps, setVisitedSteps] = useState([activeStep]);
 
