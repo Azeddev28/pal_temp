@@ -1,4 +1,4 @@
-import { setEventMessage } from '@/store/authSlice';
+import { setUserRegistrationInfo } from '@/store/authSlice';
 import { createContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -16,7 +16,7 @@ const SessionProvider = ({ children, session }) => {
             if (event.data) {
                 const eventMessage = event.data;
                 window.sessionStorage.setItem('message', eventMessage);
-                dispatch(setEventMessage(JSON.parse(eventMessage)));
+                dispatch(setUserRegistrationInfo(JSON.parse(eventMessage)));
             }
             // close connection on receiving token
             if (event.data && event.data.includes('token')) {

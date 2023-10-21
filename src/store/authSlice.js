@@ -20,7 +20,7 @@ export const authSlice = createSlice({
         setAuthState(state, action) {
             state.authState = action.payload;
         },
-        setEventMessage(state, action) {
+        setUserRegistrationInfo(state, action) {
             state.firstName = action.payload.first_name;
             state.email = action.payload.email;
             state.lastName = action.payload.last_name;
@@ -40,7 +40,7 @@ export const authSlice = createSlice({
     },
 });
 
-export const { setAuthState, setEventMessage } = authSlice.actions;
+export const { setAuthState, setUserRegistrationInfo } = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;
 
