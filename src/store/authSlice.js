@@ -6,6 +6,7 @@ const initialState = {
     authState: false,
     accessToken: null,
     isUserRegistered: false,
+    hasJoinedWaitlist: false,
     firstName: '',
     lastName: '',
     email: '',
@@ -30,6 +31,9 @@ export const authSlice = createSlice({
         setIsUserRegistered(state) {
             state.isUserRegistered = true;
         },
+        setHasJoinedWaitlist(state) {
+            state.hasJoinedWaitlist = true;
+        },
     },
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
@@ -43,8 +47,12 @@ export const authSlice = createSlice({
     },
 });
 
-export const { setAuthState, setUserRegistrationInfo, setIsUserRegistered } =
-    authSlice.actions;
+export const {
+    setAuthState,
+    setUserRegistrationInfo,
+    setIsUserRegistered,
+    setHasJoinedWaitlist,
+} = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;
 

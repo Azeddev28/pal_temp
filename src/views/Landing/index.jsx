@@ -10,7 +10,11 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import desktopImage from '../../../public/images/desktop.png';
-import { setAuthState, setIsUserRegistered } from '../../store/authSlice';
+import {
+    setAuthState,
+    setHasJoinedWaitlist,
+    setIsUserRegistered,
+} from '../../store/authSlice';
 import { wrapper } from '../../store/store';
 import { CompanyLogoWidgetList } from './CompanyLogoWidgetList';
 
@@ -46,10 +50,16 @@ const Landing = () => {
         },
         resolver: yupResolver(emailSchema),
     });
-
+    const fetchData = async () => {
+        await dispatch(setHasJoinedWaitlist());
+        router.push('/signup', undefined, {
+            shallow: true,
+        });
+    };
     const onSubmit = ({ email }) => {
         postRequest(getRoute('joinWaitlist'), { email })
             .then((res) => {
+                dispatch(setHasJoinedWaitlist());
                 router.push('/signup', undefined, {
                     shallow: true,
                 });
@@ -61,9 +71,6 @@ const Landing = () => {
                     },
                 }) => {
                     if (code === 'WAITLIST_JOINED') {
-                        router.push('/signup', undefined, {
-                            shallow: true,
-                        });
                     }
                     if (code === 'USER_ALREADY_REGISTERED') {
                         dispatch(setIsUserRegistered());

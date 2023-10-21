@@ -1,11 +1,8 @@
 import { Button } from '@/components/Button';
-import { SERVER_URL } from '@/server';
+import { getRoute } from '@/server';
 
 const GoogleButton = () => (
-    <a
-        href={`${SERVER_URL}/api/authentication/google-register`}
-        target="_blank"
-    >
+    <a href={getRoute('googleLink')} target="_blank">
         <Button
             style={{
                 backgroundColor: '#5186EC',
@@ -20,7 +17,7 @@ const GoogleButton = () => (
 );
 
 const LinkedInButton = () => (
-    <a href="#">
+    <a href={getRoute('linkedInLink')} target="_blank">
         <Button
             style={{
                 backgroundColor: '#0A66C2',
@@ -35,7 +32,7 @@ const LinkedInButton = () => (
 );
 
 const GithubButton = () => (
-    <a href="#">
+    <a href={getRoute('githubLink')} target="_blank">
         <Button
             style={{
                 backgroundColor: '#1B1817',
