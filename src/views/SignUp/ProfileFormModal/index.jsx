@@ -3,6 +3,7 @@ import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
 import { useUserProfile } from '@/hooks/use-user-profile';
+import { getRoute } from '@/server';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -58,7 +59,7 @@ const StepForm = () => {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${accessToken}`,
             };
-            postRequest('/api/users/profile-register/', dataToSend, headers);
+            postRequest(getRoute('profileRegister'), dataToSend, headers);
             router.push('/congratulations', undefined, { shallow: true });
         } catch (e) {
             console.error(e);
