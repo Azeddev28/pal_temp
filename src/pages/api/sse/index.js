@@ -1,6 +1,6 @@
 import { updateClient } from './utils';
 
-const requestHandler = (req, res) => {
+const sseEventHandler = (req, res) => {
     // TODO: Add logic to add to clients if its not already added.
     updateClient(res);
     res.setHeader('Content-Type', 'text/event-stream');
@@ -15,4 +15,4 @@ const requestHandler = (req, res) => {
     });
 };
 
-export default requestHandler;
+export default sseEventHandler;
