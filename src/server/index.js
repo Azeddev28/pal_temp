@@ -6,7 +6,7 @@ const ROUTES = {
     industriesList: `${SERVER_URL}/api/companies/industries-list/`,
     countriesList: `${SERVER_URL}/api/locations/countries-list/`,
     languagesList: `${SERVER_URL}/api/locations/languages-list/`,
-    joinWaitlist: `${SERVER_URL}/api/users/join-waitlist/`,
+    joinWaitlist: `/api/users/join-waitlist/`,
     profileRegister: '/api/users/profile-register/',
 };
 
