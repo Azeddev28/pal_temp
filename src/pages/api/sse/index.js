@@ -1,4 +1,4 @@
-import { updateClient } from '@/utils';
+import { updateClient } from './utils';
 
 const requestHandler = (req, res) => {
     // TODO: Add logic to add to clients if its not already added.

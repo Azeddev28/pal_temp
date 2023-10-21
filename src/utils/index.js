@@ -7,10 +7,4 @@ const debounce = (func, timeout = 300) => {
         }, timeout);
     };
 };
-let client = {};
-const updateClient = (responseObj) => {
-    if (responseObj) {
-        client = responseObj;
-    }
-};
-export { client, debounce, updateClient };
+export { debounce };

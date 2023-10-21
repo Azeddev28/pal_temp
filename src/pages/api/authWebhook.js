@@ -1,4 +1,4 @@
-import { client } from '@/utils';
+import { client } from './sse/utils';
 
 export default (req, res) => {
     if (req.method === 'POST') {
