@@ -14,9 +14,9 @@ const SessionProvider = ({ children, session }) => {
 
         eventSource.onmessage = (event) => {
             if (event.data) {
-                const eventMessage = event.data.split('Message:');
-                window.sessionStorage.setItem('message', eventMessage[1]);
-                dispatch(setEventMessage(JSON.parse(eventMessage[1])));
+                const eventMessage = event.data;
+                window.sessionStorage.setItem('message', eventMessage);
+                dispatch(setEventMessage(JSON.parse(eventMessage)));
             }
             // close connection on receiving token
             if (event.data && event.data.includes('token')) {

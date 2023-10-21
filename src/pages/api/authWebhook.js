@@ -3,9 +3,7 @@ import { client } from '@/utils';
 export default (req, res) => {
     if (req.method === 'POST') {
         if (client) {
-            client.write(
-                `data: Message: ${JSON.stringify({ ...req.body })}\n\n`
-            );
+            client.write(`data: ${JSON.stringify({ ...req.body })}\n\n`);
         }
         const response = {
             message: 'Message updated successfully',
