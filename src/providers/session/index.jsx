@@ -12,15 +12,17 @@ const SessionProvider = ({ children, session }) => {
             withCredentials: true,
         });
 
-        eventSource.onmessage = (event) => {
-            if (event.data) {
-                const eventMessage = event.data;
-                window.sessionStorage.setItem('authCredentials', eventMessage);
-                dispatch(setUserRegistrationInfo(JSON.parse(eventMessage)));
+        eventSource.onmessage = ({ data }) => {
+            if (data) {
+                window.sessionStorage.setItem(
+                    'accessToken',
+                    JSON.parse(data).access_token
+                );
+                dispatch(setUserRegistrationInfo(JSON.parse(data)));
             }
             // close connection on receiving token
-            if (event.data && event.data.includes('token')) {
-                const token = event.data.split('token: ')[1];
+            if (data && data.includes('token')) {
+                const token = data.split('token: ')[1];
                 setData(token);
                 eventSource.close();
             }

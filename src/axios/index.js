@@ -27,10 +27,9 @@ export const getRequest = (route, data) => {
 };
 
 export const postRequest = (route, data, requireAccessToken) => {
-    const sessionData = window.sessionStorage.getItem('authCredentials');
+    const accessToken = window.sessionStorage.getItem('accessToken');
     let authenticatedHeaders;
-    if (requireAccessToken && sessionData) {
-        let accessToken = JSON.parse(sessionData).access_token;
+    if (requireAccessToken && accessToken) {
         authenticatedHeaders = {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
