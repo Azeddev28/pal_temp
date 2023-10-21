@@ -55,11 +55,7 @@ const StepForm = () => {
                 language: formData.language,
                 role: formData.purpose,
             };
-            const headers = {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${accessToken}`,
-            };
-            postRequest(getRoute('profileRegister'), dataToSend, headers);
+            postRequest(getRoute('profileRegister'), dataToSend, true);
             router.push('/congratulations', undefined, { shallow: true });
         } catch (e) {
             console.error(e);

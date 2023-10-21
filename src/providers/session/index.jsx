@@ -15,7 +15,7 @@ const SessionProvider = ({ children, session }) => {
         eventSource.onmessage = (event) => {
             if (event.data) {
                 const eventMessage = event.data;
-                window.sessionStorage.setItem('message', eventMessage);
+                window.sessionStorage.setItem('authCredentials', eventMessage);
                 dispatch(setUserRegistrationInfo(JSON.parse(eventMessage)));
             }
             // close connection on receiving token

@@ -26,11 +26,20 @@ export const getRequest = (route, data) => {
         });
 };
 
-export const postRequest = (route, data, headers) => {
+export const postRequest = (route, data, requireAccessToken) => {
+    const sessionData = window.sessionStorage.getItem('authCredentials');
+    let authenticatedHeaders;
+    if (requireAccessToken && sessionData) {
+        let accessToken = JSON.parse(sessionData).access_token;
+        authenticatedHeaders = {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+        };
+    }
     const completeRoute = `${SERVER_URL}${route}`;
     return axios
         .post(completeRoute, data, {
-            headers: headers,
+            headers: requireAccessToken && authenticatedHeaders,
         })
         .then((response) => {
             return response.data;
