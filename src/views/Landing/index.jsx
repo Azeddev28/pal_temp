@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
@@ -50,19 +49,17 @@ const Landing = () => {
         },
         resolver: yupResolver(emailSchema),
     });
-    const fetchData = async () => {
-        await dispatch(setHasJoinedWaitlist());
+    const updateWaitListStatusAndRedirect = () => {
+        dispatch(setHasJoinedWaitlist());
         router.push('/signup', undefined, {
             shallow: true,
         });
     };
+
     const onSubmit = ({ email }) => {
         postRequest(getRoute('joinWaitlist'), { email })
             .then((res) => {
-                dispatch(setHasJoinedWaitlist());
-                router.push('/signup', undefined, {
-                    shallow: true,
-                });
+                updateWaitListStatusAndRedirect()
             })
             .catch(
                 ({
@@ -71,6 +68,7 @@ const Landing = () => {
                     },
                 }) => {
                     if (code === 'WAITLIST_JOINED') {
+                        updateWaitListStatusAndRedirect()
                     }
                     if (code === 'USER_ALREADY_REGISTERED') {
                         dispatch(setIsUserRegistered());

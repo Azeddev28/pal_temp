@@ -6,7 +6,7 @@ const initialState = {
     authState: false,
     accessToken: null,
     isUserRegistered: false,
-    hasJoinedWaitlist: false,
+    hasJoinedWaitList: false,
     firstName: '',
     lastName: '',
     email: '',
@@ -32,7 +32,7 @@ export const authSlice = createSlice({
             state.isUserRegistered = true;
         },
         setHasJoinedWaitlist(state) {
-            state.hasJoinedWaitlist = true;
+            state.hasJoinedWaitList = true;
         },
     },
 

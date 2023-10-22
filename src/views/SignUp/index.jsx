@@ -6,7 +6,7 @@ import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
 
 const SignUp = () => {
-    const { isUserRegistered, hasJoinedWaitlist } = useSelector((state) => {
+    const { isUserRegistered, hasJoinedWaitList } = useSelector((state) => {
         return state.auth;
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,11 +19,12 @@ const SignUp = () => {
                 />
             );
         }
-        if (hasJoinedWaitlist) {
-            <SignInModal
+        if (hasJoinedWaitList) {
+            return (<SignInModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-            />;
+            />
+            )
         }
     };
     return (

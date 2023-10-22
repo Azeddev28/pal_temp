@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 const withAuthorization = (Component) => {
     return () => {
         const router = useRouter();
-        const { isUserRegistered } = useSelector((state) => state.auth);
+        const { isUserRegistered, hasJoinedWaitList } = useSelector((state) => state.auth);
         useEffect(() => {
-            if (!isUserRegistered) {
+            if (!isUserRegistered && !hasJoinedWaitList) {
                 router.replace('/', undefined, { shallow: true });
             }
         }, []);
