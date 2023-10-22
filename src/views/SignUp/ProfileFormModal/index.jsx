@@ -15,9 +15,7 @@ import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
 
 const StepForm = () => {
-    const { firstName, lastName, email, accessToken } = useSelector(
-        (state) => state.auth
-    );
+    const { firstName, lastName, email } = useSelector((state) => state.auth);
     const { profile } = useUserProfile();
     const router = useRouter();
     const [activeStep, setActiveStep] = useState(0);
@@ -40,26 +38,36 @@ const StepForm = () => {
     };
 
     const onSubmit = async (formData) => {
-        try {
-            const dataToSend = {
-                first_name: formData.firstName,
-                last_name: formData.lastName,
-                country: formData.country,
-                email: formData.email,
-                another_gender: formData.anotherGender,
-                company: formData.company,
-                gender: formData.gender,
-                industry: formData.industry,
-                interested_job_title: formData.interestedJobTitle,
-                job_title: formData.jobTitle,
-                language: formData.language,
-                role: formData.purpose,
-            };
-            postRequest(getRoute('profileRegister'), dataToSend, true);
-            router.push('/congratulations', undefined, { shallow: true });
-        } catch (e) {
-            console.error(e);
-        }
+        const dataToSend = {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            country: formData.country,
+            email: formData.email,
+            another_gender: formData.anotherGender,
+            company: formData.company,
+            gender: formData.gender,
+            industry: formData.industry,
+            interested_job_title: formData.interestedJobTitle,
+            job_title: formData.jobTitle,
+            language: formData.language,
+            role: formData.purpose,
+        };
+        postRequest(getRoute('profileRegister'), dataToSend, true)
+            .then((res) => {
+                router.push('/congratulations', undefined, { shallow: true });
+            })
+            .catch(
+                ({
+                    response: {
+                        data: { non_field_errors },
+                    },
+                }) => {
+                    if (non_field_errors.length > 0)
+                        router.push('/', undefined, {
+                            shallow: true,
+                        });
+                }
+            );
     };
 
     const onContinue = () => {
