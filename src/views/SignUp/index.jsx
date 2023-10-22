@@ -6,22 +6,27 @@ import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
 
 const SignUp = () => {
-    const { isUserRegistered } = useSelector((state) => {
+    const { isUserRegistered, hasJoinedWaitList } = useSelector((state) => {
         return state.auth;
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const renderModal = () =>
-        isUserRegistered ? (
-            <ProfileFormModal
+    const renderModal = () => {
+        if (isUserRegistered) {
+            return (
+                <ProfileFormModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />
+            );
+        }
+        if (hasJoinedWaitList) {
+            return (<SignInModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
-        ) : (
-            <SignInModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            />
-        );
+            )
+        }
+    };
     return (
         <div className="flex items-center justify-center h-screen">
             <div className="py-44">
