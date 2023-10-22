@@ -1,1 +1,1 @@
-export * from './withAutherization';
+export * from './withAuthorization';

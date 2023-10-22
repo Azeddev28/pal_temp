@@ -1,4 +1,4 @@
-import { withAutherization } from '@/auth/withAutherization';
+import { withAuthorization } from '@/auth/withAuthorization';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { Typography } from '@/components/Typography';
@@ -57,4 +57,4 @@ const Page = () => {
     );
 };
 
-export default withAutherization(Page);
+export default withAuthorization(Page);

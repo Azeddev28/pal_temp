@@ -1,20 +1,21 @@
-// @ts-nocheck
+import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-import { useMutation } from '@/hooks/react-query';
-import { useUserProfile } from '@/hooks/use-user-profile';
-import { updateEmail } from '@/providers/user-profile/creators';
+import { getRoute } from '@/server';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import desktopImage from '../../../public/images/desktop.png';
+import {
+    setAuthState,
+    setHasJoinedWaitlist,
+    setIsUserRegistered,
+} from '../../store/authSlice';
+import { wrapper } from '../../store/store';
 import { CompanyLogoWidgetList } from './CompanyLogoWidgetList';
-import { selectAuthState, setAuthState } from "../../store/authSlice";
-import { wrapper } from "../../store/store"
-import { useDispatch, useSelector } from "react-redux";
-
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
@@ -22,7 +23,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             // we can set the initial state from here
 
             await store.dispatch(setAuthState(false));
-            console.log("State on server", store.getState());
+            console.log('State on server', store.getState());
             return {
                 props: {
                     authState: false,
@@ -30,7 +31,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
             };
         }
 );
-
 
 const emailSchema = yup.object().shape({
     email: yup
@@ -40,9 +40,8 @@ const emailSchema = yup.object().shape({
 });
 
 const Landing = () => {
-    const { mutateAsync: joinWaitList } = useMutation('joinWaitlist');
-    const { dispatch } = useUserProfile();
     const router = useRouter();
+    const dispatch = useDispatch();
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
         defaultValues: {
@@ -50,15 +49,35 @@ const Landing = () => {
         },
         resolver: yupResolver(emailSchema),
     });
+    const updateWaitListStatusAndRedirect = () => {
+        dispatch(setHasJoinedWaitlist());
+        router.push('/signup', undefined, {
+            shallow: true,
+        });
+    };
 
-    const onSubmit = async ({ email }) => {
-        try {
-            await joinWaitList({ email });
-            dispatch(updateEmail(email));
-            router.push({ pathname: '/signup' }, undefined, { shallow: true });
-        } catch (e) {
-            console.error(e);
-        }
+    const onSubmit = ({ email }) => {
+        postRequest(getRoute('joinWaitlist'), { email })
+            .then((res) => {
+                updateWaitListStatusAndRedirect()
+            })
+            .catch(
+                ({
+                    response: {
+                        data: { code: code },
+                    },
+                }) => {
+                    if (code === 'WAITLIST_JOINED') {
+                        updateWaitListStatusAndRedirect()
+                    }
+                    if (code === 'USER_ALREADY_REGISTERED') {
+                        dispatch(setIsUserRegistered());
+                        router.push('/congratulations', undefined, {
+                            shallow: true,
+                        });
+                    }
+                }
+            );
     };
 
     return (
