@@ -1,28 +1,30 @@
+import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
+import { useUserProfile } from '@/hooks/use-user-profile';
+import { getRoute } from '@/server';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-
-import { useMutation } from '@/hooks/react-query';
-import { useUserProfile } from '@/hooks/use-user-profile';
-import { updateProfile } from '@/providers/user-profile/creators';
+import { useSelector } from 'react-redux';
 import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
 
 const StepForm = () => {
-    const { profile, dispatch } = useUserProfile();
+    const { firstName, lastName, email, accessToken } = useSelector(
+        (state) => state.auth
+    );
+    const { profile } = useUserProfile();
     const router = useRouter();
-    const { mutateAsync: registerProfile } = useMutation('profileRegister');
     const [activeStep, setActiveStep] = useState(0);
     const [visitedSteps, setVisitedSteps] = useState([activeStep]);
 
     const methods = useForm({
-        defaultValues: profile,
+        defaultValues: { ...profile, firstName, lastName, email },
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
@@ -39,8 +41,21 @@ const StepForm = () => {
 
     const onSubmit = async (formData) => {
         try {
-            await registerProfile({ ...formData, email: profile.email });
-            dispatch(updateProfile({ ...formData, email: profile.email }));
+            const dataToSend = {
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                country: formData.country,
+                email: formData.email,
+                another_gender: formData.anotherGender,
+                company: formData.company,
+                gender: formData.gender,
+                industry: formData.industry,
+                interested_job_title: formData.interestedJobTitle,
+                job_title: formData.jobTitle,
+                language: formData.language,
+                role: formData.purpose,
+            };
+            postRequest(getRoute('profileRegister'), dataToSend, true);
             router.push('/congratulations', undefined, { shallow: true });
         } catch (e) {
             console.error(e);

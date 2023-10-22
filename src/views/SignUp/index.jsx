@@ -1,16 +1,17 @@
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
-import { useSession } from '@/hooks/use-session';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
 
 const SignUp = () => {
+    const { isUserRegistered } = useSelector((state) => {
+        return state.auth;
+    });
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { data: session } = useSession();
-
     const renderModal = () =>
-        !!session ? (
+        isUserRegistered ? (
             <ProfileFormModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

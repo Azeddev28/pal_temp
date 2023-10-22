@@ -143,8 +143,7 @@ const Step2 = () => {
 };
 
 const Step3 = () => {
-    const { register, watch, formState } = useFormContext();
-
+    const { register, watch, formState, setValue } = useFormContext();
     return (
         <div className="pt-16">
             <div className="mb-12">
@@ -205,14 +204,14 @@ const Step4 = () => {
                 <Radio
                     {...register('purpose')}
                     id="be-a-palplug"
-                    value="I want to be a plug"
+                    value="Plug"
                     label="I want to be a plug"
                 />
 
                 <Radio
                     {...register('purpose')}
                     id="looking-for-a-palplug"
-                    value="I'm looking for a plug"
+                    value="Pal"
                     label="I'm looking for a plug"
                 />
             </div>
@@ -228,7 +227,7 @@ const Step5 = () => {
         if (!companies) return [];
         return companies.map((company) => ({
             key: company.name,
-            value: company.id,
+            value: company.uuid,
         }));
     }, [companies]);
 
@@ -277,7 +276,7 @@ const Step6 = () => {
         if (!industries) return [];
         return industries.map((industry) => ({
             key: industry.name,
-            value: industry.id,
+            value: industry.uuid,
         }));
     }, [industries]);
 

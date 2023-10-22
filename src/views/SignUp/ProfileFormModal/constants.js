@@ -38,8 +38,8 @@ export const STEPS = [
         next: {
             fieldName: 'purpose',
             branch: {
-                'I want to be a plug': 4,
-                "I'm looking for a plug": 6,
+                Plug: 4,
+                Pal: 6,
             },
         },
     },
