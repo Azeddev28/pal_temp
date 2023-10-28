@@ -128,7 +128,7 @@ const Landing = () => {
                                         }
                                     />
                                     <Button
-                                        className={'w-full md:w-fit'}
+                                        className={'w-full md:w-fit mt-1'}
                                         type="submit"
                                     >
                                         Join waitlist
