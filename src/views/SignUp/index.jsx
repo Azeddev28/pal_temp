@@ -20,11 +20,12 @@ const SignUp = () => {
             );
         }
         if (hasJoinedWaitList) {
-            return (<SignInModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            />
-            )
+            return (
+                <SignInModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />
+            );
         }
     };
     return (

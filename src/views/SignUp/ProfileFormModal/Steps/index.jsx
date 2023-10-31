@@ -3,6 +3,7 @@ import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { PulseLoader } from 'react-spinners';
 import { useStep } from './context';
 
 const Step1 = () => {
@@ -10,7 +11,7 @@ const Step1 = () => {
     const { register, formState, watch } = useFormContext();
 
     return (
-        <div className="pt-12 pb-64">
+        <div className="pt-10 pb-[159px]">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
@@ -77,18 +78,22 @@ const Step2 = () => {
 
     const countryOptions = useMemo(() => {
         if (!countries) return [];
-        return countries.map((country) => ({
+        const options = countries.map((country) => ({
             key: country.name,
             value: country.code,
         }));
+        setValue('country', options[0].value);
+        return options;
     }, [countries]);
 
     const languageOptions = useMemo(() => {
         if (!languages) return [];
-        return languages.map((language) => ({
+        const options = languages.map((language) => ({
             key: language.name,
             value: language.code,
         }));
+        setValue('language', options[0].value);
+        return options;
     }, [languages]);
 
     const handleDropDownChange = (name, value) =>
@@ -97,9 +102,8 @@ const Step2 = () => {
             shouldDirty: true,
         });
 
-    if (isLoadingCountries || isLoadingLanguages) return null;
     return (
-        <div className="pt-16">
+        <div className="pt-10">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
@@ -108,44 +112,53 @@ const Step2 = () => {
                     Pick your language and country/region
                 </Typography>
             </div>
-            <div className="pt-[75px] pb-40 flex flex-col gap-6">
-                <Dropdown
-                    {...register('language')}
-                    width={'100%'}
-                    placeholder="Choose your language"
-                    onChange={(option) => {
-                        handleDropDownChange('language', option.value);
-                    }}
-                    selectedKey={
-                        languageOptions.find(
-                            (language) => language.value === watch('language')
-                        )?.key
-                    }
-                    options={languageOptions}
-                />
-                <Dropdown
-                    {...register('country')}
-                    width={'100%'}
-                    placeholder="Choose your country"
-                    onChange={(option) =>
-                        handleDropDownChange('country', option.value)
-                    }
-                    selectedKey={
-                        countryOptions.find(
-                            (country) => country.value === watch('country')
-                        )?.key
-                    }
-                    options={countryOptions}
-                />
+
+            <div className="pb-[134px] flex flex-col gap-6">
+                {isLoadingCountries || isLoadingLanguages ? (
+                    <PulseLoader className="mx-auto" color="#00446A" />
+                ) : (
+                    <>
+                        <Dropdown
+                            {...register('language')}
+                            width={'100%'}
+                            placeholder="Choose your language"
+                            onChange={(option) => {
+                                handleDropDownChange('language', option.value);
+                            }}
+                            selectedKey={
+                                languageOptions.find(
+                                    (language) =>
+                                        language.value === watch('language')
+                                )?.key
+                            }
+                            options={languageOptions}
+                        />
+                        <Dropdown
+                            {...register('country')}
+                            width={'100%'}
+                            placeholder="Choose your country"
+                            onChange={(option) =>
+                                handleDropDownChange('country', option.value)
+                            }
+                            selectedKey={
+                                countryOptions.find(
+                                    (country) =>
+                                        country.value === watch('country')
+                                )?.key
+                            }
+                            options={countryOptions}
+                        />
+                    </>
+                )}
             </div>
         </div>
     );
 };
 
 const Step3 = () => {
-    const { register, watch, formState, setValue } = useFormContext();
+    const { register, watch, formState } = useFormContext();
     return (
-        <div className="pt-16">
+        <div className="pt-10">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
@@ -154,7 +167,7 @@ const Step3 = () => {
                     What is your name?
                 </Typography>
             </div>
-            <div className="pt-[75px] pb-40 flex flex-col gap-6">
+            <div className="pb-[97px] flex flex-col gap-6">
                 <Input
                     type="text"
                     {...register('firstName')}
@@ -191,7 +204,7 @@ const Step3 = () => {
 const Step4 = () => {
     const { register } = useFormContext();
     return (
-        <div className="pt-12">
+        <div className="pt-10">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
@@ -200,7 +213,7 @@ const Step4 = () => {
                     What are you looking to do on palplug?
                 </Typography>
             </div>
-            <div className="pt-[75px] pb-40 flex flex-col gap-6">
+            <div className="pt-6 pb-[179px] flex flex-col gap-6">
                 <Radio
                     {...register('purpose')}
                     id="be-a-palplug"
@@ -237,9 +250,8 @@ const Step5 = () => {
             shouldDirty: true,
         });
 
-    if (isLoading) return null;
     return (
-        <div className="pt-16">
+        <div className="pt-10">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
@@ -248,21 +260,25 @@ const Step5 = () => {
                     Where do you work?
                 </Typography>
             </div>
-            <div className="pt-[75px] pb-40 flex flex-col gap-6">
-                <Dropdown
-                    {...register('company')}
-                    width={'100%'}
-                    onChange={(option) =>
-                        handleDropDownChange('company', option.value)
-                    }
-                    placeholder={'Select your company'}
-                    selectedKey={
-                        companyOptions.find(
-                            (company) => company.value === watch('company')
-                        )?.key
-                    }
-                    options={companyOptions}
-                />
+            <div className="pt-11 pb-[169px] flex flex-col gap-6">
+                {isLoading ? (
+                    <PulseLoader className="mx-auto" color="#00446A" />
+                ) : (
+                    <Dropdown
+                        {...register('company')}
+                        width={'100%'}
+                        onChange={(option) =>
+                            handleDropDownChange('company', option.value)
+                        }
+                        placeholder={'Select your company'}
+                        selectedKey={
+                            companyOptions.find(
+                                (company) => company.value === watch('company')
+                            )?.key
+                        }
+                        options={companyOptions}
+                    />
+                )}
             </div>
         </div>
     );
@@ -286,9 +302,8 @@ const Step6 = () => {
             shouldDirty: true,
         });
 
-    if (isLoading) return null;
     return (
-        <div className="pt-16">
+        <div className="pt-10">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
@@ -297,21 +312,26 @@ const Step6 = () => {
                     What field are you interested in working in?
                 </Typography>
             </div>
-            <div className="pt-[75px] pb-40 flex flex-col gap-6">
-                <Dropdown
-                    {...register('industry')}
-                    width={'100%'}
-                    onChange={(option) =>
-                        handleDropDownChange('industry', option.value)
-                    }
-                    placeholder={'Select your industry'}
-                    selectedKey={
-                        industryOptions.find(
-                            (industry) => industry.value === watch('industry')
-                        )?.key
-                    }
-                    options={industryOptions}
-                />
+            <div className="pt-11 pb-[169px] flex flex-col gap-6">
+                {isLoading ? (
+                    <PulseLoader className="mx-auto" color="#00446A" />
+                ) : (
+                    <Dropdown
+                        {...register('industry')}
+                        width={'100%'}
+                        onChange={(option) =>
+                            handleDropDownChange('industry', option.value)
+                        }
+                        placeholder={'Select your industry'}
+                        selectedKey={
+                            industryOptions.find(
+                                (industry) =>
+                                    industry.value === watch('industry')
+                            )?.key
+                        }
+                        options={industryOptions}
+                    />
+                )}
             </div>
         </div>
     );
@@ -341,7 +361,7 @@ const Step7 = () => {
         },
     ];
     return (
-        <div className="pt-16">
+        <div className="pt-10">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
@@ -350,7 +370,7 @@ const Step7 = () => {
                     What is your job title?
                 </Typography>
             </div>
-            <div className="pt-[75px] pb-40 flex flex-col gap-6">
+            <div className="pt-11 pb-[169px] flex flex-col gap-6">
                 <Dropdown
                     {...register('jobTitle')}
                     width={'100%'}
@@ -393,16 +413,16 @@ const Step8 = () => {
         },
     ];
     return (
-        <div className="pt-16">
+        <div className="pt-10">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
                     className={'text-center font-semibold'}
                 >
-                    What title are you most interested in?
+                    What role are you most interested in?
                 </Typography>
             </div>
-            <div className="pt-[75px] pb-40 flex flex-col gap-6">
+            <div className="pt-11 pb-[169px] flex flex-col gap-6">
                 <Dropdown
                     {...register('interestedJobTitle')}
                     width={'100%'}

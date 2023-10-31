@@ -8,6 +8,7 @@ import {
     Step7,
     Step8,
 } from './Steps';
+import { withHorizontalSlide } from './withHorizontalSlide';
 
 export const STEP_COUNT = 6;
 
@@ -19,22 +20,22 @@ export const STEP_TYPE = {
 export const STEPS = [
     {
         type: STEP_TYPE.Linear,
-        render: Step1,
+        component: withHorizontalSlide(Step1),
         next: 1,
     },
     {
         type: STEP_TYPE.Linear,
-        render: Step2,
+        component: withHorizontalSlide(Step2),
         next: 2,
     },
     {
         type: STEP_TYPE.Linear,
-        render: Step3,
+        component: withHorizontalSlide(Step3),
         next: 3,
     },
     {
         type: STEP_TYPE.Conditional,
-        render: Step4,
+        component: withHorizontalSlide(Step4),
         next: {
             fieldName: 'purpose',
             branch: {
@@ -45,20 +46,20 @@ export const STEPS = [
     },
     {
         type: STEP_TYPE.Linear,
-        render: Step5,
+        component: withHorizontalSlide(Step5),
         next: 5,
     },
     {
         type: STEP_TYPE.Linear,
-        render: Step6,
+        component: withHorizontalSlide(Step6),
     },
     {
         type: STEP_TYPE.Linear,
-        render: Step7,
+        component: withHorizontalSlide(Step7),
         next: 7,
     },
     {
         type: STEP_TYPE.Linear,
-        render: Step8,
+        component: withHorizontalSlide(Step8),
     },
 ];

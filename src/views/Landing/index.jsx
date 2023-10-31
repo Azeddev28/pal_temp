@@ -59,7 +59,7 @@ const Landing = () => {
     const onSubmit = ({ email }) => {
         postRequest(getRoute('joinWaitlist'), { email })
             .then((res) => {
-                updateWaitListStatusAndRedirect()
+                updateWaitListStatusAndRedirect();
             })
             .catch(
                 ({
@@ -68,7 +68,7 @@ const Landing = () => {
                     },
                 }) => {
                     if (code === 'WAITLIST_JOINED') {
-                        updateWaitListStatusAndRedirect()
+                        updateWaitListStatusAndRedirect();
                     }
                     if (code === 'USER_ALREADY_REGISTERED') {
                         dispatch(setIsUserRegistered());
@@ -110,7 +110,7 @@ const Landing = () => {
                                 </p>
                                 <form
                                     onSubmit={handleSubmit(onSubmit)}
-                                    className="flex gap-2 flex-col md:flex-row md:justify-start"
+                                    className="flex gap-2 flex-col md:flex-row md:justify-start md:items-center"
                                 >
                                     <Input
                                         {...register('email')}
@@ -128,7 +128,7 @@ const Landing = () => {
                                         }
                                     />
                                     <Button
-                                        className={'w-full md:w-fit mt-1'}
+                                        className={'w-full md:w-fit'}
                                         type="submit"
                                     >
                                         Join waitlist
