@@ -1,3 +1,4 @@
+import { ArrowLeftIcon } from '@/Icons';
 import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
@@ -20,7 +21,7 @@ const StepForm = () => {
     const router = useRouter();
     const [activeStep, setActiveStep] = useState(0);
     const [visitedSteps, setVisitedSteps] = useState([activeStep]);
-
+    const [slideDirection, setSlideDirection] = useState('left');
     const methods = useForm({
         defaultValues: { ...profile, firstName, lastName, email },
         mode: 'onChange',
@@ -72,49 +73,70 @@ const StepForm = () => {
 
     const onContinue = () => {
         if (isLastStep) return;
+        setSlideDirection('left');
         const nextStep = getNextStep();
         const isAleadyVisitedStep = visitedSteps.includes(nextStep);
         if (!isAleadyVisitedStep) setVisitedSteps([...visitedSteps, nextStep]);
         setActiveStep(nextStep);
     };
 
-    const FormStep = STEPS[activeStep].render;
+    const onStepClick = (index) => {
+        if (typeof visitedSteps[index] !== 'undefined') {
+            setSlideDirection('right');
+            setActiveStep(visitedSteps[index]);
+            const slicedVisitedSteps = visitedSteps.slice(0, index + 1);
+            setVisitedSteps(slicedVisitedSteps);
+        }
+    };
+
+    const onBackClick = () => {
+        // REMOVE CURRENT STEP FROM THE LIST
+        visitedSteps.pop();
+
+        const previousStep = visitedSteps[visitedSteps.length - 1];
+        setActiveStep(previousStep);
+    };
+
+    const FormStep = STEPS[activeStep].component;
     return (
-        <div className="p-10">
-            <div className="flex flex-row w-52 mx-auto">
-                <Stepper activeStep={visitedSteps.indexOf(activeStep)}>
-                    {Array(STEP_COUNT)
-                        .fill(0)
-                        .map((_, index) => (
-                            <Step
-                                onClick={
-                                    typeof visitedSteps[index] !== 'undefined'
-                                        ? () =>
-                                              setActiveStep(visitedSteps[index])
-                                        : undefined
-                                }
-                                key={index}
-                                className="w-4 h-4"
-                            />
-                        ))}
-                </Stepper>
+        <>
+            <div>
+                <ArrowLeftIcon
+                    className="w-6 h-6 absolute top-3 left-3 cursor-pointer text-brandBlue"
+                    onClick={onBackClick}
+                />
             </div>
-            <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(onSubmit)}>
-                    <StepContextProvider>
-                        <FormStep />
-                    </StepContextProvider>
-                    <Button
-                        type={isLastStep ? 'submit' : 'button'}
-                        disabled={!methods.formState.isValid}
-                        className={'w-full'}
-                        onClick={onContinue}
-                    >
-                        {isLastStep ? 'Submit' : 'Continue'}
-                    </Button>
-                </form>
-            </FormProvider>
-        </div>
+            <div className="p-10">
+                <div className="flex flex-row w-52 mx-auto">
+                    <Stepper activeStep={visitedSteps.indexOf(activeStep)}>
+                        {Array(STEP_COUNT)
+                            .fill(0)
+                            .map((_, index) => (
+                                <Step
+                                    onClick={() => onStepClick(index)}
+                                    key={index}
+                                    className="w-4 h-4"
+                                />
+                            ))}
+                    </Stepper>
+                </div>
+                <FormProvider {...methods}>
+                    <form onSubmit={methods.handleSubmit(onSubmit)}>
+                        <StepContextProvider>
+                            <FormStep slideDirection={slideDirection} />
+                        </StepContextProvider>
+                        <Button
+                            type={isLastStep ? 'submit' : 'button'}
+                            disabled={!methods.formState.isValid}
+                            className={'w-full'}
+                            onClick={onContinue}
+                        >
+                            {isLastStep ? 'Submit' : 'Continue'}
+                        </Button>
+                    </form>
+                </FormProvider>
+            </div>
+        </>
     );
 };
 
