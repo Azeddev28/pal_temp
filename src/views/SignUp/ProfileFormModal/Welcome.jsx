@@ -6,14 +6,13 @@ import logoImage from '../../../../public/images/logo.png';
 
 const Welcome = ({ onContinue }) => {
     return (
-        <div className="text-center ">
-            <div className="p-10">
-                <div className="flex flex-col gap-2 mb-14">
-                    <div className="mx-auto w-14 h-auto">
-                        {/* TODO: use proper logo. It has no eyes */}
+        <div className="text-center block">
+            <div className="p-4 md:p-10">
+                <div className="flex flex-col gap-2 mb-10 items-center justify-center md:mb-14">
+                    <div className="w-10 h-auto md:w-14">
                         <Image src={logoImage} alt="..." />
                     </div>
-                    <div>
+                    <div className="w-fit">
                         <Typography variant={'h4'} className={'font-semibold'}>
                             Welcome to palplug
                         </Typography>
@@ -22,15 +21,15 @@ const Welcome = ({ onContinue }) => {
                         </Typography>
                     </div>
                 </div>
-                <div className="mb-16">
+                <div className="mb-10 md:mb-16">
                     <Typography variant={'h6'}>
                         Let’s get some more information from you to fill out
                         your profile
                     </Typography>
                 </div>
 
-                <Button onClick={onContinue} className={'w-full'}>
-                    Continue
+                <Button className="w-full" onClick={onContinue}>
+                    <Typography variant={'body'}>Continue</Typography>
                 </Button>
             </div>
             <div className="w-full border-t border-solid border-grey0 py-8">
