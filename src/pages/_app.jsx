@@ -2,6 +2,7 @@ import Layout from '@/components/layout';
 import { CustomQueryClientProvider } from '@/providers/react-query';
 import { SessionProvider } from '@/providers/session';
 import { UserProfileProvider } from '@/providers/user-profile';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { Poppins } from 'next/font/google';
 import { Provider } from 'react-redux';
 import { wrapper } from "../store/store";
@@ -21,16 +22,18 @@ function MyApp({ Component, ...pageProps }) {
         <div>
             {/* Hacky way of making state persist both client and server side */}
             {/* TODO: Look for a better way to share state */}
-                <SessionProvider>
+                {/* <SessionProvider> */}
                     <UserProfileProvider>
                         <CustomQueryClientProvider>
+                            <UserProvider>
                             <main className={poppins.className}>
                                 <Layout />
                                 <Component {...pageProps} />
                             </main>
+                            </UserProvider>
                         </CustomQueryClientProvider>
                     </UserProfileProvider>
-                </SessionProvider>
+                {/* </SessionProvider> */}
         </div>
     );
 }

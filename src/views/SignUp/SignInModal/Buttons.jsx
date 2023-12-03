@@ -2,7 +2,7 @@ import { Button } from '@/components/Button';
 import { getRoute } from '@/server';
 
 const GoogleButton = () => (
-    <a href={getRoute('googleLink')} target="_blank">
+    <a href={'/api/auth/login'}>
         <Button
             style={{
                 backgroundColor: '#5186EC',

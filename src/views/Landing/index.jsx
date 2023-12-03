@@ -16,6 +16,11 @@ import {
 } from '../../store/authSlice';
 import { wrapper } from '../../store/store';
 import { CompanyLogoWidgetList } from './CompanyLogoWidgetList';
+// import { getSession } from '@auth0/nextjs-auth0';
+
+//   const { user } = await getSession();
+import { useUser } from '@auth0/nextjs-auth0/client';
+
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
@@ -42,6 +47,9 @@ const emailSchema = yup.object().shape({
 const Landing = () => {
     const router = useRouter();
     const dispatch = useDispatch();
+    const { user, error, isLoading } = useUser();
+    console.log(user)
+
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
         defaultValues: {
@@ -57,27 +65,28 @@ const Landing = () => {
     };
 
     const onSubmit = ({ email }) => {
-        postRequest(getRoute('joinWaitlist'), { email })
-            .then((res) => {
-                updateWaitListStatusAndRedirect();
-            })
-            .catch(
-                ({
-                    response: {
-                        data: { code: code },
-                    },
-                }) => {
-                    if (code === 'WAITLIST_JOINED') {
-                        updateWaitListStatusAndRedirect();
-                    }
-                    if (code === 'USER_ALREADY_REGISTERED') {
-                        dispatch(setIsUserRegistered());
-                        router.push('/congratulations', undefined, {
-                            shallow: true,
-                        });
-                    }
-                }
-            );
+        updateWaitListStatusAndRedirect();
+        // postRequest(getRoute('joinWaitlist'), { email })
+        //     .then((res) => {
+        //         updateWaitListStatusAndRedirect();
+        //     })
+        //     .catch(
+        //         ({
+        //             response: {
+        //                 data: { code: code },
+        //             },
+        //         }) => {
+        //             if (code === 'WAITLIST_JOINED') {
+        //                 updateWaitListStatusAndRedirect();
+        //             }
+        //             if (code === 'USER_ALREADY_REGISTERED') {
+        //                 dispatch(setIsUserRegistered());
+        //                 router.push('/congratulations', undefined, {
+        //                     shallow: true,
+        //                 });
+        //             }
+        //         }
+        //     );
     };
 
     return (
