@@ -48,7 +48,6 @@ const Landing = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const { user, error, isLoading } = useUser();
-    console.log(user)
 
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
@@ -63,30 +62,35 @@ const Landing = () => {
             shallow: true,
         });
     };
+    if (!isLoading && user) {
+        console.log(user)
+        updateWaitListStatusAndRedirect();
+        dispatch(setIsUserRegistered());
+    }
 
     const onSubmit = ({ email }) => {
-        updateWaitListStatusAndRedirect();
-        // postRequest(getRoute('joinWaitlist'), { email })
-        //     .then((res) => {
-        //         updateWaitListStatusAndRedirect();
-        //     })
-        //     .catch(
-        //         ({
-        //             response: {
-        //                 data: { code: code },
-        //             },
-        //         }) => {
-        //             if (code === 'WAITLIST_JOINED') {
-        //                 updateWaitListStatusAndRedirect();
-        //             }
-        //             if (code === 'USER_ALREADY_REGISTERED') {
-        //                 dispatch(setIsUserRegistered());
-        //                 router.push('/congratulations', undefined, {
-        //                     shallow: true,
-        //                 });
-        //             }
-        //         }
-        //     );
+        // updateWaitListStatusAndRedirect();
+        postRequest(getRoute('joinWaitlist'), { email })
+            .then((res) => {
+                updateWaitListStatusAndRedirect();
+            })
+            .catch(
+                ({
+                    response: {
+                        data: { code: code },
+                    },
+                }) => {
+                    if (code === 'WAITLIST_JOINED') {
+                        updateWaitListStatusAndRedirect();
+                    }
+                    if (code === 'USER_ALREADY_REGISTERED') {
+                        dispatch(setIsUserRegistered());
+                        router.push('/congratulations', undefined, {
+                            shallow: true,
+                        });
+                    }
+                }
+            );
     };
 
     return (
