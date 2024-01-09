@@ -5,6 +5,7 @@ import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
 import { useUserProfile } from '@/hooks/use-user-profile';
 import { getRoute } from '@/server';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -14,7 +15,6 @@ import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
-import { useUser } from '@auth0/nextjs-auth0/client';
 
 const StepForm = () => {
     const { firstName, lastName, email } = useSelector((state) => state.auth);
@@ -93,8 +93,8 @@ const StepForm = () => {
 
     const onBackClick = () => {
         // REMOVE CURRENT STEP FROM THE LIST
+        if (visitedSteps.length === 1) return;
         visitedSteps.pop();
-
         const previousStep = visitedSteps[visitedSteps.length - 1];
         setActiveStep(previousStep);
     };
