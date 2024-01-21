@@ -7,9 +7,10 @@ const initialState = {
     accessToken: null,
     isUserRegistered: false,
     hasJoinedWaitList: false,
-    firstName: '',
+    firstName: 'w',
     lastName: '',
     email: '',
+    firebaseAuthObj: null,
 };
 
 // Actual Slice
@@ -34,6 +35,10 @@ export const authSlice = createSlice({
         setHasJoinedWaitlist(state) {
             state.hasJoinedWaitList = true;
         },
+        setFirebaseAuth(state, action) {
+            console.log('🚀 ~ setFirebaseAuth ~ action:', action);
+            state.firebaseAuthObj = action.payload;
+        },
     },
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
@@ -52,6 +57,7 @@ export const {
     setUserRegistrationInfo,
     setIsUserRegistered,
     setHasJoinedWaitlist,
+    setFirebaseAuth,
 } = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;
