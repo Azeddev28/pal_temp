@@ -74,11 +74,12 @@ const LinkedInButton = () => {
 
 const GithubButton = () => {
     const { firebaseAuthObj } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
     const handleGithubLogin = async () => {
         const provider = new GithubAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuthObj, provider);
-            console.log('🚀 ~ handleGithubLogin ~ result:', result);
+            dispatch(setUserRegistrationInfo(result.user));
         } catch (error) {
             console.log('🚀 ~ handleGithubLogin ~ error:', error);
         }
