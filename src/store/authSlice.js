@@ -23,11 +23,11 @@ export const authSlice = createSlice({
             state.authState = action.payload;
         },
         setUserRegistrationInfo(state, action) {
-            state.firstName = action.payload.first_name;
+            state.firstName = action.payload.displayName.split(' ')[0];
             state.email = action.payload.email;
-            state.lastName = action.payload.last_name;
-            state.accessToken = action.payload.access_token;
-            state.isUserRegistered = action.payload.access_token ? true : false;
+            state.lastName = action.payload.displayName.split(' ')[1];
+            state.accessToken = action.payload.accessToken;
+            state.isUserRegistered = action.payload.accessToken ? true : false;
         },
         setIsUserRegistered(state) {
             state.isUserRegistered = true;
@@ -36,7 +36,6 @@ export const authSlice = createSlice({
             state.hasJoinedWaitList = true;
         },
         setFirebaseAuth(state, action) {
-            console.log('🚀 ~ setFirebaseAuth ~ action:', action);
             state.firebaseAuthObj = action.payload;
         },
     },

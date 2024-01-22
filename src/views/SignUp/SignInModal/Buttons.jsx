@@ -1,20 +1,21 @@
 import { Button } from '@/components/Button';
+import { setUserRegistrationInfo } from '@/store/authSlice';
 import {
     GithubAuthProvider,
     GoogleAuthProvider,
     signInWithPopup,
 } from 'firebase/auth';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const GoogleButton = () => {
     const { firebaseAuthObj } = useSelector((state) => state.auth);
-
+    const dispatch = useDispatch();
     const handleGoogleLogin = async () => {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuthObj, provider);
-            console.log('🚀 ~ handleGoogleLogin ~ result:', result);
+            dispatch(setUserRegistrationInfo(result.user));
         } catch (error) {
             console.log('🚀 ~ handleGoogleLogin ~ error:', error);
         }
