@@ -39,6 +39,21 @@ const GoogleButton = () => {
 };
 
 const LinkedInButton = () => {
+    const fetchLinkedInUserProfile = async (accessToken) => {
+        const apiUrl = 'https://api.linkedin.com/v2/me';
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        };
+
+        try {
+            const response = await fetch(apiUrl, { headers });
+            const data = await response.json();
+            console.log('LinkedIn user profile data:', data);
+        } catch (error) {
+            console.error('Error fetching LinkedIn user profile:', error);
+        }
+    };
     const { linkedInLogin } = useLinkedIn({
         clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID,
         scope: 'openid,profile,email',
@@ -47,6 +62,7 @@ const LinkedInButton = () => {
         }/linkedin`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
         onSuccess: (code) => {
             console.log({ code });
+            fetchLinkedInUserProfile(code);
         },
         onError: (error) => {
             console.log({ error });
