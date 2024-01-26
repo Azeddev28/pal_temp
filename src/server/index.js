@@ -10,6 +10,7 @@ const ROUTES = {
     googleLink: `${SERVER_URL}/d/api/authentication/google-register`,
     linkedInLink: `${SERVER_URL}/d/api/authentication/linkedin-register`,
     githubLink: `${SERVER_URL}/d/api/authentication/github-register`,
+    linkedin: `/d/api/authentication/linkedin-profile/`,
 };
 
 export const getRoute = (routeKey) => ROUTES[routeKey];

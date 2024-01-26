@@ -1,4 +1,6 @@
+import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
+import { getRoute } from '@/server';
 import { setUserRegistrationInfo } from '@/store/authSlice';
 import {
     GithubAuthProvider,
@@ -8,6 +10,20 @@ import {
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import { useDispatch, useSelector } from 'react-redux';
 
+const submitDetails = (signupMethod, email, code) => {
+    if (signupMethod === 'Google' || signupMethod === 'Github') {
+    }
+    if (signupMethod === 'Linkedin') {
+        postRequest(getRoute('linkedin'), { authorization_code: code })
+            .then((res) => {
+                console.log('🚀 ~ submitDetails ~ res:', res);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ submitDetails ~ err:', err);
+            });
+    }
+};
+
 const GoogleButton = () => {
     const { firebaseAuthObj } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -15,6 +31,7 @@ const GoogleButton = () => {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuthObj, provider);
+            submitDetails('Google', result.user.email);
             dispatch(setUserRegistrationInfo(result.user));
         } catch (error) {
             console.log('🚀 ~ handleGoogleLogin ~ error:', error);
@@ -63,6 +80,7 @@ const LinkedInButton = () => {
         onSuccess: (code) => {
             console.log({ code });
             fetchLinkedInUserProfile(code);
+            submitDetails('Linkedin', undefined, code);
         },
         onError: (error) => {
             console.log({ error });
@@ -95,6 +113,7 @@ const GithubButton = () => {
         const provider = new GithubAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuthObj, provider);
+            submitDetails('Github', result.user.email);
             dispatch(setUserRegistrationInfo(result.user));
         } catch (error) {
             console.log('🚀 ~ handleGithubLogin ~ error:', error);
