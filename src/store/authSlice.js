@@ -23,11 +23,16 @@ export const authSlice = createSlice({
             state.authState = action.payload;
         },
         setUserRegistrationInfo(state, action) {
-            state.firstName = action.payload.displayName.split(' ')[0];
-            state.email = action.payload.email;
-            state.lastName = action.payload.displayName.split(' ')[1];
-            state.accessToken = action.payload.accessToken;
-            state.isUserRegistered = action.payload.accessToken ? true : false;
+            console.log('🚀 ~ setUserRegistrationInfo ~ action:', action);
+            if (action.payload) {
+                state.firstName = action.payload.displayName.split(' ')[0];
+                state.email = action.payload.email;
+                state.lastName = action.payload.displayName.split(' ')[1];
+                state.accessToken = action.payload.accessToken;
+                state.isUserRegistered = action.payload.accessToken
+                    ? true
+                    : false;
+            }
         },
         setIsUserRegistered(state) {
             state.isUserRegistered = true;

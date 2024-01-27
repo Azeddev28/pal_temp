@@ -65,10 +65,12 @@ const StepForm = () => {
                         data: { non_field_errors },
                     },
                 }) => {
-                    if (non_field_errors.length > 0)
-                        router.push('/', undefined, {
-                            shallow: true,
-                        });
+                    if (non_field_errors) {
+                        if (non_field_errors.length > 0)
+                            router.push('/', undefined, {
+                                shallow: true,
+                            });
+                    }
                 }
             );
     };

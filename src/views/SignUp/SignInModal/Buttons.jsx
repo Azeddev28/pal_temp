@@ -10,17 +10,26 @@ import {
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import { useDispatch, useSelector } from 'react-redux';
 
-const submitDetails = (signupMethod, email, code) => {
-    if (signupMethod === 'Google' || signupMethod === 'Github') {
-    }
-    if (signupMethod === 'Linkedin') {
-        postRequest(getRoute('linkedin'), { authorization_code: code })
-            .then((res) => {
-                console.log('🚀 ~ submitDetails ~ res:', res);
-            })
-            .catch((err) => {
-                console.log('🚀 ~ submitDetails ~ err:', err);
+const submitDetails = async (signupMethod, email, code, functionToExecute) => {
+    try {
+        if (signupMethod === 'Google' || signupMethod === 'Github') {
+            await postRequest(getRoute('linkedin'), {
+                authorization_code: email,
             });
+        }
+        if (signupMethod === 'Linkedin') {
+            const res = await postRequest(getRoute('linkedin'), {
+                authorization_code: code,
+            });
+            const dataToSave = {
+                displayName: res.given_name,
+                email: res.email,
+                accessToken: code,
+            };
+            return dataToSave;
+        }
+    } catch (error) {
+        throw error;
     }
 };
 
@@ -56,34 +65,21 @@ const GoogleButton = () => {
 };
 
 const LinkedInButton = () => {
-    const fetchLinkedInUserProfile = async (accessToken) => {
-        const apiUrl = 'https://api.linkedin.com/v2/me';
-        const headers = {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
-        };
-
-        try {
-            const response = await fetch(apiUrl, { headers });
-            const data = await response.json();
-            console.log('LinkedIn user profile data:', data);
-        } catch (error) {
-            console.error('Error fetching LinkedIn user profile:', error);
-        }
-    };
+    const dispatch = useDispatch();
     const { linkedInLogin } = useLinkedIn({
         clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID,
         scope: 'openid,profile,email',
         redirectUri: `${
             typeof window === 'object' && window.location.origin
-        }/linkedin`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
-        onSuccess: (code) => {
-            console.log({ code });
-            fetchLinkedInUserProfile(code);
-            submitDetails('Linkedin', undefined, code);
-        },
-        onError: (error) => {
-            console.log({ error });
+        }/linkedin`,
+        onSuccess: async (code) => {
+            try {
+                submitDetails('Linkedin', undefined, code)
+                    .then((data) => {
+                        dispatch(setUserRegistrationInfo(data));
+                    })
+                    .catch((error) => {});
+            } catch (error) {}
         },
         closePopupMessage: 'Successfully logged in',
     });
