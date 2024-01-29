@@ -59,20 +59,19 @@ const StepForm = () => {
             .then((res) => {
                 router.push('/congratulations', undefined, { shallow: true });
             })
-            .catch(
-                ({
-                    response: {
-                        data: { non_field_errors },
-                    },
-                }) => {
-                    if (non_field_errors) {
-                        if (non_field_errors.length > 0)
-                            router.push('/', undefined, {
-                                shallow: true,
-                            });
-                    }
+            .catch(({ response }) => {
+                if (response.status === 400) {
+                    router.push('/congratulations', undefined, {
+                        shallow: true,
+                    });
                 }
-            );
+                if (response.data.non_field_errors) {
+                    if (response.data.non_field_errors.length > 0)
+                        router.push('/', undefined, {
+                            shallow: true,
+                        });
+                }
+            });
     };
 
     const onContinue = () => {
