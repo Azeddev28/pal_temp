@@ -14,11 +14,13 @@ const submitDetails = async (signupMethod, email, code, functionToExecute) => {
     try {
         if (signupMethod === 'Google' || signupMethod === 'Github') {
             await postRequest(getRoute('linkedin'), {
+                signupMethod: signupMethod,
                 authorization_code: email,
             });
         }
         if (signupMethod === 'Linkedin') {
             const res = await postRequest(getRoute('linkedin'), {
+                signupMethod: signupMethod,
                 authorization_code: code,
             });
             const dataToSave = {
