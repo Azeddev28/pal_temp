@@ -12,24 +12,22 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const submitDetails = async (signupMethod, email, code, functionToExecute) => {
     try {
-        if (signupMethod === 'Google' || signupMethod === 'Github') {
-            await postRequest(getRoute('linkedin'), {
-                signupMethod: signupMethod,
-                authorization_code: email,
-            });
-        }
+        var socialRegisterPayload = {
+            social_registration_type: signupMethod,
+            email: email
+        };
+        var socialRoute = getRoute('socialRegister');
         if (signupMethod === 'Linkedin') {
-            const res = await postRequest(getRoute('linkedin'), {
-                signupMethod: signupMethod,
-                authorization_code: code,
-            });
-            const dataToSave = {
-                displayName: res.given_name,
-                email: res.email,
-                accessToken: code,
-            };
-            return dataToSave;
+            socialRegisterPayload['authorization_code'] = code;
+            socialRoute = getRoute('linkedinRegister')
         }
+        const res = await postRequest(socialRoute, socialRegisterPayload);
+        const dataToSave = {
+            displayName: res.given_name,
+            email: res.email,
+            accessToken: code,
+        };
+        return dataToSave;
     } catch (error) {
         throw error;
     }

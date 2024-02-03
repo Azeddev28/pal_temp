@@ -7,10 +7,8 @@ const ROUTES = {
     languagesList: `${SERVER_URL}/d/api/locations/languages-list/`,
     joinWaitlist: `/d/api/users/join-waitlist/`,
     profileRegister: '/d/api/users/profile-register/',
-    googleLink: `${SERVER_URL}/d/api/authentication/google-register`,
-    linkedInLink: `${SERVER_URL}/d/api/authentication/linkedin-register`,
-    githubLink: `${SERVER_URL}/d/api/authentication/github-register`,
-    linkedin: `/d/api/authentication/linkedin-profile/`,
+    linkedinRegister: `/d/api/authentication/linkedin-register/`,
+    socialRegister: `/d/api/authentication/social-register/`
 };
 
 export const getRoute = (routeKey) => ROUTES[routeKey];
