@@ -30,7 +30,7 @@ const submitDetails = async (signupMethod, email, code, router) => {
         };
         return dataToSave;
     } catch (error) {
-        if (error.response.data.code === 'USER_ALREADY_REGISTERED') {
+        if (error.response.data.code === 'PROFILE_ALREADY_REGISTERED') {
             router.push('/congratulations', undefined, {
                 shallow: true,
             });
