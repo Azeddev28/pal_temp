@@ -7,20 +7,21 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
 } from 'firebase/auth';
+import { useRouter } from 'next/router';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import { useDispatch, useSelector } from 'react-redux';
 
-const submitDetails = async (signupMethod, email, code, functionToExecute) => {
+const submitDetails = async (signupMethod, email, code, router) => {
+    var socialRegisterPayload = {
+        social_registration_type: signupMethod,
+        email: email,
+    };
+    var socialRoute = getRoute('socialRegister');
+    if (signupMethod === 'Linkedin') {
+        socialRegisterPayload['authorization_code'] = code;
+        socialRoute = getRoute('linkedinRegister');
+    }
     try {
-        var socialRegisterPayload = {
-            social_registration_type: signupMethod,
-            email: email
-        };
-        var socialRoute = getRoute('socialRegister');
-        if (signupMethod === 'Linkedin') {
-            socialRegisterPayload['authorization_code'] = code;
-            socialRoute = getRoute('linkedinRegister')
-        }
         const res = await postRequest(socialRoute, socialRegisterPayload);
         const dataToSave = {
             displayName: res.given_name,
@@ -29,18 +30,23 @@ const submitDetails = async (signupMethod, email, code, functionToExecute) => {
         };
         return dataToSave;
     } catch (error) {
-        throw error;
+        if (error.response.data.code === 'USER_ALREADY_REGISTERED') {
+            router.push('/congratulations', undefined, {
+                shallow: true,
+            });
+        }
     }
 };
 
 const GoogleButton = () => {
     const { firebaseAuthObj } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const router = useRouter();
     const handleGoogleLogin = async () => {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuthObj, provider);
-            submitDetails('Google', result.user.email);
+            submitDetails('Google', result.user.email, undefined, router);
             dispatch(setUserRegistrationInfo(result.user));
         } catch (error) {
             console.log('🚀 ~ handleGoogleLogin ~ error:', error);
@@ -78,7 +84,9 @@ const LinkedInButton = () => {
                     .then((data) => {
                         dispatch(setUserRegistrationInfo(data));
                     })
-                    .catch((error) => {});
+                    .catch((error) => {
+                        console.log('🚀 ~ onSuccess: ~ error:', error);
+                    });
             } catch (error) {}
         },
         closePopupMessage: 'Successfully logged in',
@@ -105,11 +113,12 @@ const LinkedInButton = () => {
 const GithubButton = () => {
     const { firebaseAuthObj } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const router = useRouter();
     const handleGithubLogin = async () => {
         const provider = new GithubAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuthObj, provider);
-            submitDetails('Github', result.user.email);
+            submitDetails('Github', result.user.email, undefined, router);
             dispatch(setUserRegistrationInfo(result.user));
         } catch (error) {
             console.log('🚀 ~ handleGithubLogin ~ error:', error);
