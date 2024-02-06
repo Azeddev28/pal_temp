@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import navLogo from '../../public/images/nav-logo.png';
+import navLogo from '../../public/images/logo.svg';
 
 function NavBar() {
     const handleLogoClick = (e) => {
@@ -13,7 +13,7 @@ function NavBar() {
         <div className="bg-white shadow-grey10 shadow-sm p-5">
             <nav className="flex justify-between items-center w-[92%]">
                 <Link href="/" onClick={handleLogoClick}>
-                    <Image src={navLogo} alt="..." />
+                    <Image src={navLogo} alt="..." width={100} />
                 </Link>
                 <div className="nav-links duration-500 md:static absolute bg-grey0 md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
                     {/* <ul className="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
