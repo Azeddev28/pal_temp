@@ -109,7 +109,7 @@ const StepForm = () => {
                     onClick={onBackClick}
                 />
             </div>
-            <div className="p-10">
+            <div className="p-10 h-full flex flex-col justify-between">
                 <div className="flex flex-row w-32 md:w-48 mx-auto">
                     <Stepper activeStep={visitedSteps.indexOf(activeStep)}>
                         {Array(STEP_COUNT)
@@ -124,7 +124,10 @@ const StepForm = () => {
                     </Stepper>
                 </div>
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(onSubmit)}>
+                    <form
+                        onSubmit={methods.handleSubmit(onSubmit)}
+                        className="h-[93%]"
+                    >
                         <StepContextProvider>
                             <FormStep slideDirection={slideDirection} />
                         </StepContextProvider>
@@ -147,7 +150,7 @@ const ProfileFormModal = ({ isOpen, onClose }) => {
     const [showSignUpForm, setShowSignUpForm] = useState(false);
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} height={showSignUpForm}>
             {!showSignUpForm && (
                 <Welcome onContinue={() => setShowSignUpForm(true)} />
             )}

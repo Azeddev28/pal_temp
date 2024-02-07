@@ -11,7 +11,7 @@ const Step1 = () => {
     const { register, formState, watch } = useFormContext();
 
     return (
-        <div className="pt-10 pb-[159px]">
+        <div className="pt-10 pb-[130px]">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}

@@ -1,12 +1,16 @@
 import { CloseFilledIcon } from '@/Icons';
 import Image from 'next/image';
 
-const Modal = ({ isOpen, onClose, bannerImageSrc, children }) => {
+const Modal = ({ isOpen, onClose, bannerImageSrc, children, height }) => {
     if (!isOpen) return null;
     return (
         <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 p-4 md:p-10">
-            <div className="max-h-full w-full max-w-xl overflow-y-auto rounded-xl bg-white sm:rounded-2xl scrollbar-hide">
-                <div className="w-full relative">
+            <div
+                className={`max-h-full ${
+                    height && 'h-[85%]'
+                } w-full max-w-xl overflow-y-auto rounded-xl bg-white sm:rounded-2xl scrollbar-hide`}
+            >
+                <div className={`w-full relative ${height && 'h-full'}`}>
                     {onClose && (
                         <div className="flex absolute top-0 right-0">
                             <span className="py-3 px-4">
@@ -26,7 +30,7 @@ const Modal = ({ isOpen, onClose, bannerImageSrc, children }) => {
                             />
                         </div>
                     )}
-                    <div className="md:min-w-[400px]">{children}</div>
+                    <div className="md:min-w-[400px] h-full">{children}</div>
                 </div>
             </div>
         </div>
