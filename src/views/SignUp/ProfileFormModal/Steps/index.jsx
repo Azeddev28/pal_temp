@@ -82,7 +82,7 @@ const Step2 = () => {
             key: country.name,
             value: country.code,
         }));
-        setValue('country', options[0].value);
+        setValue('country', options[234].value);
         return options;
     }, [countries]);
 
@@ -92,7 +92,7 @@ const Step2 = () => {
             key: language.name,
             value: language.code,
         }));
-        setValue('language', options[0].value);
+        setValue('language', options[17].value);
         return options;
     }, [languages]);
 
