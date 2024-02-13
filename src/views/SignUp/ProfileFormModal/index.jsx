@@ -28,6 +28,8 @@ const StepForm = () => {
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
+    console.log('🚀 ~ StepForm ~ methods:', methods.formState);
+
     const { user, error, isLoading } = useUser();
 
     const isLastStep = typeof STEPS[activeStep]?.next === 'undefined';

@@ -125,6 +125,7 @@ const Step2 = () => {
                             onChange={(option) => {
                                 handleDropDownChange('language', option.value);
                             }}
+                            index={17}
                             selectedKey={
                                 languageOptions.find(
                                     (language) =>
@@ -136,6 +137,7 @@ const Step2 = () => {
                         <Dropdown
                             {...register('country')}
                             width={'100%'}
+                            index={234}
                             placeholder="Choose your country"
                             onChange={(option) =>
                                 handleDropDownChange('country', option.value)
