@@ -1,10 +1,8 @@
 import { ArrowLeftIcon } from '@/Icons';
-import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
 import { useUserProfile } from '@/hooks/use-user-profile';
-import { getRoute } from '@/server';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
@@ -57,23 +55,24 @@ const StepForm = () => {
             language: formData.language,
             role: formData.purpose,
         };
-        postRequest(getRoute('profileRegister'), dataToSend, true)
-            .then((res) => {
-                router.push('/congratulations', undefined, { shallow: true });
-            })
-            .catch(({ response }) => {
-                if (response.status === 400) {
-                    router.push('/congratulations', undefined, {
-                        shallow: true,
-                    });
-                }
-                if (response.data.non_field_errors) {
-                    if (response.data.non_field_errors.length > 0)
-                        router.push('/', undefined, {
-                            shallow: true,
-                        });
-                }
-            });
+        console.log('🚀 ~ onSubmit ~ dataToSend:', dataToSend);
+        // postRequest(getRoute('profileRegister'), dataToSend, true)
+        //     .then((res) => {
+        //         router.push('/congratulations', undefined, { shallow: true });
+        //     })
+        //     .catch(({ response }) => {
+        //         if (response.status === 400) {
+        //             router.push('/congratulations', undefined, {
+        //                 shallow: true,
+        //             });
+        //         }
+        //         if (response.data.non_field_errors) {
+        //             if (response.data.non_field_errors.length > 0)
+        //                 router.push('/', undefined, {
+        //                     shallow: true,
+        //                 });
+        //         }
+        //     });
     };
 
     const onContinue = () => {

@@ -1,4 +1,5 @@
 import { Dropdown } from '@/components/Dropdown';
+import CustomDropdown from '@/components/Dropdown/dropdown';
 import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useMemo, useState } from 'react';
@@ -96,11 +97,13 @@ const Step2 = () => {
         return options;
     }, [languages]);
 
-    const handleDropDownChange = (name, value) =>
+    const handleDropDownChange = (name, value) => {
+        console.log('🚀 ~ Step2 ~ name:', name, value);
         setValue(name, value, {
             shouldValidate: true,
             shouldDirty: true,
         });
+    };
 
     return (
         <div className="pt-10">
@@ -118,7 +121,26 @@ const Step2 = () => {
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
                     <>
-                        <Dropdown
+                        <CustomDropdown
+                            placeholder="Choose your language"
+                            onChange={(option) => {
+                                console.log('🚀 ~ Step2 ~ option:', option);
+                                // handleDropDownChange('language', option.value);
+                            }}
+                            options={languageOptions}
+                            index={17}
+                            {...register('language')}
+                        />
+                        <CustomDropdown
+                            placeholder="Choose your country"
+                            onChange={(option) => {
+                                handleDropDownChange('country', option.value);
+                            }}
+                            options={countryOptions}
+                            index={234}
+                            {...register('country')}
+                        />
+                        {/* <Dropdown
                             {...register('language')}
                             width={'100%'}
                             placeholder="Choose your language"
@@ -133,8 +155,8 @@ const Step2 = () => {
                                 )?.key
                             }
                             options={languageOptions}
-                        />
-                        <Dropdown
+                        /> */}
+                        {/* <Dropdown
                             {...register('country')}
                             width={'100%'}
                             index={234}
@@ -149,7 +171,7 @@ const Step2 = () => {
                                 )?.key
                             }
                             options={countryOptions}
-                        />
+                        /> */}
                     </>
                 )}
             </div>

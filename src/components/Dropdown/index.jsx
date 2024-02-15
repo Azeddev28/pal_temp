@@ -1,15 +1,18 @@
 import { ArrowDisabledIcon, ArrowDownIcon, ArrowUpIcon } from '@/Icons';
 import {
+    Portal,
     Content as SelectContent,
     Item as SelectItem,
+    Root as SelectRoot,
     Trigger as SelectTrigger,
     Viewport as SelectViewport,
+    Value,
 } from '@radix-ui/react-select';
 import { forwardRef, useMemo, useRef, useState } from 'react';
-import Select, { components } from 'react-select';
+import { Checkbox, Input } from '../Input';
 import { Typography } from '../Typography';
 
-const { Option, Menu } = components;
+// const { Option, Menu } = components;
 
 const Trigger = forwardRef(({ isOpen, children, width }, forwardedRef) => (
     <SelectTrigger
@@ -118,7 +121,7 @@ const Dropdown = forwardRef(
 
         return (
             <>
-                {/* <div ref={containerRef}>
+                <div ref={containerRef}>
                     <SelectRoot
                         disabled={disabled}
                         value={selectedKey}
@@ -177,7 +180,7 @@ const Dropdown = forwardRef(
                             </Content>
                         </Portal>
                     </SelectRoot>
-                </div> */}
+                </div>
                 {/* <Select
                     components={{
                         Menu: CustomMenu,
@@ -215,7 +218,7 @@ const Dropdown = forwardRef(
                         },
                     }}
                 /> */}
-                <Select
+                {/* <Select
                     defaultValue={
                         index && {
                             label: options[index].key,
@@ -234,107 +237,107 @@ const Dropdown = forwardRef(
                         IndicatorSeparator: null,
                         Option: InputOption,
                     }}
-                />
+                /> */}
             </>
         );
     }
 );
 
-const InputOption = ({
-    getStyles,
-    Icon,
-    isDisabled,
-    isFocused,
-    isSelected,
-    children,
-    innerProps,
-    ...rest
-}) => {
-    const [isActive, setIsActive] = useState(false);
-    const onMouseDown = () => setIsActive(true);
-    const onMouseUp = () => setIsActive(false);
-    const onMouseLeave = () => setIsActive(false);
+// const InputOption = ({
+//     getStyles,
+//     Icon,
+//     isDisabled,
+//     isFocused,
+//     isSelected,
+//     children,
+//     innerProps,
+//     ...rest
+// }) => {
+//     const [isActive, setIsActive] = useState(false);
+//     const onMouseDown = () => setIsActive(true);
+//     const onMouseUp = () => setIsActive(false);
+//     const onMouseLeave = () => setIsActive(false);
 
-    // styles
-    let bg = 'transparent';
-    if (isFocused) bg = '#eee';
-    if (isActive) bg = '#B2D4FF';
+//     // styles
+//     let bg = 'transparent';
+//     if (isFocused) bg = '#eee';
+//     if (isActive) bg = '#B2D4FF';
 
-    const style = {
-        alignItems: 'center',
-        backgroundColor: bg,
-        color: 'inherit',
-        display: 'flex ',
-    };
+//     const style = {
+//         alignItems: 'center',
+//         backgroundColor: bg,
+//         color: 'inherit',
+//         display: 'flex ',
+//     };
 
-    // prop assignment
-    const props = {
-        ...innerProps,
-        onMouseDown,
-        onMouseUp,
-        onMouseLeave,
-        style,
-    };
+//     // prop assignment
+//     const props = {
+//         ...innerProps,
+//         onMouseDown,
+//         onMouseUp,
+//         onMouseLeave,
+//         style,
+//     };
 
-    return (
-        <components.Option
-            {...rest}
-            isDisabled={isDisabled}
-            isFocused={isFocused}
-            isSelected={isSelected}
-            getStyles={getStyles}
-            innerProps={props}
-            className="flex items-center gap-3"
-        >
-            <input type="checkbox" checked={isSelected} />
-            {children}
-        </components.Option>
-    );
-};
+//     return (
+//         <components.Option
+//             {...rest}
+//             isDisabled={isDisabled}
+//             isFocused={isFocused}
+//             isSelected={isSelected}
+//             getStyles={getStyles}
+//             innerProps={props}
+//             className="flex items-center gap-3"
+//         >
+//             <input type="checkbox" checked={isSelected} />
+//             {children}
+//         </components.Option>
+//     );
+// };
 
-const CustomOption = (props) => {
-    return (
-        <Option {...props}>
-            <input
-                type="text"
-                placeholder="Search for..."
-                style={{
-                    width: '100%',
-                    padding: '8px',
-                    border: '1px solid #ced4da',
-                    borderRadius: '4px',
-                    boxSizing: 'border-box',
-                }}
-            />
-        </Option>
-    );
-};
+// const CustomOption = (props) => {
+//     return (
+//         <Option {...props}>
+//             <input
+//                 type="text"
+//                 placeholder="Search for..."
+//                 style={{
+//                     width: '100%',
+//                     padding: '8px',
+//                     border: '1px solid #ced4da',
+//                     borderRadius: '4px',
+//                     boxSizing: 'border-box',
+//                 }}
+//             />
+//         </Option>
+//     );
+// };
 
-const DropdownIndicator = () => (
-    <div className="pr-2">
-        <svg
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5"
-        >
-            <circle cx="8" cy="8" r="8" fill="#D2EFFF"></circle>
-            <path
-                d="M5.19995 7.2L7.79995 9.8L10.4 7.2"
-                stroke="#005382"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            ></path>
-        </svg>
-    </div>
-);
+// const DropdownIndicator = () => (
+//     <div className="pr-2">
+//         <svg
+//             viewBox="0 0 16 16"
+//             fill="none"
+//             xmlns="http://www.w3.org/2000/svg"
+//             class="w-5 h-5"
+//         >
+//             <circle cx="8" cy="8" r="8" fill="#D2EFFF"></circle>
+//             <path
+//                 d="M5.19995 7.2L7.79995 9.8L10.4 7.2"
+//                 stroke="#005382"
+//                 stroke-width="2"
+//                 stroke-linecap="round"
+//                 stroke-linejoin="round"
+//             ></path>
+//         </svg>
+//     </div>
+// );
 
-const CustomMenu = (props) => (
-    <Menu {...props}>
-        <CustomOption {...props} />
-        {props.children}
-    </Menu>
-);
+// const CustomMenu = (props) => (
+//     <Menu {...props}>
+//         <CustomOption {...props} />
+//         {props.children}
+//     </Menu>
+// );
 
 export { Dropdown };

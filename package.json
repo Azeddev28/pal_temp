@@ -16,6 +16,7 @@
         "prettier": "prettier --write ."
     },
     "dependencies": {
+        "@atlaskit/button": "^17.3.2",
         "@auth0/nextjs-auth0": "^3.3.0",
         "@hookform/resolvers": "^3.3.1",
         "@radix-ui/react-select": "^1.2.2",
