@@ -1,4 +1,3 @@
-import { Dropdown } from '@/components/Dropdown';
 import CustomDropdown from '@/components/Dropdown/dropdown';
 import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
@@ -124,12 +123,11 @@ const Step2 = () => {
                         <CustomDropdown
                             placeholder="Choose your language"
                             onChange={(option) => {
-                                console.log('🚀 ~ Step2 ~ option:', option);
-                                // handleDropDownChange('language', option.value);
+                                handleDropDownChange('language', option.value);
                             }}
                             options={languageOptions}
                             index={17}
-                            {...register('language')}
+                            // {...register('language')}
                         />
                         <CustomDropdown
                             placeholder="Choose your country"
@@ -138,7 +136,7 @@ const Step2 = () => {
                             }}
                             options={countryOptions}
                             index={234}
-                            {...register('country')}
+                            // {...register('country')}
                         />
                         {/* <Dropdown
                             {...register('language')}
@@ -155,8 +153,8 @@ const Step2 = () => {
                                 )?.key
                             }
                             options={languageOptions}
-                        /> */}
-                        {/* <Dropdown
+                        />
+                        <Dropdown
                             {...register('country')}
                             width={'100%'}
                             index={234}
@@ -288,20 +286,31 @@ const Step5 = () => {
                 {isLoading ? (
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
-                    <Dropdown
-                        {...register('company')}
-                        width={'100%'}
-                        onChange={(option) =>
-                            handleDropDownChange('company', option.value)
-                        }
-                        placeholder={'Select your company'}
-                        selectedKey={
-                            companyOptions.find(
-                                (company) => company.value === watch('company')
-                            )?.key
-                        }
-                        options={companyOptions}
-                    />
+                    <>
+                        <CustomDropdown
+                            placeholder={'Select your company'}
+                            onChange={(option) => {
+                                handleDropDownChange('company', option.value);
+                            }}
+                            options={companyOptions}
+                            // {...register('company')}
+                        />
+                        {/* <Dropdown
+                            {...register('company')}
+                            width={'100%'}
+                            onChange={(option) =>
+                                handleDropDownChange('company', option.value)
+                            }
+                            placeholder={'Select your company'}
+                            selectedKey={
+                                companyOptions.find(
+                                    (company) =>
+                                        company.value === watch('company')
+                                )?.key
+                            }
+                            options={companyOptions}
+                        /> */}
+                    </>
                 )}
             </div>
         </div>
@@ -340,21 +349,31 @@ const Step6 = () => {
                 {isLoading ? (
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
-                    <Dropdown
-                        {...register('industry')}
-                        width={'100%'}
-                        onChange={(option) =>
-                            handleDropDownChange('industry', option.value)
-                        }
-                        placeholder={'Select your industry'}
-                        selectedKey={
-                            industryOptions.find(
-                                (industry) =>
-                                    industry.value === watch('industry')
-                            )?.key
-                        }
-                        options={industryOptions}
-                    />
+                    <>
+                        <CustomDropdown
+                            placeholder={'Select your industry'}
+                            onChange={(option) => {
+                                handleDropDownChange('industry', option.value);
+                            }}
+                            options={industryOptions}
+                            // {...register('company')}
+                        />
+                        {/* <Dropdown
+                            {...register('industry')}
+                            width={'100%'}
+                            onChange={(option) =>
+                                handleDropDownChange('industry', option.value)
+                            }
+                            placeholder={'Select your industry'}
+                            selectedKey={
+                                industryOptions.find(
+                                    (industry) =>
+                                        industry.value === watch('industry')
+                                )?.key
+                            }
+                            options={industryOptions}
+                        /> */}
+                    </>
                 )}
             </div>
         </div>
@@ -395,7 +414,15 @@ const Step7 = () => {
                 </Typography>
             </div>
             <div className="pt-11 pb-16 md:pb-[169px] flex flex-col gap-6">
-                <Dropdown
+                <CustomDropdown
+                    placeholder={'Select your job title'}
+                    onChange={(option) => {
+                        handleDropDownChange('jobTitle', option.value);
+                    }}
+                    options={jobs}
+                    // {...register('jobTitle')}
+                />
+                {/* <Dropdown
                     {...register('jobTitle')}
                     width={'100%'}
                     onChange={(option) =>
@@ -406,7 +433,7 @@ const Step7 = () => {
                         jobs.find((job) => job.value === watch('jobTitle'))?.key
                     }
                     options={jobs}
-                />
+                /> */}
             </div>
         </div>
     );
@@ -447,7 +474,18 @@ const Step8 = () => {
                 </Typography>
             </div>
             <div className="pt-11 pb-16 md:pb-[169px] flex flex-col gap-6">
-                <Dropdown
+                <CustomDropdown
+                    placeholder={'Select your interested title'}
+                    onChange={(option) => {
+                        handleDropDownChange(
+                            'interestedJobTitle',
+                            option.value
+                        );
+                    }}
+                    options={jobs}
+                    // {...register('interestedJobTitle')}
+                />
+                {/* <Dropdown
                     {...register('interestedJobTitle')}
                     width={'100%'}
                     onChange={(option) =>
@@ -460,7 +498,7 @@ const Step8 = () => {
                         )?.key
                     }
                     options={jobs}
-                />
+                /> */}
             </div>
         </div>
     );

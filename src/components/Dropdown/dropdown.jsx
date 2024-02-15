@@ -45,12 +45,12 @@ export default class CustomDropdown extends Component {
     toggleOpen = () => {
         this.setState((state) => ({ isOpen: !state.isOpen }));
     };
-    onSelectChange = (e, value) => {
+    onSelectChange = (value) => {
         console.log(
             '🚀 ~ CustomDropdown ~ value:',
             this.props,
             value,
-            this.props.onChange(e, value)
+            this.props.onChange(value)
         );
         this.toggleOpen();
         // this.props.onChange({ key: value.label, value: value.value });
@@ -78,11 +78,10 @@ export default class CustomDropdown extends Component {
                         }}
                     >
                         {value
-                            ? // ? console.log('hehe', this.props.options[value])
-                              this.props.options[value] &&
-                              this.props.options[value].key
-                            : // : this.props.options[value].label
-                              this.props.placeholder}
+                            ? this.props.options[value]
+                                ? this.props.options[value].key
+                                : value.label
+                            : this.props.placeholder}
                     </Button>
                 }
             >

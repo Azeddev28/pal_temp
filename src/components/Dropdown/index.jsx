@@ -107,9 +107,7 @@ const Dropdown = forwardRef(
 
         const handleSelection = (key) => {
             if (!onChange) return;
-            const selectedOption = options.find(
-                (option) => option.key === key.label
-            );
+            const selectedOption = options.find((option) => option.key === key);
             if (!selectedOption) return;
             onChange(selectedOption);
         };
