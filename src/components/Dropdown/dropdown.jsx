@@ -91,7 +91,7 @@ export default class CustomDropdown extends Component {
                     components={{
                         DropdownIndicator,
                         IndicatorSeparator: null,
-                        // Option: InputOption,
+                        Option: InputOption,
                     }}
                     controlShouldRenderValue={false}
                     hideSelectedOptions={false}
@@ -156,7 +156,11 @@ const InputOption = ({
             getStyles={getStyles}
             innerProps={props}
         >
-            <input type="checkbox" checked={isSelected} />
+            <input
+                type="checkbox"
+                checked={isSelected}
+                style={{ marginRight: '15px' }}
+            />
             {children}
         </components.Option>
     );
