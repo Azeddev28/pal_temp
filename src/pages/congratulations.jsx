@@ -1,3 +1,4 @@
+import { withAuthorization } from '@/auth';
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
 import { useState } from 'react';
@@ -65,4 +66,4 @@ const Page = () => {
     );
 };
 
-export default Page;
+export default withAuthorization(Page);
