@@ -21,7 +21,6 @@ import { CompanyLogoWidgetList } from './CompanyLogoWidgetList';
 //   const { user } = await getSession();
 import { useUser } from '@auth0/nextjs-auth0/client';
 
-
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
         async ({ params }) => {
@@ -63,7 +62,7 @@ const Landing = () => {
         });
     };
     if (!isLoading && user) {
-        console.log(user)
+        console.log(user);
         updateWaitListStatusAndRedirect();
         dispatch(setIsUserRegistered());
     }
@@ -123,7 +122,10 @@ const Landing = () => {
                                 </p>
                                 <form
                                     onSubmit={handleSubmit(onSubmit)}
-                                    className="flex gap-2 flex-col md:flex-row md:justify-start md:items-center"
+                                    className={`flex gap-2 flex-col md:flex-row md:justify-start ${
+                                        !formState.errors.email &&
+                                        'md:items-center m-0'
+                                    }`}
                                 >
                                     <Input
                                         {...register('email')}
@@ -141,7 +143,9 @@ const Landing = () => {
                                         }
                                     />
                                     <Button
-                                        className={'w-full md:w-fit'}
+                                        className={`w-full md:w-fit mt-1 ${
+                                            !formState.errors.email && '!mt-0'
+                                        }`}
                                         type="submit"
                                     >
                                         Join waitlist
