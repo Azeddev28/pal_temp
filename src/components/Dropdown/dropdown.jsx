@@ -1,7 +1,6 @@
-import Button from '@atlaskit/button';
 import { Component, useState } from 'react';
-
 import Select, { components, defaultTheme } from 'react-select';
+import { Checkbox } from '../Input';
 
 const options = [
     { value: '1', label: 'Item 1' },
@@ -16,12 +15,28 @@ const options = [
 const { colors } = defaultTheme;
 
 const selectStyles = {
-    control: (provided) => ({
+    control: (provided, state) => ({
         ...provided,
         minWidth: 240,
         margin: 8,
+        border: state.isFocused && '1px solid #005382',
+        '&:hover': {
+            borderColor: state.isFocused && '#005382',
+            backgroundColor: state.isFocused ? '#fff' : '#e5e7eb',
+        },
     }),
-    menu: () => ({ boxShadow: 'inset 0 1px 0 rgba(0, 0, 0, 0.1)' }),
+    menu: () => ({ boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)' }),
+    option: (provided, state) => {
+        console.log('🚀 ~ state:', state);
+        return {
+            ...provided,
+            fontSize: '14px',
+            '&:hover': {
+                // borderColor: state.isFocused && '#005382',
+                background: '#fff !important',
+            },
+        };
+    },
 };
 const Menu = (props) => {
     const shadow = 'hsla(218, 50%, 10%, 0.1)';
@@ -64,32 +79,45 @@ export default class CustomDropdown extends Component {
                 isOpen={isOpen}
                 onClose={this.toggleOpen}
                 target={
-                    <Button
-                        iconAfter={<ChevronDown />}
+                    <button
                         onClick={this.toggleOpen}
-                        isSelected={isOpen}
-                        style={{
-                            width: '100%',
-                            textAlign: 'left',
-                            backgroundColor: '#fff',
-                            fontWeight: 400,
-                            fontSize: '14px',
-                            color: '#0000 !important',
-                        }}
+                        className="p-2 lg:p-4 border-2 border-solid rounded-lg border-theme-border w-full flex items-center justify-between text-xs md:text-sm 2xl:text-base "
                     >
                         {value
                             ? this.props.options[value]
                                 ? this.props.options[value].key
                                 : value.label
                             : this.props.placeholder}
-                    </Button>
+                        <span className="bg-[#D2EFFF] rounded-full ">
+                            <ChevronDown />
+                        </span>
+                    </button>
+                    // <Button
+                    //     iconAfter={<ChevronDown />}
+                    //     onClick={this.toggleOpen}
+                    //     isSelected={isOpen}
+                    //     style={{
+                    //         width: '100%',
+                    //         textAlign: 'left',
+                    //         backgroundColor: '#fff',
+                    //         fontWeight: 400,
+                    //         fontSize: '14px',
+                    //         color: 'red',
+                    //     }}
+                    // >
+                    //     {value
+                    //         ? this.props.options[value]
+                    //             ? this.props.options[value].key
+                    //             : value.label
+                    //         : this.props.placeholder}
+                    // </Button>
                 }
             >
                 <Select
-                    autoFocus
+                    autoFocus={false}
                     backspaceRemovesValue={false}
                     components={{
-                        DropdownIndicator,
+                        DropdownIndicator: null,
                         IndicatorSeparator: null,
                         Option: InputOption,
                     }}
@@ -156,12 +184,14 @@ const InputOption = ({
             getStyles={getStyles}
             innerProps={props}
         >
-            <input
+            <Checkbox checked={isSelected} />
+            {/* <input
                 type="checkbox"
                 checked={isSelected}
                 style={{ marginRight: '15px' }}
-            />
-            {children}
+                // className="h-5 w-5 text-blue-500 focus:ring-blue-400 border-gray-300 rounded cursor-pointer"
+            /> */}
+            <div className="pl-5">{children}</div>
         </components.Option>
     );
 };
@@ -185,8 +215,9 @@ const Dropdown = ({ children, isOpen, target, onClose }) => (
         style={{
             position: 'relative',
             background: '#fff',
-            border: '2px solid #e5e7eb',
-            borderRadius: '0.5rem',
+            // border: '2px solid #e5e7eb',
+            // borderRadius: '0.5rem',
+            // color: 'red',
         }}
     >
         {target}
@@ -216,11 +247,11 @@ const DropdownIndicator = () => (
     </div>
 );
 const ChevronDown = () => (
-    <Svg style={{ marginRight: -6 }}>
+    <Svg>
         <path
             d="M8.292 10.293a1.009 1.009 0 0 0 0 1.419l2.939 2.965c.218.215.5.322.779.322s.556-.107.769-.322l2.93-2.955a1.01 1.01 0 0 0 0-1.419.987.987 0 0 0-1.406 0l-2.298 2.317-2.307-2.327a.99.99 0 0 0-1.406 0z"
             stroke="#005382"
-            strokeWidth={2}
+            strokeWidth={1}
             fill="currentColor"
             fillRule="evenodd"
         />

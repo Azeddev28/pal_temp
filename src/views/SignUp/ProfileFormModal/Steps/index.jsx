@@ -189,7 +189,7 @@ const Step3 = () => {
                     What is your name?
                 </Typography>
             </div>
-            <div className="pb-10 md:pb-[97px] flex flex-col gap-6">
+            <div className="pb-10 md:pb-[77px] flex flex-col gap-6">
                 <Input
                     type="text"
                     {...register('firstName')}
