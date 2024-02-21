@@ -79,7 +79,7 @@ export default class CustomDropdown extends Component {
                 isOpen={isOpen}
                 onClose={this.toggleOpen}
                 target={
-                    <button
+                    <div
                         onClick={this.toggleOpen}
                         className="p-2 lg:p-4 border-2 border-solid rounded-lg border-theme-border w-full flex items-center justify-between text-xs md:text-sm 2xl:text-base "
                     >
@@ -91,7 +91,7 @@ export default class CustomDropdown extends Component {
                         <span className="bg-[#D2EFFF] rounded-full ">
                             <ChevronDown />
                         </span>
-                    </button>
+                    </div>
                     // <Button
                     //     iconAfter={<ChevronDown />}
                     //     onClick={this.toggleOpen}
