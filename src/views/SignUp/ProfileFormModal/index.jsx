@@ -107,10 +107,12 @@ const StepForm = () => {
     return (
         <>
             <div>
-                <ArrowLeftIcon
-                    className="w-4 h-4 md:w-6 md:h-6 absolute top-[18px] left-3 cursor-pointer text-brandBlue"
-                    onClick={onBackClick}
-                />
+                {activeStep !== 0 && (
+                    <ArrowLeftIcon
+                        className="w-4 h-4 md:w-6 md:h-6 absolute top-[18px] left-3 cursor-pointer text-brandBlue"
+                        onClick={onBackClick}
+                    />
+                )}
             </div>
             <div className="p-10 h-full flex flex-col justify-between">
                 <div className="flex flex-row w-32 md:w-48 mx-auto">
