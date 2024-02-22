@@ -115,7 +115,7 @@ const Step2 = () => {
                 </Typography>
             </div>
 
-            <div className="pb-14 md:pb-[134px] flex flex-col gap-6">
+            <div className="pb-14 md:pb-[123px] flex flex-col gap-6">
                 {isLoadingCountries || isLoadingLanguages ? (
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
@@ -189,7 +189,7 @@ const Step3 = () => {
                     What is your name?
                 </Typography>
             </div>
-            <div className="pb-10 md:pb-[77px] flex flex-col gap-6">
+            <div className="pb-10 md:pb-[50px] flex flex-col gap-6">
                 <Input
                     type="text"
                     {...register('firstName')}
@@ -235,7 +235,7 @@ const Step4 = () => {
                     What are you looking to do on palplug?
                 </Typography>
             </div>
-            <div className="pt-6 pb-16 md:pb-[179px] flex flex-col gap-6">
+            <div className="pt-6 pb-16 md:pb-[145px] flex flex-col gap-6">
                 <Radio
                     {...register('purpose')}
                     id="be-a-palplug"
@@ -282,7 +282,7 @@ const Step5 = () => {
                     Where do you work?
                 </Typography>
             </div>
-            <div className="pt-11 pb-16 md:pb-[169px] flex flex-col gap-6">
+            <div className="pt-11 pb-16 md:pb-[145px] flex flex-col gap-6">
                 {isLoading ? (
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
@@ -345,7 +345,7 @@ const Step6 = () => {
                     What field are you interested in working in?
                 </Typography>
             </div>
-            <div className="pt-11 pb-16 md:pb-[169px] flex flex-col gap-6">
+            <div className="pt-11 pb-16 md:pb-[145px] flex flex-col gap-6">
                 {isLoading ? (
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
@@ -413,7 +413,7 @@ const Step7 = () => {
                     What is your job title?
                 </Typography>
             </div>
-            <div className="pt-11 pb-16 md:pb-[169px] flex flex-col gap-6">
+            <div className="pt-11 pb-16 md:pb-[145px] flex flex-col gap-6">
                 <CustomDropdown
                     placeholder={'Select your job title'}
                     onChange={(option) => {
@@ -473,7 +473,7 @@ const Step8 = () => {
                     What role are you most interested in?
                 </Typography>
             </div>
-            <div className="pt-11 pb-16 md:pb-[169px] flex flex-col gap-6">
+            <div className="pt-11 pb-16 md:pb-[145px] flex flex-col gap-6">
                 <CustomDropdown
                     placeholder={'Select your interested title'}
                     onChange={(option) => {
