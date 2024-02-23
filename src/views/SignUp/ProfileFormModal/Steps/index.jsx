@@ -2,7 +2,7 @@ import CustomDropdown from '@/components/Dropdown/dropdown';
 import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useMemo, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { PulseLoader } from 'react-spinners';
 import { useStep } from './context';
 
@@ -256,7 +256,7 @@ const Step4 = () => {
 
 const Step5 = () => {
     const [companies, isLoading] = useStep('companies');
-    const { register, setValue, watch } = useFormContext();
+    const { register, setValue, watch, control } = useFormContext();
 
     const companyOptions = useMemo(() => {
         if (!companies) return [];
@@ -266,11 +266,13 @@ const Step5 = () => {
         }));
     }, [companies]);
 
-    const handleDropDownChange = (name, value) =>
-        setValue(name, value, {
+    const handleDropDownChange = (name, value) => {
+        console.log('🚀 ~ handleDropDownChange ~ name:', name, value);
+        return setValue(name, value, {
             shouldValidate: true,
             shouldDirty: true,
         });
+    };
 
     return (
         <div className="pt-10">
@@ -287,13 +289,24 @@ const Step5 = () => {
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
                     <>
-                        <CustomDropdown
-                            placeholder={'Select your company'}
-                            onChange={(option) => {
-                                handleDropDownChange('company', option.value);
-                            }}
-                            options={companyOptions}
-                            // {...register('company')}
+                        <Controller
+                            name="company"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <CustomDropdown
+                                    placeholder={'Select your company'}
+                                    onChange={(option) => {
+                                        handleDropDownChange(
+                                            'company',
+                                            option.value
+                                        );
+                                    }}
+                                    options={companyOptions}
+                                    inputRef={field.ref}
+                                    {...field}
+                                />
+                            )}
                         />
                         {/* <Dropdown
                             {...register('company')}
@@ -319,7 +332,7 @@ const Step5 = () => {
 
 const Step6 = () => {
     const [industries, isLoading] = useStep('industries');
-    const { register, setValue, watch } = useFormContext();
+    const { register, setValue, watch, control } = useFormContext();
 
     const industryOptions = useMemo(() => {
         if (!industries) return [];
@@ -350,13 +363,22 @@ const Step6 = () => {
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
                     <>
-                        <CustomDropdown
-                            placeholder={'Select your industry'}
-                            onChange={(option) => {
-                                handleDropDownChange('industry', option.value);
-                            }}
-                            options={industryOptions}
-                            // {...register('company')}
+                        <Controller
+                            name="industry"
+                            control={control}
+                            render={({ field }) => (
+                                <CustomDropdown
+                                    placeholder={'Select your industry'}
+                                    onChange={(option) => {
+                                        handleDropDownChange(
+                                            'industry',
+                                            option.value
+                                        );
+                                    }}
+                                    options={industryOptions}
+                                    {...field}
+                                />
+                            )}
                         />
                         {/* <Dropdown
                             {...register('industry')}
@@ -381,7 +403,7 @@ const Step6 = () => {
 };
 
 const Step7 = () => {
-    const { register, setValue, watch } = useFormContext();
+    const { register, setValue, watch, control } = useFormContext();
 
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {
@@ -414,13 +436,19 @@ const Step7 = () => {
                 </Typography>
             </div>
             <div className="pt-11 pb-16 md:pb-[145px] flex flex-col gap-6">
-                <CustomDropdown
-                    placeholder={'Select your job title'}
-                    onChange={(option) => {
-                        handleDropDownChange('jobTitle', option.value);
-                    }}
-                    options={jobs}
-                    // {...register('jobTitle')}
+                <Controller
+                    name="company"
+                    control={control}
+                    render={({ field }) => (
+                        <CustomDropdown
+                            placeholder={'Select your job title'}
+                            onChange={(option) => {
+                                handleDropDownChange('jobTitle', option.value);
+                            }}
+                            options={jobs}
+                            {...field}
+                        />
+                    )}
                 />
                 {/* <Dropdown
                     {...register('jobTitle')}
@@ -440,7 +468,7 @@ const Step7 = () => {
 };
 
 const Step8 = () => {
-    const { register, setValue, watch } = useFormContext();
+    const { register, setValue, watch, control } = useFormContext();
 
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {
@@ -463,6 +491,7 @@ const Step8 = () => {
             value: 'Mechanical Engineer',
         },
     ];
+    console.log('watchwatch', watch('interestedJobTitle'));
     return (
         <div className="pt-10">
             <div className="mb-12">
@@ -474,16 +503,22 @@ const Step8 = () => {
                 </Typography>
             </div>
             <div className="pt-11 pb-16 md:pb-[145px] flex flex-col gap-6">
-                <CustomDropdown
-                    placeholder={'Select your interested title'}
-                    onChange={(option) => {
-                        handleDropDownChange(
-                            'interestedJobTitle',
-                            option.value
-                        );
-                    }}
-                    options={jobs}
-                    // {...register('interestedJobTitle')}
+                <Controller
+                    name="company"
+                    control={control}
+                    render={({ field }) => (
+                        <CustomDropdown
+                            placeholder={'Select your interested title'}
+                            onChange={(option) => {
+                                handleDropDownChange(
+                                    'interestedJobTitle',
+                                    option.value
+                                );
+                            }}
+                            options={jobs}
+                            {...field}
+                        />
+                    )}
                 />
                 {/* <Dropdown
                     {...register('interestedJobTitle')}

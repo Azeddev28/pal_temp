@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import { Component, forwardRef, useState } from 'react';
 import Select, { components, defaultTheme } from 'react-select';
 import { Checkbox } from '../Input';
 
@@ -55,20 +55,14 @@ const Menu = (props) => {
         />
     );
 };
-export default class CustomDropdown extends Component {
+class CustomDropdown extends Component {
     state = { isOpen: false, value: this.props.index };
     toggleOpen = () => {
         this.setState((state) => ({ isOpen: !state.isOpen }));
     };
     onSelectChange = (value) => {
-        console.log(
-            '🚀 ~ CustomDropdown ~ value:',
-            this.props,
-            value,
-            this.props.onChange(value)
-        );
         this.toggleOpen();
-        // this.props.onChange({ key: value.label, value: value.value });
+        this.props.onChange(value.value);
         this.setState({ value });
     };
     render() {
@@ -80,6 +74,7 @@ export default class CustomDropdown extends Component {
                 onClose={this.toggleOpen}
                 target={
                     <div
+                        ref={(ref) => (this.targetRef = ref)}
                         onClick={this.toggleOpen}
                         className="p-2 lg:p-4 border-2 border-solid rounded-lg border-theme-border w-full flex items-center justify-between text-xs md:text-sm 2xl:text-base "
                     >
@@ -92,28 +87,10 @@ export default class CustomDropdown extends Component {
                             <ChevronDown />
                         </span>
                     </div>
-                    // <Button
-                    //     iconAfter={<ChevronDown />}
-                    //     onClick={this.toggleOpen}
-                    //     isSelected={isOpen}
-                    //     style={{
-                    //         width: '100%',
-                    //         textAlign: 'left',
-                    //         backgroundColor: '#fff',
-                    //         fontWeight: 400,
-                    //         fontSize: '14px',
-                    //         color: 'red',
-                    //     }}
-                    // >
-                    //     {value
-                    //         ? this.props.options[value]
-                    //             ? this.props.options[value].key
-                    //             : value.label
-                    //         : this.props.placeholder}
-                    // </Button>
                 }
             >
                 <Select
+                    ref={this.props.innerRef}
                     autoFocus={false}
                     backspaceRemovesValue={false}
                     components={{
@@ -138,7 +115,9 @@ export default class CustomDropdown extends Component {
         );
     }
 }
-
+export default forwardRef((props, ref) => (
+    <CustomDropdown innerRef={ref} {...props} />
+));
 const InputOption = ({
     getStyles,
     Icon,
