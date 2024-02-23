@@ -376,6 +376,7 @@ const Step6 = () => {
                                         );
                                     }}
                                     options={industryOptions}
+                                    inputRef={field.ref}
                                     {...field}
                                 />
                             )}
@@ -437,7 +438,7 @@ const Step7 = () => {
             </div>
             <div className="pt-11 pb-16 md:pb-[145px] flex flex-col gap-6">
                 <Controller
-                    name="company"
+                    name="jobTitle"
                     control={control}
                     render={({ field }) => (
                         <CustomDropdown
@@ -446,6 +447,7 @@ const Step7 = () => {
                                 handleDropDownChange('jobTitle', option.value);
                             }}
                             options={jobs}
+                            inputRef={field.ref}
                             {...field}
                         />
                     )}
@@ -504,7 +506,7 @@ const Step8 = () => {
             </div>
             <div className="pt-11 pb-16 md:pb-[145px] flex flex-col gap-6">
                 <Controller
-                    name="company"
+                    name="interestedJobTitle"
                     control={control}
                     render={({ field }) => (
                         <CustomDropdown
@@ -516,6 +518,7 @@ const Step8 = () => {
                                 );
                             }}
                             options={jobs}
+                            inputRef={field.ref}
                             {...field}
                         />
                     )}
