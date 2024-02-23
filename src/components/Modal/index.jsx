@@ -7,7 +7,8 @@ const Modal = ({ isOpen, onClose, bannerImageSrc, children, height }) => {
         <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 p-4 md:p-10">
             <div
                 className={`max-h-full ${
-                    height && 'h-[85%]'
+                    height &&
+                    'h-[85%] sm:h-[95%] md:h-[75%] xl:h-[55%] 2xl:h-[30%]'
                 } w-full max-w-xl overflow-y-auto rounded-xl bg-white sm:rounded-2xl scrollbar-hide`}
             >
                 <div className={`w-full relative ${height && 'h-full'}`}>

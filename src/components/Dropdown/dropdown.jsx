@@ -17,7 +17,7 @@ const { colors } = defaultTheme;
 const selectStyles = {
     control: (provided, state) => ({
         ...provided,
-        minWidth: 240,
+        // minWidth: 240,
         margin: 8,
         border: state.isFocused && '1px solid #005382',
         '&:hover': {
@@ -25,7 +25,9 @@ const selectStyles = {
             backgroundColor: state.isFocused ? '#fff' : '#e5e7eb',
         },
     }),
-    menu: () => ({ boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)' }),
+    menu: () => ({
+        boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)',
+    }),
     option: (provided, state) => {
         console.log('🚀 ~ state:', state);
         return {
