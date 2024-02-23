@@ -27,9 +27,13 @@ const selectStyles = {
     }),
     menu: () => ({
         boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)',
+        // overflow: scroll,
+    }),
+    menuList: (base) => ({
+        ...base,
+        maxHeight: '100px', // your desired height
     }),
     option: (provided, state) => {
-        console.log('🚀 ~ state:', state);
         return {
             ...provided,
             fontSize: '14px',
