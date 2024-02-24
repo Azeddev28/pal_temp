@@ -160,7 +160,7 @@ const ProfileFormModal = ({ isOpen, onClose }) => {
     const [showSignUpForm, setShowSignUpForm] = useState(false);
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} height={showSignUpForm}>
+        <Modal isOpen={isOpen} onClose={onClose}>
             {!showSignUpForm && (
                 <Welcome onContinue={() => setShowSignUpForm(true)} />
             )}
