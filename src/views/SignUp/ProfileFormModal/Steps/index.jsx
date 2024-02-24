@@ -412,19 +412,28 @@ const Step7 = () => {
             shouldDirty: true,
         });
     const jobs = [
-        {
-            key: 'Software Engineer',
-            value: 'Software Engineer',
-        },
-        {
-            key: 'Chartered Accountant',
-            value: 'Chartered Accountant',
-        },
-        { key: 'Dentist', value: 'Dentist' },
-        {
-            key: 'Mechanical Engineer',
-            value: 'Mechanical Engineer',
-        },
+        { key: 'Accountant', value: 'Accountant' },
+        { key: 'Biomedical Engineer', value: 'Biomedical Engineer' },
+        { key: 'Business Analyst', value: 'Business Analyst' },
+        { key: 'Business Developer', value: 'Business Developer' },
+        { key: 'Civil Engineer', value: 'Civil Engineer' },
+        { key: 'Copy Writer', value: 'Copy Writer' },
+        { key: 'Data Scientist', value: 'Data Scientist' },
+        { key: 'Hardware Engineer', value: 'Hardware Engineer' },
+        { key: 'Human Resources', value: 'Human Resources' },
+        { key: 'Marketing', value: 'Marketing' },
+        { key: 'Marketing Associate', value: 'Marketing Associate' },
+        { key: 'Marketing Manager', value: 'Marketing Manager' },
+        { key: 'Networking Engineer', value: 'Networking Engineer' },
+        { key: 'Operations', value: 'Operations' },
+        { key: 'Product Designer', value: 'Product Designer' },
+        { key: 'Product Manager', value: 'Product Manager' },
+        { key: 'QA Engineer', value: 'QA Engineer' },
+        { key: 'Recruiter', value: 'Recruiter' },
+        { key: 'Sales', value: 'Sales' },
+        { key: 'Software Engineer', value: 'Software Engineer' },
+        { key: 'Technical Recruiter', value: 'Technical Recruiter' },
+        { key: 'UX/UI Designer', value: 'UX/UI Designer' },
     ];
     return (
         <div className="pt-10">
