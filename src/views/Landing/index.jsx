@@ -36,7 +36,11 @@ const emailSchema = yup.object().shape({
     email: yup
         .string()
         .email('Please enter valid email')
-        .required('Please enter email'),
+        .required('Please enter email')
+        .matches(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            'Please enter valid email'
+        ),
 });
 
 const Landing = () => {
@@ -128,7 +132,9 @@ const Landing = () => {
                                         }
                                     />
                                     <Button
-                                        className={'w-full md:w-fit'}
+                                        className={
+                                            'w-full md:w-fit self-baseline mt-1'
+                                        }
                                         type="submit"
                                     >
                                         Join waitlist

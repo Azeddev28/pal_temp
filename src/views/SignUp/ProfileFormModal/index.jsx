@@ -98,6 +98,7 @@ const StepForm = () => {
     };
 
     const FormStep = STEPS[activeStep].component;
+
     return (
         <>
             <div>

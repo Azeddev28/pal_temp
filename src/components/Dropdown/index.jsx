@@ -9,7 +9,7 @@ import {
     Value,
 } from '@radix-ui/react-select';
 import { forwardRef, useMemo, useRef, useState } from 'react';
-import { Checkbox, Input } from '../Input';
+import { Radio } from '../Input';
 import { Typography } from '../Typography';
 
 const Trigger = forwardRef(({ isOpen, children, width }, forwardedRef) => (
@@ -145,10 +145,13 @@ const Dropdown = forwardRef(
                                     ?.slice(0, page * 200)
                                     .map((option, index) => (
                                         <Item key={index} value={option.key}>
-                                            <Checkbox
+                                          
+                                                <Radio
                                                 defaultChecked={
                                                     selectedKey === option.key
                                                 }
+                                                id={index}
+                                                value={option.key}
                                             />
                                             <Typography variant={'body'}>
                                                 {option.key}
