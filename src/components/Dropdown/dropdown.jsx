@@ -1,6 +1,6 @@
 import { Component, forwardRef, useState } from 'react';
 import Select, { components, defaultTheme } from 'react-select';
-import { Checkbox } from '../Input';
+import { Radio } from '../Input';
 
 const options = [
     { value: '1', label: 'Item 1' },
@@ -169,7 +169,7 @@ const InputOption = ({
             getStyles={getStyles}
             innerProps={props}
         >
-            <Checkbox checked={isSelected} />
+            <Radio checked={isSelected} />
             {/* <input
                 type="checkbox"
                 checked={isSelected}

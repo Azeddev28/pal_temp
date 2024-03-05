@@ -74,7 +74,7 @@ const Step2 = () => {
     const [countries, isLoadingCountries] = useStep('countries');
     const [languages, isLoadingLanguages] = useStep('languages');
 
-    const { register, setValue, watch } = useFormContext();
+    const { register, setValue, watch, control } = useFormContext();
 
     const countryOptions = useMemo(() => {
         if (!countries) return [];
@@ -120,24 +120,45 @@ const Step2 = () => {
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
                     <>
-                        <CustomDropdown
-                            placeholder="Choose your language"
-                            onChange={(option) => {
-                                handleDropDownChange('language', option.value);
-                            }}
-                            options={languageOptions}
-                            index={17}
-                            // {...register('language')}
+                        <Controller
+                            name="jobTitle"
+                            control={control}
+                            render={({ field }) => (
+                                <CustomDropdown
+                                    placeholder="Choose your language"
+                                    onChange={(option) => {
+                                        handleDropDownChange(
+                                            'language',
+                                            option.value
+                                        );
+                                    }}
+                                    options={languageOptions}
+                                    index={17}
+                                    inputRef={field.ref}
+                                    {...field}
+                                />
+                            )}
                         />
-                        <CustomDropdown
-                            placeholder="Choose your country"
-                            onChange={(option) => {
-                                handleDropDownChange('country', option.value);
-                            }}
-                            options={countryOptions}
-                            index={234}
-                            // {...register('country')}
+                        <Controller
+                            name="jobTitle"
+                            control={control}
+                            render={({ field }) => (
+                                <CustomDropdown
+                                    placeholder="Choose your country"
+                                    onChange={(option) => {
+                                        handleDropDownChange(
+                                            'country',
+                                            option.value
+                                        );
+                                    }}
+                                    options={countryOptions}
+                                    index={234}
+                                    inputRef={field.ref}
+                                    {...field}
+                                />
+                            )}
                         />
+
                         {/* <Dropdown
                             {...register('language')}
                             width={'100%'}
