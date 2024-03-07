@@ -1,6 +1,5 @@
-import { withAuthorization } from '@/auth/withAuthorization';
+import { withAuthorization } from '@/auth';
 import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useState } from 'react';
 
@@ -36,15 +35,25 @@ const Page = () => {
                             sharing the link.
                         </Typography>
                     </div>
-                    <div className="flex flex-row items-end gap-2">
+                    <p className="text-xs md:text-sm 2xl:text-base font-semibold">
+                        Share Link
+                    </p>
+                    <div className="flex flex-row items-center gap-2 mt-2">
                         <div className="w-full">
-                            <Input
+                            <input
+                                readOnly={true}
+                                type="text"
+                                placeholder={url}
+                                value={url}
+                                className="w-full p-3 bg-white border-2 border-solid rounded-lg outline-none   hover:bg-[#F5F8FF] active:border-[#8bb4ff] active:bg-[#F5F8FF] focus:border-brandBlue focus:bg-white "
+                            />
+                            {/* <Input
                                 type="text"
                                 placeholder={url}
                                 value={url}
                                 label={'Share Link'}
                                 readOnly={true}
-                            />
+                            /> */}
                         </div>
 
                         <Button onClick={copyToClipboard}>

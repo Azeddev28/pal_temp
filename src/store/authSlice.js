@@ -7,9 +7,10 @@ const initialState = {
     accessToken: null,
     isUserRegistered: false,
     hasJoinedWaitList: false,
-    firstName: '',
+    firstName: 'w',
     lastName: '',
     email: '',
+    firebaseAuthObj: null,
 };
 
 // Actual Slice
@@ -22,17 +23,25 @@ export const authSlice = createSlice({
             state.authState = action.payload;
         },
         setUserRegistrationInfo(state, action) {
-            state.firstName = action.payload.first_name;
-            state.email = action.payload.email;
-            state.lastName = action.payload.last_name;
-            state.accessToken = action.payload.access_token;
-            state.isUserRegistered = action.payload.access_token ? true : false;
+            console.log('🚀 ~ setUserRegistrationInfo ~ action:', action);
+            if (action.payload) {
+                state.firstName = action.payload.displayName.split(' ')[0];
+                state.email = action.payload.email;
+                state.lastName = action.payload.displayName.split(' ')[1];
+                state.accessToken = action.payload.accessToken;
+                state.isUserRegistered = action.payload.accessToken
+                    ? true
+                    : false;
+            }
         },
         setIsUserRegistered(state) {
             state.isUserRegistered = true;
         },
         setHasJoinedWaitlist(state) {
             state.hasJoinedWaitList = true;
+        },
+        setFirebaseAuth(state, action) {
+            state.firebaseAuthObj = action.payload;
         },
     },
 
@@ -52,6 +61,7 @@ export const {
     setUserRegistrationInfo,
     setIsUserRegistered,
     setHasJoinedWaitlist,
+    setFirebaseAuth,
 } = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;

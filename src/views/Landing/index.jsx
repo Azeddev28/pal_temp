@@ -16,6 +16,10 @@ import {
 } from '../../store/authSlice';
 import { wrapper } from '../../store/store';
 import { CompanyLogoWidgetList } from './CompanyLogoWidgetList';
+// import { getSession } from '@auth0/nextjs-auth0';
+
+//   const { user } = await getSession();
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
@@ -46,6 +50,8 @@ const emailSchema = yup.object().shape({
 const Landing = () => {
     const router = useRouter();
     const dispatch = useDispatch();
+    const { user, error, isLoading } = useUser();
+
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
         defaultValues: {
@@ -59,8 +65,14 @@ const Landing = () => {
             shallow: true,
         });
     };
+    if (!isLoading && user) {
+        console.log(user);
+        updateWaitListStatusAndRedirect();
+        dispatch(setIsUserRegistered());
+    }
 
     const onSubmit = ({ email }) => {
+        // updateWaitListStatusAndRedirect();
         postRequest(getRoute('joinWaitlist'), { email })
             .then((res) => {
                 updateWaitListStatusAndRedirect();
@@ -114,7 +126,10 @@ const Landing = () => {
                                 </p>
                                 <form
                                     onSubmit={handleSubmit(onSubmit)}
-                                    className="flex gap-2 flex-col md:flex-row md:justify-start md:items-center"
+                                    className={`flex gap-2 flex-col md:flex-row md:justify-start ${
+                                        !formState.errors.email &&
+                                        'md:items-center m-0'
+                                    }`}
                                 >
                                     <Input
                                         {...register('email')}
@@ -132,9 +147,9 @@ const Landing = () => {
                                         }
                                     />
                                     <Button
-                                        className={
-                                            'w-full md:w-fit self-baseline mt-1'
-                                        }
+                                        className={`w-full md:w-fit mt-1 ${
+                                            !formState.errors.email && '!mt-1'
+                                        }`}
                                         type="submit"
                                     >
                                         Join waitlist

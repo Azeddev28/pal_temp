@@ -2,7 +2,7 @@ import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
 import Image from 'next/image';
 import Link from 'next/link';
-import logoImage from '../../../../public/images/logo.png';
+import logoImage from '../../../../public/images/logo1.svg';
 
 const Welcome = ({ onContinue }) => {
     return (
