@@ -8,7 +8,6 @@ import { useStep } from './context';
 
 const Step1 = () => {
     const [showAnotherGender, setShowAnotherGender] = useState(false);
-
     const { register, formState, watch } = useFormContext();
 
     return (
@@ -263,6 +262,7 @@ const Step4 = () => {
                     id="be-a-palplug"
                     value="Plug"
                     label="I want to be a plug"
+                    tooltip={true}
                 />
 
                 <Radio

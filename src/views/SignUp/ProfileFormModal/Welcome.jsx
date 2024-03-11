@@ -1,7 +1,6 @@
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
 import Image from 'next/image';
-import Link from 'next/link';
 import logoImage from '../../../../public/images/logo1.svg';
 
 const Welcome = ({ onContinue }) => {
@@ -31,17 +30,6 @@ const Welcome = ({ onContinue }) => {
                 <Button className="w-full" onClick={onContinue}>
                     <Typography variant={'body'}>Continue</Typography>
                 </Button>
-            </div>
-            <div className="w-full border-t border-solid border-grey0 py-8">
-                <Typography variant={'body'}>
-                    Already a member?{' '}
-                    <Link
-                        href="#"
-                        className="text-brandBlue hover:text-hoverBlue font-semibold"
-                    >
-                        Sign in
-                    </Link>
-                </Typography>
             </div>
         </div>
     );
