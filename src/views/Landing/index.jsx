@@ -107,8 +107,8 @@ const Landing = () => {
                     </div>
                     <div className="order-2 md:order-1 md:w-1/2">
                         <div className="h-full flex flex-col items-center justify-center p-5 gap-10 lg:gap-16 xl:pl-24">
-                            <div className="flex flex-col text-center gap-10">
-                                <h1 className="text-3xl lg:text-[42px] mb-4 text-brandBlue dark:text-brandBlue font-bold leading-10">
+                            <div className="flex flex-col  gap-10">
+                                <h1 className="text-3xl lg:text-[42px] mb-4 text-brandBlue dark:text-brandBlue font-semibold leading-10">
                                     Looking for a referral or want to get paid
                                     to refer others?
                                 </h1>

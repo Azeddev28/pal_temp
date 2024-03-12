@@ -3,6 +3,7 @@ import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import Select from 'react-select';
 import { PulseLoader } from 'react-spinners';
 import { useStep } from './context';
 
@@ -282,8 +283,9 @@ const Step5 = () => {
 
     const companyOptions = useMemo(() => {
         if (!companies) return [];
+
         return companies.map((company) => ({
-            key: company.name,
+            label: company.name,
             value: company.uuid,
         }));
     }, [companies]);
@@ -316,7 +318,8 @@ const Step5 = () => {
                             control={control}
                             rules={{ required: true }}
                             render={({ field }) => (
-                                <CustomDropdown
+                                <Select
+                                    {...field}
                                     placeholder={'Select your company'}
                                     onChange={(option) => {
                                         handleDropDownChange(
@@ -325,26 +328,10 @@ const Step5 = () => {
                                         );
                                     }}
                                     options={companyOptions}
-                                    inputRef={field.ref}
-                                    {...field}
+                                    value={field.label}
                                 />
                             )}
                         />
-                        {/* <Dropdown
-                            {...register('company')}
-                            width={'100%'}
-                            onChange={(option) =>
-                                handleDropDownChange('company', option.value)
-                            }
-                            placeholder={'Select your company'}
-                            selectedKey={
-                                companyOptions.find(
-                                    (company) =>
-                                        company.value === watch('company')
-                                )?.key
-                            }
-                            options={companyOptions}
-                        /> */}
                     </>
                 )}
             </div>
