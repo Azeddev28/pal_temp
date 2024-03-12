@@ -7,6 +7,27 @@ import Select from 'react-select';
 import { PulseLoader } from 'react-spinners';
 import { useStep } from './context';
 
+const Svg = (p) => (
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        focusable="false"
+        role="presentation"
+        {...p}
+    />
+);
+const ChevronDown = () => (
+    <Svg>
+        <path
+            d="M8.292 10.293a1.009 1.009 0 0 0 0 1.419l2.939 2.965c.218.215.5.322.779.322s.556-.107.769-.322l2.93-2.955a1.01 1.01 0 0 0 0-1.419.987.987 0 0 0-1.406 0l-2.298 2.317-2.307-2.327a.99.99 0 0 0-1.406 0z"
+            stroke="#005382"
+            strokeWidth={1}
+            fill="currentColor"
+            fillRule="evenodd"
+        />
+    </Svg>
+);
 const Step1 = () => {
     const [showAnotherGender, setShowAnotherGender] = useState(false);
     const { register, formState, watch } = useFormContext();
@@ -297,7 +318,47 @@ const Step5 = () => {
             shouldDirty: true,
         });
     };
-
+    const selectStyles = {
+        control: (provided, state) => ({
+            ...provided,
+            // minWidth: 240,
+            margin: 8,
+            padding: '1rem',
+            fontSize: '.875rem',
+            borderRadius: '0.5rem',
+            border: state.isFocused && '1px solid #005382',
+            '&:hover': {
+                borderColor: state.isFocused && '#005382',
+                backgroundColor: state.isFocused ? '#fff' : '#e5e7eb',
+            },
+        }),
+        // menu: () => ({
+        //     boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)',
+        //     // overflow: scroll,
+        // }),
+        menuList: (base) => ({
+            ...base,
+            maxHeight: '100px', // your desired height
+        }),
+        option: (provided, state) => {
+            return {
+                ...provided,
+                fontSize: '14px',
+                background: '#fff !important',
+                '&:hover': {
+                    // borderColor: state.isFocused && '#005382',
+                    background: '#fff !important',
+                },
+            };
+        },
+        indicatorsContainer: (provided, state) => ({
+            ...provided,
+            backgroundColor: '#D2EFFF',
+            borderRadius: '9999px',
+            paddingLeft: '2px',
+            paddingRight: '2px',
+        }),
+    };
     return (
         <div className="pt-10">
             <div className="mb-12">
@@ -320,6 +381,29 @@ const Step5 = () => {
                             render={({ field }) => (
                                 <Select
                                     {...field}
+                                    components={{
+                                        DropdownIndicator: ChevronDown,
+                                        IndicatorSeparator: null,
+                                    }}
+                                    placeholder={'Select your company'}
+                                    onChange={(option) => {
+                                        handleDropDownChange(
+                                            'company',
+                                            option.value
+                                        );
+                                    }}
+                                    styles={selectStyles}
+                                    options={companyOptions}
+                                    value={field.label}
+                                />
+                            )}
+                        />
+                        {/* <Controller
+                            name="company"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <CustomDropdown
                                     placeholder={'Select your company'}
                                     onChange={(option) => {
                                         handleDropDownChange(
@@ -328,10 +412,12 @@ const Step5 = () => {
                                         );
                                     }}
                                     options={companyOptions}
-                                    value={field.label}
+                                    // index={234}
+                                    inputRef={field.ref}
+                                    {...field}
                                 />
                             )}
-                        />
+                        /> */}
                     </>
                 )}
             </div>
