@@ -1,4 +1,5 @@
 import CustomDropdown from '@/components/Dropdown/dropdown';
+import SearchBar from '@/components/Dropdown/suggestion';
 import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useMemo, useState } from 'react';
@@ -301,6 +302,7 @@ const Step4 = () => {
 const Step5 = () => {
     const [companies, isLoading] = useStep('companies');
     const { register, setValue, watch, control } = useFormContext();
+    console.log('🚀 ~ Step5 ~ watch:', watch('company'));
 
     const companyOptions = useMemo(() => {
         if (!companies) return [];
@@ -374,6 +376,11 @@ const Step5 = () => {
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
                     <>
+                        <SearchBar
+                            options={companyOptions}
+                            setValue={setValue}
+                            name="company"
+                        />
                         <Controller
                             name="company"
                             control={control}
