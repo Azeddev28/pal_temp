@@ -380,6 +380,7 @@ const Step5 = () => {
                             options={companyOptions}
                             setValue={setValue}
                             name="company"
+                            register={register}
                         />
                         <Controller
                             name="company"

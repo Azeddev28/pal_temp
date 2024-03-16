@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const SearchBar = ({ options, name, setValue }) => {
+const SearchBar = ({ options, name, setValue, register }) => {
     console.log('🚀 ~ SearchBar ~ name:', name);
     const [query, setQuery] = useState('');
     console.log('🚀 ~ SearchBar ~ query:', query);
@@ -35,6 +35,7 @@ const SearchBar = ({ options, name, setValue }) => {
         <form onSubmit={handleSubmit}>
             <div className="search-bar">
                 <input
+                    {...register(name)}
                     type="text"
                     value={query.label ? query.label : query}
                     onChange={(e) => {
