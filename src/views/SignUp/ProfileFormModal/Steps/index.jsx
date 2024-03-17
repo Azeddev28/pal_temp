@@ -154,7 +154,7 @@ const Step2 = () => {
                                         );
                                     }}
                                     options={languageOptions}
-                                    index={17}
+                                    index={24}
                                     inputRef={field.ref}
                                     {...field}
                                 />

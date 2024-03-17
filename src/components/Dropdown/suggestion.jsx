@@ -35,7 +35,7 @@ const SearchBar = ({ options, name, setValue, register }) => {
                     suggestion.label.toLowerCase() ===
                     (query.label ? query.label : query).toLowerCase()
                 )
-                    val = suggestion.value;
+                    val = suggestion.label;
             });
             setValue(name, val);
         }
