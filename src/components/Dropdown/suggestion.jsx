@@ -60,7 +60,7 @@ const SearchBar = ({ options, name, setValue, register }) => {
                     } border-theme-border w-full p-2 lg:p-4`}
                 />
                 {optionMatched && (
-                    <div className="border-2 border-solid !border-t-0 rounded-b-lg border-theme-border w-full p-2 lg:p-4">
+                    <div className="border-2 border-solid !border-t-0 rounded-b-lg border-theme-border w-full p-2 lg:p-4 cursor-pointer">
                         <ul className="suggestions">
                             {suggestions.map((suggestion) => (
                                 <li
