@@ -147,7 +147,7 @@ const Landing = () => {
                                         }
                                     />
                                     <Button
-                                        className={`w-full md:w-fit  h-12  min-h-12 ${!formState
+                                        className={`!min-h-12 w-full md:w-fit !h-12   ${!formState
                                             .errors.email}`}
                                         type="submit"
                                     >
