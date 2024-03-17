@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 const SearchBar = ({ options, name, setValue, register }) => {
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
+    const [optionSelected, setOptionSelected] = useState(false);
     useEffect(() => {
         if (window) {
             const filteredSuggestions = options.filter((option) =>
@@ -19,6 +20,7 @@ const SearchBar = ({ options, name, setValue, register }) => {
     // Handle user selection or submit
     const handleSelect = (selectedOption) => {
         setQuery(selectedOption);
+        setOptionSelected(true);
         setSuggestions([]); // Clear suggestions on selection
     };
 
@@ -26,7 +28,7 @@ const SearchBar = ({ options, name, setValue, register }) => {
         e.preventDefault(); // Prevent default form submission behavior
         // Handle search using the final query value here
     };
-    const optionMatched = query && suggestions.length > 0;
+    const optionMatched = !optionSelected && query && suggestions.length > 0;
     useEffect(() => {
         if (optionMatched) {
             let val;
@@ -50,6 +52,7 @@ const SearchBar = ({ options, name, setValue, register }) => {
                     onChange={(e) => {
                         setValue(name, e.target.value);
                         setQuery(e.target.value);
+                        setOptionSelected(false);
                     }}
                     placeholder="Select your company"
                     className={`border-2 border-solid ${
@@ -57,7 +60,7 @@ const SearchBar = ({ options, name, setValue, register }) => {
                     } border-theme-border w-full p-2 lg:p-4`}
                 />
                 {optionMatched && (
-                    <div className="border-2 border-solid !border-t-0 rounded-b-lg border-theme-border w-full p-2 lg:p-4">
+                    <div className="border-2 border-solid !border-t-0 rounded-b-lg border-theme-border w-full p-2 lg:p-4 cursor-pointer">
                         <ul className="suggestions">
                             {suggestions.map((suggestion) => (
                                 <li
