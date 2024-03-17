@@ -6,7 +6,7 @@ import logoImage from '../../../../public/images/logo1.svg';
 const Welcome = ({ onContinue }) => {
     return (
         <div className="text-center block">
-            <div className="p-4 md:p-10">
+            <div className="p-10">
                 <div className="flex flex-col gap-2 mb-10 items-center justify-center md:mb-14">
                     <div className="w-10 h-auto md:w-14">
                         <Image src={logoImage} alt="..." />
