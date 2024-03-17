@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 
 const SearchBar = ({ options, name, setValue, register }) => {
-    console.log('🚀 ~ SearchBar ~ name:', name);
     const [query, setQuery] = useState('');
-    console.log('🚀 ~ SearchBar ~ query:', query);
     const [suggestions, setSuggestions] = useState([]);
-    console.log('🚀 ~ SearchBar ~ suggestions:', suggestions);
-
     useEffect(() => {
         if (window) {
             const filteredSuggestions = options.filter((option) =>
@@ -31,6 +27,19 @@ const SearchBar = ({ options, name, setValue, register }) => {
         // Handle search using the final query value here
     };
     const optionMatched = query && suggestions.length > 0;
+    useEffect(() => {
+        if (optionMatched) {
+            let val;
+            suggestions.map((suggestion) => {
+                if (
+                    suggestion.label.toLowerCase() ===
+                    (query.label ? query.label : query).toLowerCase()
+                )
+                    val = suggestion.value;
+            });
+            setValue(name, val);
+        }
+    }, [optionMatched]);
     return (
         <form onSubmit={handleSubmit}>
             <div className="search-bar">

@@ -4,7 +4,6 @@ import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
 import { useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import Select from 'react-select';
 import { PulseLoader } from 'react-spinners';
 import { useStep } from './context';
 
@@ -120,7 +119,6 @@ const Step2 = () => {
     }, [languages]);
 
     const handleDropDownChange = (name, value) => {
-        console.log('🚀 ~ Step2 ~ name:', name, value);
         setValue(name, value, {
             shouldValidate: true,
             shouldDirty: true,
@@ -301,8 +299,7 @@ const Step4 = () => {
 
 const Step5 = () => {
     const [companies, isLoading] = useStep('companies');
-    const { register, setValue, watch, control } = useFormContext();
-    console.log('🚀 ~ Step5 ~ watch:', watch('company'));
+    const { register, setValue } = useFormContext();
 
     const companyOptions = useMemo(() => {
         if (!companies) return [];
@@ -314,7 +311,6 @@ const Step5 = () => {
     }, [companies]);
 
     const handleDropDownChange = (name, value) => {
-        console.log('🚀 ~ handleDropDownChange ~ name:', name, value);
         return setValue(name, value, {
             shouldValidate: true,
             shouldDirty: true,
@@ -382,7 +378,7 @@ const Step5 = () => {
                             name="company"
                             register={register}
                         />
-                        <Controller
+                        {/* <Controller
                             name="company"
                             control={control}
                             rules={{ required: true }}
@@ -405,7 +401,7 @@ const Step5 = () => {
                                     value={field.label}
                                 />
                             )}
-                        />
+                        /> */}
                         {/* <Controller
                             name="company"
                             control={control}
@@ -605,7 +601,6 @@ const Step8 = () => {
             value: 'Mechanical Engineer',
         },
     ];
-    console.log('watchwatch', watch('interestedJobTitle'));
     return (
         <div className="pt-10">
             <div className="mb-12">
