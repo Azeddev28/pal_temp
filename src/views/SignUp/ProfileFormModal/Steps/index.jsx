@@ -33,7 +33,7 @@ const Step1 = () => {
     const { register, formState, watch } = useFormContext();
 
     return (
-        <div className="pt-10 pb-[130px]">
+        <div className="pt-10">
             <div className="mb-12">
                 <Typography
                     variant={'h4'}
@@ -42,7 +42,7 @@ const Step1 = () => {
                     How do you identify?
                 </Typography>
             </div>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 pt-3">
                 <Radio
                     {...register('gender')}
                     id="male"
@@ -136,7 +136,7 @@ const Step2 = () => {
                 </Typography>
             </div>
 
-            <div className="pb-14 md:pb-[94px] flex flex-col gap-6">
+            <div className="pt-3 flex flex-col gap-6">
                 {isLoadingCountries || isLoadingLanguages ? (
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
@@ -231,7 +231,7 @@ const Step3 = () => {
                     What is your name?
                 </Typography>
             </div>
-            <div className="pb-10 md:pb-[54px] flex flex-col gap-6">
+            <div className="pt-3 flex flex-col gap-6">
                 <Input
                     type="text"
                     {...register('firstName')}
@@ -277,7 +277,7 @@ const Step4 = () => {
                     What are you looking to do on palplug?
                 </Typography>
             </div>
-            <div className="pt-6 pb-16 md:pb-[150px] flex flex-col gap-6">
+            <div className="pt-3 flex flex-col gap-6">
                 <Radio
                     {...register('purpose')}
                     id="be-a-palplug"
@@ -367,7 +367,7 @@ const Step5 = () => {
                     Where do you work?
                 </Typography>
             </div>
-            <div className="pt-11 pb-16 md:pb-[135px] flex flex-col gap-6">
+            <div className="pt-3 flex flex-col gap-6">
                 {isLoading ? (
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
@@ -544,7 +544,7 @@ const Step7 = () => {
                     What is your job title?
                 </Typography>
             </div>
-            <div className="pt-11 pb-16 md:pb-[135px] flex flex-col gap-6">
+            <div className="pt-3 flex flex-col gap-6">
                 <Controller
                     name="jobTitle"
                     control={control}
@@ -611,7 +611,7 @@ const Step8 = () => {
                     What role are you most interested in?
                 </Typography>
             </div>
-            <div className="pt-11 pb-16 md:pb-[135px] flex flex-col gap-6">
+            <div className="pt-2 flex flex-col gap-6">
                 <Controller
                     name="interestedJobTitle"
                     control={control}

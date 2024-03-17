@@ -137,7 +137,7 @@ const StepForm = () => {
                 <FormProvider {...methods}>
                     <form
                         onSubmit={methods.handleSubmit(onSubmit)}
-                        className="h-[93%]"
+                        className="h-[93%] flex flex-col max-h-[398px] min-h-[398px] justify-between"
                     >
                         <StepContextProvider>
                             <FormStep slideDirection={slideDirection} />
