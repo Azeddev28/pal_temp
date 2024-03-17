@@ -114,7 +114,7 @@ const Step2 = () => {
             key: language.name,
             value: language.code,
         }));
-        setValue('language', options[17].value);
+        setValue('language', options[24].value);
         return options;
     }, [languages]);
 

@@ -7,24 +7,24 @@ const Welcome = ({ onContinue }) => {
     return (
         <div className="text-center block">
             <div className="p-10">
-                <div className="flex flex-col gap-2 mb-10 items-center justify-center md:mb-14">
+                <div className="flex flex-col gap-2  items-center justify-center mb-[92px]">
                     <div className="w-10 h-auto md:w-14">
                         <Image src={logoImage} alt="..." />
                     </div>
                     <div className="w-fit">
-                        <Typography variant={'h4'} className={'font-semibold'}>
+                        <p className={'font-semibold text-2xl'}>
                             Welcome to palplug
-                        </Typography>
-                        <Typography variant={'x-small'}>
+                        </p>
+                        <p className="text-xs font-normal">
                             Let’s get you connected
-                        </Typography>
+                        </p>
                     </div>
                 </div>
-                <div className="mb-10 md:mb-16">
-                    <Typography variant={'h6'}>
+                <div className="mb-32">
+                    <p className={'text-lg font-normal leading-[1.125]'}>
                         Let’s get some more information from you to fill out
                         your profile
-                    </Typography>
+                    </p>
                 </div>
 
                 <Button className="w-full" onClick={onContinue}>
