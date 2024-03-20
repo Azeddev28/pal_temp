@@ -19,6 +19,18 @@ const SearchBar = ({ options, name, setValue, register }) => {
 
     // Handle user selection or submit
     const handleSelect = (selectedOption) => {
+        console.log('Selected option', selectedOption);
+        Object.entries(selectedOption).forEach(([label, value]) => {
+            console.log('label', label);
+            console.log('value', value);
+            // setValue(label, value);
+        });
+
+        // setValue(selectedOption, {
+        //     shouldValidate: true,
+        //     shouldDirty: true,
+        // });
+        // setValue(selectedOption);
         setQuery(selectedOption);
         setOptionSelected(true);
         setSuggestions([]); // Clear suggestions on selection
@@ -50,7 +62,7 @@ const SearchBar = ({ options, name, setValue, register }) => {
                     type="text"
                     value={query.label ? query.label : query}
                     onChange={(e) => {
-                        setValue(name, e.target.value);
+                        // setValue(name, e.target.value);
                         setQuery(e.target.value);
                         setOptionSelected(false);
                     }}

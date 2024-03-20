@@ -310,53 +310,13 @@ const Step5 = () => {
         }));
     }, [companies]);
 
-    const handleDropDownChange = (name, value) => {
-        return setValue(name, value, {
-            shouldValidate: true,
-            shouldDirty: true,
-        });
-    };
-    const selectStyles = {
-        control: (provided, state) => ({
-            ...provided,
-            // minWidth: 240,
-            margin: 8,
-            padding: '1rem',
-            fontSize: '.875rem',
-            borderRadius: '0.5rem',
-            border: state.isFocused && '1px solid #005382',
-            '&:hover': {
-                borderColor: state.isFocused && '#005382',
-                backgroundColor: state.isFocused ? '#fff' : '#e5e7eb',
-            },
-        }),
-        // menu: () => ({
-        //     boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)',
-        //     // overflow: scroll,
-        // }),
-        menuList: (base) => ({
-            ...base,
-            maxHeight: '100px', // your desired height
-        }),
-        option: (provided, state) => {
-            return {
-                ...provided,
-                fontSize: '14px',
-                background: '#fff !important',
-                '&:hover': {
-                    // borderColor: state.isFocused && '#005382',
-                    background: '#fff !important',
-                },
-            };
-        },
-        indicatorsContainer: (provided, state) => ({
-            ...provided,
-            backgroundColor: '#D2EFFF',
-            borderRadius: '9999px',
-            paddingLeft: '2px',
-            paddingRight: '2px',
-        }),
-    };
+    // const handleDropDownChange = (name, value) => {
+    //     return setValue(name, value, {
+    //         shouldValidate: true,
+    //         shouldDirty: true,
+    //     });
+    // };
+
     return (
         <div className="pt-10">
             <div className="mb-12">
@@ -378,50 +338,6 @@ const Step5 = () => {
                             name="company"
                             register={register}
                         />
-                        {/* <Controller
-                            name="company"
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                                <Select
-                                    {...field}
-                                    components={{
-                                        DropdownIndicator: ChevronDown,
-                                        IndicatorSeparator: null,
-                                    }}
-                                    placeholder={'Select your company'}
-                                    onChange={(option) => {
-                                        handleDropDownChange(
-                                            'company',
-                                            option.value
-                                        );
-                                    }}
-                                    styles={selectStyles}
-                                    options={companyOptions}
-                                    value={field.label}
-                                />
-                            )}
-                        /> */}
-                        {/* <Controller
-                            name="company"
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field }) => (
-                                <CustomDropdown
-                                    placeholder={'Select your company'}
-                                    onChange={(option) => {
-                                        handleDropDownChange(
-                                            'company',
-                                            option.value
-                                        );
-                                    }}
-                                    options={companyOptions}
-                                    // index={234}
-                                    inputRef={field.ref}
-                                    {...field}
-                                />
-                            )}
-                        /> */}
                     </>
                 )}
             </div>
@@ -560,18 +476,6 @@ const Step7 = () => {
                         />
                     )}
                 />
-                {/* <Dropdown
-                    {...register('jobTitle')}
-                    width={'100%'}
-                    onChange={(option) =>
-                        handleDropDownChange('jobTitle', option.value)
-                    }
-                    placeholder={'Select your job title'}
-                    selectedKey={
-                        jobs.find((job) => job.value === watch('jobTitle'))?.key
-                    }
-                    options={jobs}
-                /> */}
             </div>
         </div>
     );
@@ -630,20 +534,6 @@ const Step8 = () => {
                         />
                     )}
                 />
-                {/* <Dropdown
-                    {...register('interestedJobTitle')}
-                    width={'100%'}
-                    onChange={(option) =>
-                        handleDropDownChange('interestedJobTitle', option.value)
-                    }
-                    placeholder={'Select your interested title'}
-                    selectedKey={
-                        jobs.find(
-                            (job) => job.value === watch('interestedJobTitle')
-                        )?.key
-                    }
-                    options={jobs}
-                /> */}
             </div>
         </div>
     );

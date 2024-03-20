@@ -28,12 +28,12 @@ const StepForm = () => {
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
-    console.log(
-        '🚀 ~ StepForm ~ methods:',
-        methods.formState,
-        methods.formState.isValid,
-        methods.formState.errors.length === 0 ? true : false
-    );
+    // console.log(
+    //     '🚀 ~ StepForm ~ methods:',
+    //     methods.formState,
+    //     methods.formState.isValid,
+    //     methods.formState.errors.length === 0 ? true : false
+    // );
 
     const { user, error, isLoading } = useUser();
 
