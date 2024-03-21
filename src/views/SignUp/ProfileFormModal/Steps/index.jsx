@@ -1,11 +1,25 @@
+import { getRequest } from '@/axios';
 import CustomDropdown from '@/components/Dropdown/dropdown';
 import SearchBar from '@/components/Dropdown/suggestion';
 import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
-import { useMemo, useState } from 'react';
+import { getRoute } from '@/server';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { PulseLoader } from 'react-spinners';
 import { useStep } from './context';
+
+const fetchUserRoles = async (setState) => {
+    await getRequest(getRoute('userRoles'))
+        .then((res) => {
+            setState(
+                res.map((role) => {
+                    return { key: role.title, value: role.uuid };
+                })
+            );
+        })
+        .catch((err) => {});
+};
 
 const Svg = (p) => (
     <svg
@@ -419,6 +433,7 @@ const Step6 = () => {
 };
 
 const Step7 = () => {
+    const [userRoles, setUserRoles] = useState([]);
     const { register, setValue, watch, control } = useFormContext();
 
     const handleDropDownChange = (name, value) =>
@@ -426,30 +441,9 @@ const Step7 = () => {
             shouldValidate: true,
             shouldDirty: true,
         });
-    const jobs = [
-        { key: 'Accountant', value: 'Accountant' },
-        { key: 'Biomedical Engineer', value: 'Biomedical Engineer' },
-        { key: 'Business Analyst', value: 'Business Analyst' },
-        { key: 'Business Developer', value: 'Business Developer' },
-        { key: 'Civil Engineer', value: 'Civil Engineer' },
-        { key: 'Copy Writer', value: 'Copy Writer' },
-        { key: 'Data Scientist', value: 'Data Scientist' },
-        { key: 'Hardware Engineer', value: 'Hardware Engineer' },
-        { key: 'Human Resources', value: 'Human Resources' },
-        { key: 'Marketing', value: 'Marketing' },
-        { key: 'Marketing Associate', value: 'Marketing Associate' },
-        { key: 'Marketing Manager', value: 'Marketing Manager' },
-        { key: 'Networking Engineer', value: 'Networking Engineer' },
-        { key: 'Operations', value: 'Operations' },
-        { key: 'Product Designer', value: 'Product Designer' },
-        { key: 'Product Manager', value: 'Product Manager' },
-        { key: 'QA Engineer', value: 'QA Engineer' },
-        { key: 'Recruiter', value: 'Recruiter' },
-        { key: 'Sales', value: 'Sales' },
-        { key: 'Software Engineer', value: 'Software Engineer' },
-        { key: 'Technical Recruiter', value: 'Technical Recruiter' },
-        { key: 'UX/UI Designer', value: 'UX/UI Designer' },
-    ];
+    useEffect(() => {
+        fetchUserRoles(setUserRoles);
+    }, []);
     return (
         <div className="pt-10">
             <div className="mb-12">
@@ -470,7 +464,7 @@ const Step7 = () => {
                             onChange={(option) => {
                                 handleDropDownChange('jobTitle', option.value);
                             }}
-                            options={jobs}
+                            options={userRoles}
                             inputRef={field.ref}
                             {...field}
                         />
@@ -482,6 +476,7 @@ const Step7 = () => {
 };
 
 const Step8 = () => {
+    const [userRoles, setUserRoles] = useState([]);
     const { register, setValue, watch, control } = useFormContext();
 
     const handleDropDownChange = (name, value) =>
@@ -490,21 +485,9 @@ const Step8 = () => {
             shouldDirty: true,
         });
 
-    const jobs = [
-        {
-            key: 'Software Engineer',
-            value: 'Software Engineer',
-        },
-        {
-            key: 'Chartered Accountant',
-            value: 'Chartered Accountant',
-        },
-        { key: 'Dentist', value: 'Dentist' },
-        {
-            key: 'Mechanical Engineer',
-            value: 'Mechanical Engineer',
-        },
-    ];
+    useEffect(() => {
+        fetchUserRoles(setUserRoles);
+    }, []);
     return (
         <div className="pt-10">
             <div className="mb-12">
@@ -528,7 +511,7 @@ const Step8 = () => {
                                     option.value
                                 );
                             }}
-                            options={jobs}
+                            options={userRoles}
                             inputRef={field.ref}
                             {...field}
                         />
