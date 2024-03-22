@@ -42,7 +42,7 @@ const ChevronDown = () => (
         />
     </Svg>
 );
-const Step1 = () => {
+const GenderSelector = () => {
     const [showAnotherGender, setShowAnotherGender] = useState(false);
     const { register, formState, watch } = useFormContext();
 
@@ -106,7 +106,7 @@ const Step1 = () => {
     );
 };
 
-const Step2 = () => {
+const CountrySelector = () => {
     const [countries, isLoadingCountries] = useStep('countries');
     const [languages, isLoadingLanguages] = useStep('languages');
 
@@ -233,7 +233,7 @@ const Step2 = () => {
     );
 };
 
-const Step3 = () => {
+const NameSelector = () => {
     const { register, watch, formState } = useFormContext();
     return (
         <div className="pt-10">
@@ -279,7 +279,7 @@ const Step3 = () => {
     );
 };
 
-const Step4 = () => {
+const RoleSelector = () => {
     const { register } = useFormContext();
     return (
         <div className="pt-10">
@@ -311,7 +311,7 @@ const Step4 = () => {
     );
 };
 
-const Step5 = () => {
+const CompanySelector = () => {
     const [companies, isLoading] = useStep('companies');
     const { register, setValue } = useFormContext();
 
@@ -323,13 +323,6 @@ const Step5 = () => {
             value: company.uuid,
         }));
     }, [companies]);
-
-    // const handleDropDownChange = (name, value) => {
-    //     return setValue(name, value, {
-    //         shouldValidate: true,
-    //         shouldDirty: true,
-    //     });
-    // };
 
     return (
         <div className="pt-10">
@@ -359,7 +352,7 @@ const Step5 = () => {
     );
 };
 
-const Step6 = () => {
+const InterestedIndustrySelector = () => {
     const [industries, isLoading] = useStep('industries');
     const { register, setValue, watch, control } = useFormContext();
 
@@ -410,21 +403,6 @@ const Step6 = () => {
                                 />
                             )}
                         />
-                        {/* <Dropdown
-                            {...register('industry')}
-                            width={'100%'}
-                            onChange={(option) =>
-                                handleDropDownChange('industry', option.value)
-                            }
-                            placeholder={'Select your industry'}
-                            selectedKey={
-                                industryOptions.find(
-                                    (industry) =>
-                                        industry.value === watch('industry')
-                                )?.key
-                            }
-                            options={industryOptions}
-                        /> */}
                     </>
                 )}
             </div>
@@ -432,7 +410,7 @@ const Step6 = () => {
     );
 };
 
-const Step7 = () => {
+const JobSelector = () => {
     const [userRoles, setUserRoles] = useState([]);
     const { register, setValue, watch, control } = useFormContext();
 
@@ -475,7 +453,7 @@ const Step7 = () => {
     );
 };
 
-const Step8 = () => {
+const InterestedJobSelector = () => {
     const [userRoles, setUserRoles] = useState([]);
     const { register, setValue, watch, control } = useFormContext();
 
@@ -522,4 +500,13 @@ const Step8 = () => {
     );
 };
 
-export { Step1, Step2, Step3, Step4, Step5, Step6, Step7, Step8 };
+export {
+    CompanySelector,
+    CountrySelector,
+    GenderSelector,
+    InterestedIndustrySelector,
+    InterestedJobSelector,
+    JobSelector,
+    NameSelector,
+    RoleSelector,
+};
