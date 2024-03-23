@@ -21,27 +21,6 @@ const fetchUserRoles = async (setState) => {
         .catch((err) => {});
 };
 
-const Svg = (p) => (
-    <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        focusable="false"
-        role="presentation"
-        {...p}
-    />
-);
-const ChevronDown = () => (
-    <Svg>
-        <path
-            d="M8.292 10.293a1.009 1.009 0 0 0 0 1.419l2.939 2.965c.218.215.5.322.779.322s.556-.107.769-.322l2.93-2.955a1.01 1.01 0 0 0 0-1.419.987.987 0 0 0-1.406 0l-2.298 2.317-2.307-2.327a.99.99 0 0 0-1.406 0z"
-            stroke="#005382"
-            strokeWidth={1}
-            fill="currentColor"
-            fillRule="evenodd"
-        />
-    </Svg>
-);
 const GenderSelector = () => {
     const [showAnotherGender, setShowAnotherGender] = useState(false);
     const { register, formState, watch } = useFormContext();
@@ -193,39 +172,6 @@ const CountrySelector = () => {
                                 />
                             )}
                         />
-
-                        {/* <Dropdown
-                            {...register('language')}
-                            width={'100%'}
-                            placeholder="Choose your language"
-                            onChange={(option) => {
-                                handleDropDownChange('language', option.value);
-                            }}
-                            index={17}
-                            selectedKey={
-                                languageOptions.find(
-                                    (language) =>
-                                        language.value === watch('language')
-                                )?.key
-                            }
-                            options={languageOptions}
-                        />
-                        <Dropdown
-                            {...register('country')}
-                            width={'100%'}
-                            index={234}
-                            placeholder="Choose your country"
-                            onChange={(option) =>
-                                handleDropDownChange('country', option.value)
-                            }
-                            selectedKey={
-                                countryOptions.find(
-                                    (country) =>
-                                        country.value === watch('country')
-                                )?.key
-                            }
-                            options={countryOptions}
-                        /> */}
                     </>
                 )}
             </div>
