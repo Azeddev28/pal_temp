@@ -18,7 +18,7 @@ const Page = () => {
     return (
         <div className="flex items-center justify-center">
             <div className="flex flex-row w-auto my-24">
-                <div className="max-w-[51rem] body-font flex flex-col font-poppins md:p-10">
+                <div className="max-w-[51rem] body-font flex flex-col font-poppins md:p-10 p-5">
                     <div className="mb-8 text-center">
                         <Typography
                             variant={'h1'}

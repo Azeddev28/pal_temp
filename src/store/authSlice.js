@@ -7,7 +7,7 @@ const initialState = {
     accessToken: null,
     isUserRegistered: false,
     hasJoinedWaitList: false,
-    firstName: 'w',
+    firstName: '',
     lastName: '',
     email: '',
     firebaseAuthObj: null,

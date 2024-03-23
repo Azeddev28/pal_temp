@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
+import Tooltip from '../Tooltip';
 import { Typography } from '../Typography';
 
 const innerCircleStyles =
@@ -6,20 +7,54 @@ const innerCircleStyles =
 const baseStyles =
     'relative cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-solid border-carbon rounded-full bg-white appearance-none checked:border-blue-60';
 
-const Radio = forwardRef(({ id, label, ...rest }, ref) => (
-    <label className="flex items-center gap-2" htmlFor={id}>
-        <input
-            ref={ref}
-            {...rest}
-            type="radio"
-            className={`${baseStyles} ${innerCircleStyles}`}
-        />
-        {label && (
-            <Typography variant={'body'} className={'font-semibold'}>
-                {label}
-            </Typography>
-        )}
-    </label>
-));
+const Radio = forwardRef(({ id, label, tooltip, ...rest }, ref) => {
+    const radioRef = useRef(null);
+    const handleTypographyClick = () => {
+        if (radioRef.current) {
+            radioRef.current.click();
+        }
+    };
+
+    return (
+        <div className="flex justify-between items-center">
+            <label className="flex items-center gap-2" htmlFor={id}>
+                <input
+                    ref={(inputRef) => {
+                        radioRef.current = inputRef;
+                        if (ref) {
+                            if (typeof ref === 'function') {
+                                ref(inputRef);
+                            } else {
+                                ref.current = inputRef;
+                            }
+                        }
+                    }}
+                    {...rest}
+                    type="radio"
+                    className={`${baseStyles} ${innerCircleStyles}`}
+                />
+                {label && (
+                    <div onClick={handleTypographyClick}>
+                        <Typography
+                            variant="body"
+                            className="font-semibold"
+                            style={{ cursor: 'pointer' }}
+                        >
+                            {label}
+                        </Typography>
+                    </div>
+                )}
+            </label>
+            {tooltip && (
+                <Tooltip
+                    text={'what is a plug?'}
+                    tooltip={
+                        ' A plug is an employee at a company offering a service such as a referral, resume review or interview prep help'
+                    }
+                />
+            )}
+        </div>
+    );
+});
 
 export { Radio };

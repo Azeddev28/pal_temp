@@ -29,7 +29,7 @@ const SignUp = () => {
         }
     };
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-[calc(100vh-69px)]">
             <div className="flex flex-row w-auto mb-14">
                 <div className="max-w-[42rem] body-font flex flex-col font-poppins md:p-10">
                     <div className="mb-8 text-center">

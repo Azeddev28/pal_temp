@@ -6,9 +6,14 @@ const schema = {
         anotherGender: yup.string().when('gender', {
             is: (value) => value === 'another',
             then: (stringSchema) =>
-                stringSchema.required(
-                    'Another gender is required when gender is "another"'
-                ),
+                stringSchema
+                    .matches(
+                        /^[a-zA-Z\s]+$/,
+                        'Special characters and digits are not allowed'
+                    )
+                    .required(
+                        'Another gender is required when gender is "another"'
+                    ),
             otherwise: (stringSchema) => stringSchema.notRequired(),
         }),
     }),

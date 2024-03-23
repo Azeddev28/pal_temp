@@ -1,23 +1,11 @@
+import ChevronDown from '@/Icons/ChevronDown';
 import { Component, forwardRef, useState } from 'react';
-import Select, { components, defaultTheme } from 'react-select';
+import Select, { components } from 'react-select';
 import { Radio } from '../Input';
-
-const options = [
-    { value: '1', label: 'Item 1' },
-    { value: '2', label: 'Item 2' },
-    { value: '3', label: 'Item 3' },
-    { value: '4', label: 'Item 4' },
-    { value: '5', label: 'Item 5' },
-    { value: '6', label: 'Item 6' },
-    { value: '7', label: 'Item 7' },
-];
-
-const { colors } = defaultTheme;
 
 const selectStyles = {
     control: (provided, state) => ({
         ...provided,
-        // minWidth: 240,
         margin: 8,
         border: state.isFocused && '1px solid #005382',
         '&:hover': {
@@ -27,18 +15,16 @@ const selectStyles = {
     }),
     menu: () => ({
         boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)',
-        // overflow: scroll,
     }),
     menuList: (base) => ({
         ...base,
-        maxHeight: '100px', // your desired height
+        maxHeight: '100px',
     }),
     option: (provided, state) => {
         return {
             ...provided,
             fontSize: '14px',
             '&:hover': {
-                // borderColor: state.isFocused && '#005382',
                 background: '#fff !important',
             },
         };
@@ -170,12 +156,6 @@ const InputOption = ({
             innerProps={props}
         >
             <Radio checked={isSelected} />
-            {/* <input
-                type="checkbox"
-                checked={isSelected}
-                style={{ marginRight: '15px' }}
-                // className="h-5 w-5 text-blue-500 focus:ring-blue-400 border-gray-300 rounded cursor-pointer"
-            /> */}
             <div className="pl-5">{children}</div>
         </components.Option>
     );
@@ -200,9 +180,6 @@ const Dropdown = ({ children, isOpen, target, onClose }) => (
         style={{
             position: 'relative',
             background: '#fff',
-            // border: '2px solid #e5e7eb',
-            // borderRadius: '0.5rem',
-            // color: 'red',
         }}
     >
         {target}
@@ -219,26 +196,4 @@ const Svg = (p) => (
         role="presentation"
         {...p}
     />
-);
-const DropdownIndicator = () => (
-    <div style={{ color: colors.neutral20, height: 24, width: 32 }}>
-        <Svg>
-            <path
-                d="M16.436 15.085l3.94 4.01a1 1 0 0 1-1.425 1.402l-3.938-4.006a7.5 7.5 0 1 1 1.423-1.406zM10.5 16a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z"
-                fill="currentColor"
-                fillRule="evenodd"
-            />
-        </Svg>
-    </div>
-);
-const ChevronDown = () => (
-    <Svg>
-        <path
-            d="M8.292 10.293a1.009 1.009 0 0 0 0 1.419l2.939 2.965c.218.215.5.322.779.322s.556-.107.769-.322l2.93-2.955a1.01 1.01 0 0 0 0-1.419.987.987 0 0 0-1.406 0l-2.298 2.317-2.307-2.327a.99.99 0 0 0-1.406 0z"
-            stroke="#005382"
-            strokeWidth={1}
-            fill="currentColor"
-            fillRule="evenodd"
-        />
-    </Svg>
 );

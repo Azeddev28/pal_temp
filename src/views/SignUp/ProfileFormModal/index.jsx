@@ -28,12 +28,6 @@ const StepForm = () => {
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
-    console.log(
-        '🚀 ~ StepForm ~ methods:',
-        methods.formState,
-        methods.formState.isValid,
-        methods.formState.errors.length === 0 ? true : false
-    );
 
     const { user, error, isLoading } = useUser();
 
@@ -109,6 +103,7 @@ const StepForm = () => {
     };
 
     const FormStep = STEPS[activeStep].component;
+
     return (
         <>
             <div>
@@ -136,7 +131,7 @@ const StepForm = () => {
                 <FormProvider {...methods}>
                     <form
                         onSubmit={methods.handleSubmit(onSubmit)}
-                        className="h-[93%]"
+                        className="h-[93%] flex flex-col max-h-[398px] min-h-[398px] justify-between"
                     >
                         <StepContextProvider>
                             <FormStep slideDirection={slideDirection} />

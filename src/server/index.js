@@ -8,7 +8,8 @@ const ROUTES = {
     joinWaitlist: `/d/api/users/join-waitlist/`,
     profileRegister: '/d/api/users/profile-register/',
     linkedinRegister: `/d/api/authentication/linkedin-register/`,
-    socialRegister: `/d/api/authentication/social-register/`
+    socialRegister: `/d/api/authentication/social-register/`,
+    userRoles: '/d/api/users/user-roles/',
 };
 
 export const getRoute = (routeKey) => ROUTES[routeKey];

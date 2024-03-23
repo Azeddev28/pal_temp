@@ -1,47 +1,35 @@
 import { Button } from '@/components/Button';
 import { Typography } from '@/components/Typography';
 import Image from 'next/image';
-import Link from 'next/link';
 import logoImage from '../../../../public/images/logo1.svg';
 
 const Welcome = ({ onContinue }) => {
     return (
         <div className="text-center block">
-            <div className="p-4 md:p-10">
-                <div className="flex flex-col gap-2 mb-10 items-center justify-center md:mb-14">
+            <div className="p-10">
+                <div className="flex flex-col gap-2  items-center justify-center mb-[92px]">
                     <div className="w-10 h-auto md:w-14">
                         <Image src={logoImage} alt="..." />
                     </div>
                     <div className="w-fit">
-                        <Typography variant={'h4'} className={'font-semibold'}>
+                        <p className={'font-semibold text-2xl'}>
                             Welcome to palplug
-                        </Typography>
-                        <Typography variant={'x-small'}>
+                        </p>
+                        <p className="text-xs font-normal">
                             Let’s get you connected
-                        </Typography>
+                        </p>
                     </div>
                 </div>
-                <div className="mb-10 md:mb-16">
-                    <Typography variant={'h6'}>
+                <div className="mb-32">
+                    <p className={'text-lg font-normal leading-[1.125]'}>
                         Let’s get some more information from you to fill out
                         your profile
-                    </Typography>
+                    </p>
                 </div>
 
                 <Button className="w-full" onClick={onContinue}>
                     <Typography variant={'body'}>Continue</Typography>
                 </Button>
-            </div>
-            <div className="w-full border-t border-solid border-grey0 py-8">
-                <Typography variant={'body'}>
-                    Already a member?{' '}
-                    <Link
-                        href="#"
-                        className="text-brandBlue hover:text-hoverBlue font-semibold"
-                    >
-                        Sign in
-                    </Link>
-                </Typography>
             </div>
         </div>
     );

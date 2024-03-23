@@ -40,7 +40,11 @@ const emailSchema = yup.object().shape({
     email: yup
         .string()
         .email('Please enter valid email')
-        .required('Please enter email'),
+        .required('Please enter email')
+        .matches(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            'Please enter valid email'
+        ),
 });
 
 const Landing = () => {
@@ -103,8 +107,8 @@ const Landing = () => {
                     </div>
                     <div className="order-2 md:order-1 md:w-1/2">
                         <div className="h-full flex flex-col items-center justify-center p-5 gap-10 lg:gap-16 xl:pl-24">
-                            <div className="flex flex-col text-center gap-10">
-                                <h1 className="text-3xl lg:text-[42px] mb-4 text-brandBlue dark:text-brandBlue font-bold leading-10">
+                            <div className="flex flex-col  gap-10">
+                                <h1 className="text-3xl lg:text-[42px] mb-4 text-brandBlue dark:text-brandBlue font-semibold leading-10">
                                     Looking for a referral or want to get paid
                                     to refer others?
                                 </h1>
@@ -143,9 +147,8 @@ const Landing = () => {
                                         }
                                     />
                                     <Button
-                                        className={`w-full md:w-fit mt-1 ${
-                                            !formState.errors.email && '!mt-0'
-                                        }`}
+                                        className={`!min-h-12 w-full md:w-fit !h-12   ${!formState
+                                            .errors.email}`}
                                         type="submit"
                                     >
                                         Join waitlist

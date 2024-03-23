@@ -1,13 +1,13 @@
 import { LogoWidget } from '@/components/Misc';
 import { useIsMobile } from '@/hooks/use-is-mobile';
-import airbnbLogo from '../../../public/images/company-logos/Airbnb.png';
-import discordLogo from '../../../public/images/company-logos/Discord.png';
-import figmaLogo from '../../../public/images/company-logos/Figma.png';
-import googleLogo from '../../../public/images/company-logos/Google.png';
-import slackLogo from '../../../public/images/company-logos/Slack.png';
-import spotifyLogo from '../../../public/images/company-logos/Spotify.png';
-import teslaLogo from '../../../public/images/company-logos/Tesla.png';
-import tiktokLogo from '../../../public/images/company-logos/TikTok.png';
+import airbnbLogo from '../../../public/images/company-logos/Airbnb.svg';
+import discordLogo from '../../../public/images/company-logos/Discord.svg';
+import figmaLogo from '../../../public/images/company-logos/Figma.svg';
+import googleLogo from '../../../public/images/company-logos/Google.svg';
+import slackLogo from '../../../public/images/company-logos/Slack.svg';
+import spotifyLogo from '../../../public/images/company-logos/Spotify.svg';
+import teslaLogo from '../../../public/images/company-logos/Tesla.svg';
+import tiktokLogo from '../../../public/images/company-logos/TikTok.svg';
 
 const CompanyLogoWidgetList = () => {
     const isMobile = useIsMobile();
