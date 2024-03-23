@@ -1,4 +1,5 @@
 import { forwardRef, useRef } from 'react';
+import Tooltip from '../Tooltip';
 import { Typography } from '../Typography';
 
 const innerCircleStyles =
@@ -45,15 +46,12 @@ const Radio = forwardRef(({ id, label, tooltip, ...rest }, ref) => {
                 )}
             </label>
             {tooltip && (
-                <div className="has-tooltip">
-                    <p className="text-sm font-normal text-grey20 underline">
-                        what is a plug?
-                    </p>
-                    <p className="tooltip text-xs rounded-lg shadow-lg p-2 bg-gray-100 text-grey20 border-gray-800 -mt-24 -ml-32 w-64 h-16">
-                        A plug is an employee at a company offering a service
-                        such as a referral, resume review or interview prep help
-                    </p>
-                </div>
+                <Tooltip
+                    text={'what is a plug?'}
+                    tooltip={
+                        ' A plug is an employee at a company offering a service such as a referral, resume review or interview prep help'
+                    }
+                />
             )}
         </div>
     );
