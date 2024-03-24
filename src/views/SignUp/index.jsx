@@ -3,7 +3,7 @@ import { Typography } from '@/components/Typography';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ProfileFormModal } from './ProfileFormModal';
-import { SignInModal } from './SignInModal'
+import { SignInModal } from './SignInModal';
 
 const SignUp = () => {
     const { isUserRegistered, hasJoinedWaitList } = useSelector((state) => {
@@ -29,7 +29,7 @@ const SignUp = () => {
         }
     };
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center h-[calc(100vh-69px)]">
             <div className="flex flex-row w-auto mb-14">
                 <div className="max-w-[42rem] body-font flex flex-col font-poppins md:p-10">
                     <div className="mb-8 text-center">
@@ -40,13 +40,13 @@ const SignUp = () => {
                             Your spot is reserved! 🎉
                         </Typography>
                     </div>
-                    <div className="mb-10 text-center font-semibold">
+                    <div className="mb-10 text-center font-semibold p-3 md:p-0">
                         <Typography variant={'h5'} className="text-grey20 ">
                             You're on the list! We'll let you know when your
                             spot to sign up is ready
                         </Typography>
                     </div>
-                    <div className="mb-6 text-center font-semibold">
+                    <div className="mb-6 text-center font-semibold p-5 md:p-0">
                         <Typography variant={'h5'} className="text-grey40">
                             If you'd like to move up in line, sign up and
                             complete your profile set up now

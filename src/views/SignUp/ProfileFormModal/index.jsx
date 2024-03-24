@@ -28,6 +28,7 @@ const StepForm = () => {
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
+
     const { user, error, isLoading } = useUser();
 
     const isLastStep = typeof STEPS[activeStep]?.next === 'undefined';
@@ -55,6 +56,7 @@ const StepForm = () => {
             language: formData.language,
             role: formData.purpose,
         };
+        console.log('🚀 ~ onSubmit ~ dataToSend:', dataToSend);
         postRequest(getRoute('profileRegister'), dataToSend, true)
             .then((res) => {
                 router.push('/congratulations', undefined, { shallow: true });
@@ -101,15 +103,18 @@ const StepForm = () => {
     };
 
     const FormStep = STEPS[activeStep].component;
+
     return (
         <>
             <div>
-                <ArrowLeftIcon
-                    className="w-4 h-4 md:w-6 md:h-6 absolute top-[18px] left-3 cursor-pointer text-brandBlue"
-                    onClick={onBackClick}
-                />
+                {activeStep !== 0 && (
+                    <ArrowLeftIcon
+                        className="w-4 h-4 md:w-6 md:h-6 absolute top-[18px] left-3 cursor-pointer text-brandBlue"
+                        onClick={onBackClick}
+                    />
+                )}
             </div>
-            <div className="p-10">
+            <div className="p-10 h-full flex flex-col justify-between">
                 <div className="flex flex-row w-32 md:w-48 mx-auto">
                     <Stepper activeStep={visitedSteps.indexOf(activeStep)}>
                         {Array(STEP_COUNT)
@@ -124,7 +129,10 @@ const StepForm = () => {
                     </Stepper>
                 </div>
                 <FormProvider {...methods}>
-                    <form onSubmit={methods.handleSubmit(onSubmit)}>
+                    <form
+                        onSubmit={methods.handleSubmit(onSubmit)}
+                        className="h-[93%] flex flex-col max-h-[398px] min-h-[398px] justify-between"
+                    >
                         <StepContextProvider>
                             <FormStep slideDirection={slideDirection} />
                         </StepContextProvider>

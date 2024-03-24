@@ -16,7 +16,7 @@ import {
 // Define an initial state for your reducer
 export const initialState = {
     email: '',
-    gender: '',
+    gender: 'male',
     anotherGender: '',
     language: '',
     country: '',

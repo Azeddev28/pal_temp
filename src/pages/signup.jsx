@@ -1,4 +1,4 @@
-import { withAuthorization } from '@/auth/withAuthorization';
+import { withAuthorization } from '@/auth';
 import { SignUp } from '@/views/SignUp';
 
 const Page = () => {

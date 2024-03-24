@@ -101,7 +101,7 @@ const Input = forwardRef(
                         disabled={disabled || display}
                         id={id}
                         placeholder={placeholder}
-                        className={`${baseClasses} ${hoverClasses} ${activeClasses} ${focusClasses} ${
+                        className={`h-12 ${baseClasses} ${hoverClasses} ${activeClasses} ${focusClasses} ${
                             !!disabled || display ? 'pointer-events-none' : ''
                         }`}
                     />
