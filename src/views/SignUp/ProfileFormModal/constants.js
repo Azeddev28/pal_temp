@@ -1,12 +1,12 @@
 import {
-    Step1,
-    Step2,
-    Step3,
-    Step4,
-    Step5,
-    Step6,
-    Step7,
-    Step8,
+    CompanySelector,
+    CountrySelector,
+    GenderSelector,
+    InterestedIndustrySelector,
+    InterestedJobSelector,
+    JobSelector,
+    NameSelector,
+    RoleSelector,
 } from './Steps';
 import { withHorizontalSlide } from './withHorizontalSlide';
 
@@ -20,22 +20,22 @@ export const STEP_TYPE = {
 export const STEPS = [
     {
         type: STEP_TYPE.Linear,
-        component: withHorizontalSlide(Step1),
+        component: withHorizontalSlide(GenderSelector),
         next: 1,
     },
     {
         type: STEP_TYPE.Linear,
-        component: withHorizontalSlide(Step2),
+        component: withHorizontalSlide(CountrySelector),
         next: 2,
     },
     {
         type: STEP_TYPE.Linear,
-        component: withHorizontalSlide(Step3),
+        component: withHorizontalSlide(NameSelector),
         next: 3,
     },
     {
         type: STEP_TYPE.Conditional,
-        component: withHorizontalSlide(Step4),
+        component: withHorizontalSlide(RoleSelector),
         next: {
             fieldName: 'purpose',
             branch: {
@@ -46,20 +46,20 @@ export const STEPS = [
     },
     {
         type: STEP_TYPE.Linear,
-        component: withHorizontalSlide(Step5),
+        component: withHorizontalSlide(CompanySelector),
         next: 5,
     },
     {
         type: STEP_TYPE.Linear,
-        component: withHorizontalSlide(Step6),
+        component: withHorizontalSlide(InterestedIndustrySelector),
     },
     {
         type: STEP_TYPE.Linear,
-        component: withHorizontalSlide(Step7),
+        component: withHorizontalSlide(JobSelector),
         next: 7,
     },
     {
         type: STEP_TYPE.Linear,
-        component: withHorizontalSlide(Step8),
+        component: withHorizontalSlide(InterestedJobSelector),
     },
 ];
