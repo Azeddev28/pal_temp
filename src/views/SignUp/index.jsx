@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import AnnouncementRobo from '../../../public/images/AnnouncementRobo.svg';
 import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
+
 const SignUp = () => {
     const { isUserRegistered, hasJoinedWaitList } = useSelector((state) => {
         return state.auth;

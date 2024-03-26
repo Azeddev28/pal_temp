@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import navLogo from '../../public/images/nav-logo.png';
+import navLogo from '../../public/images/logo.svg';
 
 function NavBar() {
     const handleLogoClick = (e) => {

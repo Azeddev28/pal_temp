@@ -25,6 +25,8 @@ import {
 } from '../../store/authSlice';
 import { wrapper } from '../../store/store';
 
+import { useUser } from '@auth0/nextjs-auth0/client';
+
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
         async ({ params }) => {
@@ -44,12 +46,18 @@ const emailSchema = yup.object().shape({
     email: yup
         .string()
         .email('Please enter valid email')
-        .required('Please enter email'),
+        .required('Please enter email')
+        .matches(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            'Please enter valid email'
+        ),
 });
 
 const Landing = () => {
     const router = useRouter();
     const dispatch = useDispatch();
+    const { user, error, isLoading } = useUser();
+
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
         defaultValues: {
@@ -63,8 +71,14 @@ const Landing = () => {
             shallow: true,
         });
     };
+    if (!isLoading && user) {
+        console.log(user);
+        updateWaitListStatusAndRedirect();
+        dispatch(setIsUserRegistered());
+    }
 
     const onSubmit = ({ email }) => {
+        // updateWaitListStatusAndRedirect();
         postRequest(getRoute('joinWaitlist'), { email })
             .then((res) => {
                 updateWaitListStatusAndRedirect();
@@ -152,7 +166,8 @@ const Landing = () => {
                                         }
                                     />
                                     <Button
-                                        className={'w-full md:w-fit'}
+                                        className={`!min-h-12 w-full md:w-fit !h-12   ${!formState
+                                            .errors.email}`}
                                         type="submit"
                                     >
                                         Join waitlist
