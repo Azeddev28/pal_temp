@@ -1,21 +1,29 @@
 import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
+import Card from '@/components/Card';
 import { Input } from '@/components/Input';
+import WorkDemonstration from '@/components/WorkDemonstration';
+import theme from '@/components/theme';
 import { getRoute } from '@/server';
+import {
+    FOR_REFERRER,
+    For_Job_Seekers,
+    PalPlug_Services,
+    Social_Icons,
+} from '@/utils/constants';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import desktopImage from '../../../public/images/desktop.png';
+import LandingPageRobos from '../../../public/images/LandingPageRobos.svg';
 import {
     setAuthState,
     setHasJoinedWaitlist,
     setIsUserRegistered,
 } from '../../store/authSlice';
 import { wrapper } from '../../store/store';
-import { CompanyLogoWidgetList } from './CompanyLogoWidgetList';
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
@@ -82,35 +90,51 @@ const Landing = () => {
 
     return (
         <div>
-            <div className="pt-8 md:pt-24 lg:pt-28">
-                <div className="flex flex-col md:flex-row md:gap-10 lg:gap-16 xl:justify-between">
-                    <div className="order-1 md:order-2 md:w-1/2">
-                        <div className="flex justify-end items-center h-full">
-                            <Image src={desktopImage} alt="..." />
-                        </div>
+            <div className="bg-white">
+                <div className="relative flex overflow-x-hidden">
+                    <div className="md:py-5 py-2 animate-marquee whitespace-nowrap flex flex-row">
+                        {Social_Icons.slice(0, 6).map((item, index) => (
+                            <span className="h-[90px] w-[90px] flex items-center justify-center">
+                                <Image
+                                    src={item}
+                                    alt="social-icons"
+                                    className="inline"
+                                />
+                            </span>
+                        ))}
                     </div>
-                    <div className="order-2 md:order-1 md:w-1/2">
-                        <div className="h-full flex flex-col items-center justify-center p-5 gap-10 lg:gap-16 xl:pl-24">
-                            <div className="flex flex-col text-center gap-10">
-                                <h1 className="text-3xl lg:text-[42px] mb-4 text-brandBlue dark:text-brandBlue font-bold leading-10">
+                    <div className="absolute top-0 md:py-5 py-2 animate-marquee2 whitespace-nowrap flex flex-row">
+                        {Social_Icons.slice(7, 13).map((item, index) => (
+                            <span className="h-[90px] w-[90px] flex items-center justify-center">
+                                <Image
+                                    src={item}
+                                    alt="social-icons"
+                                    className="inline"
+                                />
+                            </span>
+                        ))}
+                    </div>
+                </div>
+                <div className="flex md:pt-[60px] md:pr-4 md:pb-14 md:pl-14  flex-col pt-0 pr-5 pb-4 pl-5">
+                    <div className="flex md:gap-16 md:flex-row gap-8 md:p-2 flex-col-reverse w-full">
+                        <div className="flex  md:max-w-[46.5%] md:gap-[74px] gap-6 flex-col w-full justify-between">
+                            <div className="flex md:gap-10 gap-4 flex-col">
+                                <p className="heading">
                                     Looking for a referral or want to get paid
                                     to refer others?
-                                </h1>
-                                <h4 className="text-base lg:text-xl leading-5 text-grey20 font-semibold">
-                                    Whether you want to get job of your dreams
-                                    or want to get paid to help someone get
-                                    there, PalPlug is the platform to help you
-                                    connect. Get early access below.
-                                </h4>
-                            </div>
-                            <div className="flex flex-col gap-2 w-full">
-                                <p className="text-xs lg:text-sm  text-black font-semibold">
-                                    Join Blake, Kareem and 2165 others on the
-                                    waitlist
                                 </p>
+                                <p className="subHeading2">
+                                    Whether you need help getting your foot in
+                                    the door at your favorite company or want to
+                                    get paid to help someone else get there,
+                                    palplug is the platform to help you connect.
+                                    Get early access below.
+                                </p>
+                            </div>
+                            <div className="flex md:flex-row flex-col gap-4">
                                 <form
                                     onSubmit={handleSubmit(onSubmit)}
-                                    className="flex gap-2 flex-col md:flex-row md:justify-start md:items-center"
+                                    className="flex gap-2 flex-col md:flex-row md:justify-start md:items-center w-full"
                                 >
                                     <Input
                                         {...register('email')}
@@ -136,14 +160,44 @@ const Landing = () => {
                                 </form>
                             </div>
                         </div>
+                        <div className="md:max-w-[53%] w-full">
+                            <Image src={LandingPageRobos} />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="flex flex-col gap-5 px-5 pb-5 lg:gap-10 lg:px-10 lg:pb-10 xl:px-24">
-                <p className="text-xs font-semibold text-grey20 lg:text-sm">
-                    Get referrals to top companies like
-                </p>
-                <CompanyLogoWidgetList />
+                <div className="flex md:flex-row flex-col gap-[60px] max-w-[1236px] m-auto md:pb-10 pb-5">
+                    {PalPlug_Services.map((item, index) => (
+                        <div className="max-w-[372px] w-full" key={index}>
+                            <Card
+                                text1={item?.text1}
+                                text2={item?.text2}
+                                borderColor={theme.palette.grey.grey10V2}
+                                backgroundColor={theme.palette.white.trueWhite}
+                                icon={item.icon}
+                            />
+                        </div>
+                    ))}
+                </div>
+                <div className="flex m-auto py-2 px-4 rounded-27"></div>
+
+                <div className="flex md:flex-col md:gap-10 bg-whiteSmoke md:[pt-20 pr-8 pb-20 pl-16] pt-8 pr-0 pb-10 pl-8">
+                    {/* 1 slider */}
+
+                    <div className="flex flex-col md:gap-4 mb-2">
+                        <p className="heading">How it Works: </p>
+                        <p className="subHeading3 text-neutral-black">
+                            For Job Seeker
+                        </p>
+                        <WorkDemonstration list={For_Job_Seekers} />
+                    </div>
+                    {/* 2 slider */}
+                    <div className="gap-2">
+                        <p className="subHeading3 text-neutral-black">
+                            For Referrer (We call these “Plugs”)
+                        </p>
+                        <WorkDemonstration list={FOR_REFERRER} />
+                    </div>
+                </div>
             </div>
         </div>
     );

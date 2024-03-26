@@ -20,18 +20,98 @@ module.exports = {
                 disabledBlue: '#CCDDE6',
                 grey0: '#F0F0F0',
                 grey10: '#CACACA',
+                grey10V2: '#D5D4DC',
                 grey20: '#939393',
                 grey30: '#555555',
                 grey40: '#2F2F2F',
                 error: '#eb5757',
                 success: '#27AE60',
                 warning: '#EF8943',
+                whiteSmoke: '#F5F5F5',
+                neutralBlack: '#0B0B0B',
+                bluishCyan: '#005382',
+            },
+            animation: {
+                marquee: 'marquee 25s linear infinite',
+                marquee2: 'marquee2 25s linear infinite',
+            },
+            keyframes: {
+                marquee: {
+                    '0%': { transform: 'translateX(0%)' },
+                    '100%': { transform: 'translateX(-100%)' },
+                },
+                marquee2: {
+                    '0%': { transform: 'translateX(100%)' },
+                    '100%': { transform: 'translateX(0%)' },
+                },
             },
         },
     },
     plugins: [
         plugin(function ({ addUtilities }) {
             addUtilities({
+                '.heading': {
+                    color: '#005382',
+                    fontSize: '42px',
+                    fontWeight: 600,
+                    lineHeight: '100%',
+                    letterSpacing: '-0.84px',
+                    '@media (max-width: 768px)': {
+                        fontSize: '24px',
+                        fontWeight: 600,
+                        lineHeight: '100%',
+                        letterSpacing: '-0.48px',
+                    },
+                },
+                '.subHeading1': {
+                    color: '#005382',
+                    fontSize: '24px',
+                    fontWeight: 600,
+                    lineHeight: '100%',
+                    letterSpacing: '-0.48px',
+                },
+                '.subHeading2': {
+                    color: '#939393',
+                    fontSize: '20px',
+                    fontWeight: 600,
+                    lineHeight: '110%',
+                    letterSpacing: '0.6px',
+                    '@media (max-width: 768px)': {
+                        fontSize: '14px',
+                        fontWeight: 400,
+                        letterSpacing: '0.42px',
+                    },
+                },
+                '.subHeading3': {
+                    color: '#000',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    lineHeight: '130%',
+                    letterSpacing: '-0.28px',
+                },
+
+                '.subHeading4': {
+                    color: '#2F2F2F',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    lineHeight: '20px',
+                    letterSpacing: '0.4px',
+                    '@media (min-width: 768px)': {
+                        fontSize: '12px',
+                    },
+                },
+                '.subHeading5': {
+                    color: 'white',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                },
+                '.subHeading6': {
+                    color: '#939393',
+                    fontSize: '12px',
+                    fontWeight: 400,
+                    lineHeight: '130%',
+                    letterSpacing: '-0.24px',
+                },
                 '.scrollbar-hide': {
                     /* IE and Edge */
                     '-ms-overflow-style': 'none',
