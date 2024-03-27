@@ -1,6 +1,9 @@
+import ChevronDown from '@/Icons/ChevronDown';
 import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import Card from '@/components/Card';
+import Contact from '@/components/Contact';
+import Footer from '@/components/Footer';
 import { Input } from '@/components/Input';
 import WorkDemonstration from '@/components/WorkDemonstration';
 import theme from '@/components/theme';
@@ -18,6 +21,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
 import LandingPageRobos from '../../../public/images/LandingPageRobos.svg';
+import LandingPageSingleRobo from '../../../public/images/LandingPageSingleRobo.svg';
 import {
     setAuthState,
     setHasJoinedWaitlist,
@@ -106,9 +110,12 @@ const Landing = () => {
         <div>
             <div className="bg-white">
                 <div className="relative flex overflow-x-hidden">
-                    <div className="md:py-5 py-2 animate-marquee whitespace-nowrap flex flex-row">
+                    <div className="md:py-5 py-2 animate-marquee whitespace-nowrap flex flex-row gap-5">
                         {Social_Icons.slice(0, 6).map((item, index) => (
-                            <span className="h-[90px] w-[90px] flex items-center justify-center">
+                            <span
+                                key={index}
+                                className="h-[90px] w-[90px] flex items-center justify-center"
+                            >
                                 <Image
                                     src={item}
                                     alt="social-icons"
@@ -117,9 +124,12 @@ const Landing = () => {
                             </span>
                         ))}
                     </div>
-                    <div className="absolute top-0 md:py-5 py-2 animate-marquee2 whitespace-nowrap flex flex-row">
+                    <div className="absolute top-0 md:py-5 py-2 animate-marquee2 whitespace-nowrap flex flex-row gap-5">
                         {Social_Icons.slice(7, 13).map((item, index) => (
-                            <span className="h-[90px] w-[90px] flex items-center justify-center">
+                            <span
+                                key={index}
+                                className="h-[90px] w-[90px] flex items-center justify-center"
+                            >
                                 <Image
                                     src={item}
                                     alt="social-icons"
@@ -180,9 +190,9 @@ const Landing = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex md:flex-row flex-col gap-[60px] max-w-[1236px] m-auto md:pb-10 pb-5">
+                <div className="flex md:flex-row flex-col gap-[60px] max-w-[1236px] px-16 m-auto md:pb-10 pb-5 box-content">
                     {PalPlug_Services.map((item, index) => (
-                        <div className="max-w-[372px] w-full" key={index}>
+                        <div className="lg:w-[50%]  md:w-full" key={index}>
                             <Card
                                 text1={item?.text1}
                                 text2={item?.text2}
@@ -193,26 +203,36 @@ const Landing = () => {
                         </div>
                     ))}
                 </div>
-                <div className="flex m-auto py-2 px-4 rounded-27"></div>
-
-                <div className="flex md:flex-col md:gap-10 bg-whiteSmoke md:[pt-20 pr-8 pb-20 pl-16] pt-8 pr-0 pb-10 pl-8">
-                    {/* 1 slider */}
-
-                    <div className="flex flex-col md:gap-4 mb-2">
-                        <p className="heading">How it Works: </p>
-                        <p className="subHeading3 text-neutral-black">
-                            For Job Seeker
-                        </p>
-                        <WorkDemonstration list={For_Job_Seekers} />
+                <div className="flex m-auto py-2 px-3 rounded-[27px] gap-2.5 w-[184px] shadow-custom mb-6">
+                    <p className="subHeading3 text-trueBlack">
+                        Scroll to learn more
+                    </p>
+                    <ChevronDown />
+                </div>
+                <div className="grid grid-cols-10 bg-whiteSmoke md:pt-20 md:pr-8 md:pb-20 md:pl-16 pt-8 pr-0 pb-10 pl-8">
+                    <div className="md:col-span-9 col-span-10 flex  md:flex-col flex-col md:gap-10  ">
+                        <div className="flex flex-col md:flex-col md:gap-4 mb-2">
+                            <p className="heading">How it Works: </p>
+                            <p className="subHeading3 text-neutral-black">
+                                For Job Seeker
+                            </p>
+                            <WorkDemonstration list={For_Job_Seekers} />
+                        </div>
+                        <div>
+                            <div className="flex flex-col gap-2">
+                                <p className="subHeading3 text-neutral-black">
+                                    For Referrer (We call these “Plugs”)
+                                </p>
+                                <WorkDemonstration list={FOR_REFERRER} />
+                            </div>
+                        </div>
                     </div>
-                    {/* 2 slider */}
-                    <div className="gap-2">
-                        <p className="subHeading3 text-neutral-black">
-                            For Referrer (We call these “Plugs”)
-                        </p>
-                        <WorkDemonstration list={FOR_REFERRER} />
+                    <div className="md:col-span-1 md:flex hidden  items-end  max-w-[137px] justify-end">
+                        <Image src={LandingPageSingleRobo} alt="robo" />
                     </div>
                 </div>
+                <Contact />
+                <Footer />
             </div>
         </div>
     );

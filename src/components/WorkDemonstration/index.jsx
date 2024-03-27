@@ -1,17 +1,37 @@
-import theme from '@/components/theme';
+import Card from '@/components/Card';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import Card from '../Card';
-
+import theme from '../theme';
 const WorkDemonstration = ({ list }) => {
     var settings = {
-        dots: true,
+        dots: false,
         arrows: false,
         infinite: true,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true,
+                    dots: true,
+                },
+            },
+
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    initialSlide: 1,
+                    dots: true,
+                },
+            },
+        ],
     };
 
     return (
@@ -25,8 +45,8 @@ const WorkDemonstration = ({ list }) => {
                                 text2={item.text2}
                                 backgroundColor={theme.palette.white}
                             />
-                            {index !== 3 && (
-                                <div className="border-2  border-dashed border-brandBlue w-[21%]"></div>
+                            {index !== list.length - 1 && (
+                                <div className="border-2 border-dashed border-brandBlue w-[21%]"></div>
                             )}
                         </div>
                     </div>

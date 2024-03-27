@@ -15,6 +15,7 @@ module.exports = {
                 'theme-border': '#DFDFDF',
                 'blue-60': '#25B2F8',
                 carbon: '#B6C3CC',
+                trueBlack: '#000',
                 hoverBlue: '#00446A',
                 pressedBlue: '#002B43',
                 disabledBlue: '#CCDDE6',
@@ -44,6 +45,9 @@ module.exports = {
                     '0%': { transform: 'translateX(100%)' },
                     '100%': { transform: 'translateX(0%)' },
                 },
+            },
+            boxShadow: {
+                custom: '0px 4px 4px 0px rgba(0, 0, 0, 0.10)',
             },
         },
     },
@@ -83,7 +87,6 @@ module.exports = {
                     },
                 },
                 '.subHeading3': {
-                    color: '#000',
                     fontSize: '14px',
                     fontWeight: 600,
                     lineHeight: '130%',

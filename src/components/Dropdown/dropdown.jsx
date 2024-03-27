@@ -75,9 +75,8 @@ class CustomDropdown extends Component {
                                 ? this.props.options[value].key
                                 : value.label
                             : this.props.placeholder}
-                        <span className="bg-[#D2EFFF] rounded-full ">
-                            <ChevronDown />
-                        </span>
+
+                        <ChevronDown />
                     </div>
                 }
             >
