@@ -111,7 +111,7 @@ const Landing = () => {
             <div className="bg-white">
                 <div className="relative flex overflow-x-hidden">
                     <div className="md:py-5 py-2 animate-marquee whitespace-nowrap flex flex-row gap-5">
-                        {Social_Icons.slice(0, 6).map((item, index) => (
+                        {Social_Icons.map((item, index) => (
                             <span
                                 key={index}
                                 className="h-[90px] w-[90px] flex items-center justify-center"
@@ -125,7 +125,7 @@ const Landing = () => {
                         ))}
                     </div>
                     <div className="absolute top-0 md:py-5 py-2 animate-marquee2 whitespace-nowrap flex flex-row gap-5">
-                        {Social_Icons.slice(7, 13).map((item, index) => (
+                        {Social_Icons.map((item, index) => (
                             <span
                                 key={index}
                                 className="h-[90px] w-[90px] flex items-center justify-center"
