@@ -10,9 +10,9 @@ function NavBar() {
         redirect(target.href);
     };
     return (
-        <div className="flex flex-row bg-white shadow-grey10 shadow-sm p-5 justify-between">
+        <div className="flex flex-row bg-white shadow-grey10 shadow-sm p-5 justify-between  fixed z-10 w-full">
             <Link href="/" onClick={handleLogoClick}>
-                <Image src={navLogo} alt="..." />
+                <Image src={navLogo} alt="..." height={24} width={103} />
             </Link>
             <div className="flex flex-row gap-3">
                 <p className="subHeading3 text-brandBlue">How it works</p>

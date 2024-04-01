@@ -1,4 +1,3 @@
-import ChevronDown from '@/Icons/ChevronDown';
 import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import Card from '@/components/Card';
@@ -14,12 +13,15 @@ import {
     PalPlug_Services,
     Social_Icons,
 } from '@/utils/constants';
+import { useUser } from '@auth0/nextjs-auth0/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
+import DownArrow from '../../../public/images/DownArrow.svg';
 import LandingPageRobos from '../../../public/images/LandingPageRobos.svg';
 import LandingPageSingleRobo from '../../../public/images/LandingPageSingleRobo.svg';
 import {
@@ -28,8 +30,6 @@ import {
     setIsUserRegistered,
 } from '../../store/authSlice';
 import { wrapper } from '../../store/store';
-
-import { useUser } from '@auth0/nextjs-auth0/client';
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
@@ -58,6 +58,15 @@ const emailSchema = yup.object().shape({
 });
 
 const Landing = () => {
+    const [isVisible, setIsVisible] = useState(false);
+    const [showMore, setShowMore] = useState(false);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, []);
     const router = useRouter();
     const dispatch = useDispatch();
     const { user, error, isLoading } = useUser();
@@ -82,7 +91,6 @@ const Landing = () => {
     }
 
     const onSubmit = ({ email }) => {
-        // updateWaitListStatusAndRedirect();
         postRequest(getRoute('joinWaitlist'), { email })
             .then((res) => {
                 updateWaitListStatusAndRedirect();
@@ -107,7 +115,7 @@ const Landing = () => {
     };
 
     return (
-        <div>
+        <div className="pt-[68px]">
             <div className="bg-white">
                 <div className="relative flex overflow-x-hidden">
                     <div className="md:py-5 py-2 animate-marquee whitespace-nowrap flex flex-row gap-5">
@@ -139,9 +147,9 @@ const Landing = () => {
                         ))}
                     </div>
                 </div>
-                <div className="flex md:pt-[60px] md:pr-4 md:pb-14 md:pl-14  flex-col pt-0 pr-5 pb-4 pl-5">
-                    <div className="flex md:gap-16 md:flex-row gap-8 md:p-2 flex-col-reverse w-full">
-                        <div className="flex  md:max-w-[46.5%] md:gap-[74px] gap-6 flex-col w-full justify-between">
+                <div className="flex md:pt-5 md:pr-5 md:pb-4 md:pl-5  flex-col pt-0 pr-5 pb-4 pl-5">
+                    <div className="flex md:gap-16 lg:flex-row gap-8 md:p-2 flex-col-reverse w-full">
+                        <div className="flex  lg:max-w-[46.5%] md:gap-[74px] gap-6 flex-col w-full justify-between">
                             <div className="flex md:gap-10 gap-4 flex-col">
                                 <p className="heading">
                                     Looking for a referral or want to get paid
@@ -185,14 +193,17 @@ const Landing = () => {
                                 </form>
                             </div>
                         </div>
-                        <div className="md:max-w-[53%] w-full">
+                        <div className="lg:max-w-[53%] w-full">
                             <Image src={LandingPageRobos} />
                         </div>
                     </div>
                 </div>
-                <div className="flex md:flex-row flex-col gap-[60px] max-w-[1236px] px-16 m-auto md:pb-10 pb-5 box-content">
+                <div className="flex md:flex-row flex-wrap flex-col gap-4 lg:gap-[60px] max-w-[1236px] px-5 m-auto md:pb-10 pb-5 box-content">
                     {PalPlug_Services.map((item, index) => (
-                        <div className="lg:w-[50%]  md:w-full" key={index}>
+                        <div
+                            className="md:w-[100%] lg:w-[46%] xl:w-[30%]  "
+                            key={index}
+                        >
                             <Card
                                 text1={item?.text1}
                                 text2={item?.text2}
@@ -203,36 +214,53 @@ const Landing = () => {
                         </div>
                     ))}
                 </div>
-                <div className="flex m-auto py-2 px-3 rounded-[27px] gap-2.5 w-[184px] shadow-custom mb-6">
-                    <p className="subHeading3 text-trueBlack">
-                        Scroll to learn more
-                    </p>
-                    <ChevronDown />
-                </div>
-                <div className="grid grid-cols-10 bg-whiteSmoke md:pt-20 md:pr-8 md:pb-20 md:pl-16 pt-8 pr-0 pb-10 pl-8">
-                    <div className="md:col-span-9 col-span-10 flex  md:flex-col flex-col md:gap-10  ">
-                        <div className="flex flex-col md:flex-col md:gap-4 mb-2">
-                            <p className="heading">How it Works: </p>
-                            <p className="subHeading3 text-neutral-black">
-                                For Job Seeker
-                            </p>
-                            <WorkDemonstration list={For_Job_Seekers} />
-                        </div>
-                        <div>
-                            <div className="flex flex-col gap-2">
-                                <p className="subHeading3 text-neutral-black">
-                                    For Referrer (We call these “Plugs”)
-                                </p>
-                                <WorkDemonstration list={FOR_REFERRER} />
+                {isVisible && (
+                    <div
+                        className="flex m-auto py-2 px-3 rounded-[27px] gap-2.5 w-[184px] shadow-custom mb-6 cursor-pointer"
+                        onClick={() => setShowMore(!showMore)}
+                    >
+                        <p className="subHeading3 text-trueBlack">
+                            Scroll to learn more
+                        </p>
+
+                        <div className="flex justify-center items-center bg-brandSecondaryBlue h-4 w-4 rounded-full">
+                            <div className="animated-div">
+                                <Image src={DownArrow} height={18} width={18} />
                             </div>
                         </div>
                     </div>
-                    <div className="md:col-span-1 md:flex hidden  items-end  max-w-[137px] justify-end">
-                        <Image src={LandingPageSingleRobo} alt="robo" />
-                    </div>
-                </div>
-                <Contact />
-                <Footer />
+                )}
+                {!showMore && <div className="h-6 w-full"></div>}
+                {showMore && (
+                    <>
+                        <div className="grid grid-cols-10 bg-whiteSmoke md:pt-20 md:pr-8 md:pb-20 md:pl-16 pt-8 pr-5 pb-10 pl-5">
+                            <div className="md:col-span-9 col-span-10 flex  md:flex-col flex-col gap-10  ">
+                                <div className="flex flex-col md:flex-col gap-4 mb-2">
+                                    <p className="heading">How it Works: </p>
+                                    <p className="subHeading3 text-neutral-black">
+                                        For Job Seeker
+                                    </p>
+                                    <WorkDemonstration list={For_Job_Seekers} />
+                                </div>
+                                <div>
+                                    <div className="flex flex-col gap-4">
+                                        <p className="subHeading3 text-neutral-black">
+                                            For Referrer (We call these “Plugs”)
+                                        </p>
+                                        <WorkDemonstration
+                                            list={FOR_REFERRER}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="md:col-span-1 md:flex hidden  items-end  max-w-[137px] justify-end">
+                                <Image src={LandingPageSingleRobo} alt="robo" />
+                            </div>
+                        </div>
+                        <Contact />
+                        <Footer />
+                    </>
+                )}
             </div>
         </div>
     );

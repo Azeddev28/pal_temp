@@ -7,28 +7,30 @@ const WorkDemonstration = ({ list }) => {
     var settings = {
         dots: false,
         arrows: false,
-        infinite: true,
         speed: 500,
         slidesToShow: 4,
+        initialSlide: 0,
+        infinite: true,
         slidesToScroll: 1,
         responsive: [
             {
                 breakpoint: 1200,
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 2,
-                    infinite: true,
+                    slidesToScroll: 1,
                     dots: true,
+                    arrows: false,
                 },
             },
 
             {
-                breakpoint: 600,
+                breakpoint: 900,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     initialSlide: 1,
                     dots: true,
+                    arrows: false,
                 },
             },
         ],
@@ -38,16 +40,22 @@ const WorkDemonstration = ({ list }) => {
         <div>
             <Slider {...settings}>
                 {list.map((item, index) => (
-                    <div key={index} style={{ border: '1px solid red' }}>
-                        <div className="flex flex-row items-center">
+                    <div>
+                        <div
+                            className="flex flex-row items-center"
+                            style={{
+                                width: '100%',
+                                width: '313px',
+                            }}
+                        >
                             <Card
                                 text1={item.text1}
                                 text2={item.text2}
+                                id={item.id}
                                 backgroundColor={theme.palette.white}
                             />
-                            {index !== list.length - 1 && (
-                                <div className="border-2 border-dashed border-brandBlue w-[21%]"></div>
-                            )}
+
+                            <div className="border-2 border-dashed border-brandBlue w-[21%] !h-0.5"></div>
                         </div>
                     </div>
                 ))}
