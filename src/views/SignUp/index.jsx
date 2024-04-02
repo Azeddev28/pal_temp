@@ -1,5 +1,4 @@
 import { Button } from '@/components/Button';
-import { Typography } from '@/components/Typography';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -31,26 +30,26 @@ const SignUp = () => {
         }
     };
     return (
-        <div className="flex justify-center items-center flex-col h-screen font-poppins">
+        <div className="flex justify-center items-center flex-col h-screen font-poppins px-4">
             <div className="flex flex-col gap-[3.125rem] max-w-[44.94rem] ">
                 <div className="flex flex-col items-center gap-[2.5rem]">
                     <Image src={AnnouncementRobo} />
-                    <Typography variant={'h2'} className="text-brandBlue">
+                    <p className="heading text-brandBlue text-center">
                         Your spot is reserved! 🎉
-                    </Typography>
+                    </p>
 
-                    <Typography variant={'h5'} className="text-grey20 ">
+                    <p className="subHeading2 text-grey20  text-center ">
                         You're on the list! We'll let you know when your spot to
                         sign up is ready
-                    </Typography>
+                    </p>
                 </div>
                 <div className="flex flex-col items-center gap-4">
-                    <Typography variant={'h5'} className="text-grey40">
+                    <p className="text-grey40 subHeading2  text-center">
                         If you'd like to move up in line, sign up and complete
                         your profile set up now
-                    </Typography>
+                    </p>
                     <Button size="sm" onClick={() => setIsModalOpen(true)}>
-                        <Typography variant={'body'}>Sign up</Typography>
+                        <p className="subHeading5">Sign up</p>
                     </Button>
                 </div>
             </div>

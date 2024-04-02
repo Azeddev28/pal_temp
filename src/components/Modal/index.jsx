@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Modal = ({ isOpen, onClose, bannerImageSrc, children, height }) => {
     if (!isOpen) return null;
     return (
-        <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 p-4 md:p-10">
+        <div className="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 p-4 md:p-10 z-20">
             <div
                 className={`max-h-full ${
                     height &&

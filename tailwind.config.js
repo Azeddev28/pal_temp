@@ -75,7 +75,6 @@ module.exports = {
                     letterSpacing: '-0.48px',
                 },
                 '.subHeading2': {
-                    color: '#939393',
                     fontSize: '20px',
                     fontWeight: 600,
                     lineHeight: '110%',

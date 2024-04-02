@@ -50,7 +50,7 @@ const GenderSelector = () => {
                     label="Female"
                     onClick={() => setShowAnotherGender(false)}
                 />
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-baseline">
                     <Radio
                         {...register('gender')}
                         id="another"

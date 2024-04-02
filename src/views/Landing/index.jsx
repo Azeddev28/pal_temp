@@ -155,7 +155,7 @@ const Landing = () => {
                                     Looking for a referral or want to get paid
                                     to refer others?
                                 </p>
-                                <p className="subHeading2">
+                                <p className="subHeading2 text-grey20">
                                     Whether you need help getting your foot in
                                     the door at your favorite company or want to
                                     get paid to help someone else get there,
@@ -166,7 +166,7 @@ const Landing = () => {
                             <div className="flex md:flex-row flex-col gap-4">
                                 <form
                                     onSubmit={handleSubmit(onSubmit)}
-                                    className="flex gap-2 flex-col md:flex-row md:justify-start md:items-center w-full"
+                                    className="flex gap-2 flex-col md:flex-row md:justify-start  w-full"
                                 >
                                     <Input
                                         {...register('email')}
