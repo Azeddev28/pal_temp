@@ -17,9 +17,9 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import DownArrow from '../../../public/images/DownArrow.svg';
 import LandingPageRobos from '../../../public/images/LandingPageRobos.svg';
@@ -28,6 +28,8 @@ import {
     setAuthState,
     setHasJoinedWaitlist,
     setIsUserRegistered,
+    setScrollState,
+    setShowMore,
 } from '../../store/authSlice';
 import { wrapper } from '../../store/store';
 
@@ -59,7 +61,24 @@ const emailSchema = yup.object().shape({
 
 const Landing = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const [showMore, setShowMore] = useState(false);
+    const workingBehaviour = useRef(null);
+    const contact = useRef();
+    const { scroll, showMore } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (workingBehaviour.current) {
+            workingBehaviour.current.scrollIntoView({ behavior: 'smooth' });
+        }
+        dispatch(setScrollState(false));
+    }, [scroll, workingBehaviour]);
+    useEffect(() => {
+        if (contact.current) {
+            contact.current.scrollIntoView({ behavior: 'smooth' });
+        }
+        dispatch(setScrollState(false));
+    }, [scroll, contact]);
+
+    // for displaying the button show more
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsVisible(true);
@@ -112,6 +131,10 @@ const Landing = () => {
                     }
                 }
             );
+    };
+
+    const handleShowMore = () => {
+        dispatch(setShowMore(!showMore));
     };
 
     return (
@@ -217,7 +240,7 @@ const Landing = () => {
                 {isVisible && (
                     <div
                         className="flex m-auto py-2 px-3 rounded-[27px] gap-2.5 w-[184px] shadow-custom mb-6 cursor-pointer"
-                        onClick={() => setShowMore(!showMore)}
+                        onClick={handleShowMore}
                     >
                         <p className="subHeading3 text-trueBlack">
                             Scroll to learn more
@@ -233,7 +256,10 @@ const Landing = () => {
                 {!showMore && <div className="h-6 w-full"></div>}
                 {showMore && (
                     <>
-                        <div className="grid grid-cols-10 bg-whiteSmoke md:pt-20 md:pr-8 md:pb-20 md:pl-16 pt-8 pr-5 pb-10 pl-5">
+                        <div
+                            ref={workingBehaviour}
+                            className="grid grid-cols-10 bg-whiteSmoke md:pt-20 md:pr-8 md:pb-20 md:pl-16 pt-8 pr-5 pb-10 pl-5"
+                        >
                             <div className="md:col-span-9 col-span-10 flex  md:flex-col flex-col gap-10  ">
                                 <div className="flex flex-col md:flex-col gap-4 mb-2">
                                     <p className="heading">How it Works: </p>
@@ -257,7 +283,9 @@ const Landing = () => {
                                 <Image src={LandingPageSingleRobo} alt="robo" />
                             </div>
                         </div>
-                        <Contact />
+                        <div ref={contact}>
+                            <Contact />
+                        </div>
                         <Footer />
                     </>
                 )}
