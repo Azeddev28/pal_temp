@@ -28,7 +28,8 @@ import {
     setAuthState,
     setHasJoinedWaitlist,
     setIsUserRegistered,
-    setScrollState,
+    setScrollStateContact,
+    setScrollStateWorking,
     setShowMore,
 } from '../../store/authSlice';
 import { wrapper } from '../../store/store';
@@ -61,22 +62,29 @@ const emailSchema = yup.object().shape({
 
 const Landing = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const workingBehaviour = useRef(null);
+    const workingBehaviour = useRef();
     const contact = useRef();
-    const { scroll, showMore } = useSelector((state) => state.auth);
+    const { scrollContact, scrollWorking, showMore } = useSelector(
+        (state) => state.auth
+    );
 
     useEffect(() => {
         if (workingBehaviour.current) {
-            workingBehaviour.current.scrollIntoView({ behavior: 'smooth' });
+            const scrollOptions = {
+                behavior: 'smooth',
+                block: 'start',
+                inline: 'nearest',
+            };
+            workingBehaviour.current.scrollIntoView(scrollOptions);
         }
-        dispatch(setScrollState(false));
-    }, [scroll, workingBehaviour]);
+        dispatch(setScrollStateWorking(false));
+    }, [scrollWorking]);
     useEffect(() => {
         if (contact.current) {
             contact.current.scrollIntoView({ behavior: 'smooth' });
         }
-        dispatch(setScrollState(false));
-    }, [scroll, contact]);
+        dispatch(setScrollStateContact(false));
+    }, [scrollContact]);
 
     // for displaying the button show more
     useEffect(() => {

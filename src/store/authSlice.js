@@ -11,7 +11,8 @@ const initialState = {
     lastName: '',
     email: '',
     firebaseAuthObj: null,
-    scroll: false,
+    scrollContact: false,
+    scrollWorking: false,
     showMore: false,
 };
 
@@ -45,8 +46,11 @@ export const authSlice = createSlice({
         setFirebaseAuth(state, action) {
             state.firebaseAuthObj = action.payload;
         },
-        setScrollState(state, action) {
-            state.scroll = action.payload;
+        setScrollStateContact(state, action) {
+            state.scrollContact = action.payload;
+        },
+        setScrollStateWorking(state, action) {
+            state.scrollWorking = action.payload;
         },
         setShowMore(state, action) {
             state.showMore = action.payload;
@@ -70,7 +74,8 @@ export const {
     setIsUserRegistered,
     setHasJoinedWaitlist,
     setFirebaseAuth,
-    setScrollState,
+    setScrollStateContact,
+    setScrollStateWorking,
     setShowMore,
 } = authSlice.actions;
 

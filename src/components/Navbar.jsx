@@ -1,4 +1,8 @@
-import { setScrollState, setShowMore } from '@/store/authSlice';
+import {
+    setScrollStateContact,
+    setScrollStateWorking,
+    setShowMore,
+} from '@/store/authSlice';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -12,9 +16,13 @@ function NavBar() {
     };
 
     const dispatch = useDispatch();
-    const handleScroll = () => {
+    const handleScrollWorking = () => {
         dispatch(setShowMore(true));
-        dispatch(setScrollState(true));
+        dispatch(setScrollStateWorking(true));
+    };
+    const handleScrollContact = () => {
+        dispatch(setShowMore(true));
+        dispatch(setScrollStateContact(true));
     };
     return (
         <div className="flex flex-row bg-white shadow-grey10 shadow-sm p-5 justify-between  fixed z-10 w-full">
@@ -24,14 +32,14 @@ function NavBar() {
             <div className="flex flex-row gap-3">
                 <p
                     className="subHeading3 text-brandBlue cursor-pointer"
-                    onClick={handleScroll}
+                    onClick={handleScrollWorking}
                 >
                     How it works
                 </p>
                 <div className="h-[17px] w-0.5 bg-brandBlue "></div>
                 <p
                     className="subHeading3 text-brandBlue cursor-pointer"
-                    onClick={handleScroll}
+                    onClick={handleScrollContact}
                 >
                     Contact Us
                 </p>
