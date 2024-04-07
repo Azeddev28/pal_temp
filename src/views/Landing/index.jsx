@@ -30,7 +30,6 @@ import {
     setIsUserRegistered,
     setScrollStateContact,
     setScrollStateWorking,
-    setShowMore,
 } from '../../store/authSlice';
 import { wrapper } from '../../store/store';
 
@@ -62,11 +61,10 @@ const emailSchema = yup.object().shape({
 
 const Landing = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const [showMore, setShowMore] = useState(false);
     const workingBehaviour = useRef();
     const contact = useRef();
-    const { scrollContact, scrollWorking, showMore } = useSelector(
-        (state) => state.auth
-    );
+    const { scrollContact, scrollWorking } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (workingBehaviour.current) {
@@ -91,6 +89,12 @@ const Landing = () => {
         const timer = setTimeout(() => {
             setIsVisible(true);
         }, 3000);
+        return () => clearTimeout(timer);
+    }, []);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowMore(true);
+        }, 4000);
 
         return () => clearTimeout(timer);
     }, []);
@@ -139,10 +143,6 @@ const Landing = () => {
                     }
                 }
             );
-    };
-
-    const handleShowMore = () => {
-        dispatch(setShowMore(!showMore));
     };
 
     return (
@@ -246,10 +246,7 @@ const Landing = () => {
                     ))}
                 </div>
                 {isVisible && (
-                    <div
-                        className="flex m-auto py-2 px-3 rounded-[27px] gap-2.5 w-[184px] shadow-custom mb-6 cursor-pointer"
-                        onClick={handleShowMore}
-                    >
+                    <div className="animate-fade flex m-auto py-2 px-3 rounded-[27px] gap-2.5 w-[184px] shadow-custom mb-6 cursor-pointer">
                         <p className="subHeading3 text-trueBlack">
                             Scroll to learn more
                         </p>

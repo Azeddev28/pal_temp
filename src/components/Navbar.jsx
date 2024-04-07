@@ -29,7 +29,7 @@ function NavBar() {
             <Link href="/" onClick={handleLogoClick}>
                 <Image src={navLogo} alt="..." height={24} width={103} />
             </Link>
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-row gap-3 items-center">
                 <p
                     className="subHeading3 text-brandBlue cursor-pointer"
                     onClick={handleScrollWorking}

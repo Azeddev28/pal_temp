@@ -1,4 +1,5 @@
 import ChevronDown from '@/Icons/ChevronDown';
+import ChevronUp from '@/Icons/ChevronUp';
 import { Component, forwardRef, useState } from 'react';
 import Select, { components } from 'react-select';
 import { Radio } from '../Input';
@@ -76,7 +77,7 @@ class CustomDropdown extends Component {
                                 : value.label
                             : this.props.placeholder}
 
-                        <ChevronDown />
+                        {isOpen ? <ChevronUp /> : <ChevronDown />}
                     </div>
                 }
             >

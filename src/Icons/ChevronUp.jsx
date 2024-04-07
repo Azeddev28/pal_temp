@@ -1,4 +1,4 @@
-const ChevronDown = () => {
+const ChevronUp = () => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -9,14 +9,14 @@ const ChevronDown = () => {
         >
             <circle cx="8" cy="8" r="8" fill="#D2EFFF" />
             <path
-                d="M5.19995 7.2002L7.79995 9.8002L10.4 7.2002"
+                d="M5.19995 8.7998L7.79995 6.1998L10.4 8.7998"
                 stroke="#005382"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
 };
 
-export default ChevronDown;
+export default ChevronUp;

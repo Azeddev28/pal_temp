@@ -35,19 +35,15 @@ html {
 
 .slick-slide {
     height: inherit !important;
-    width: 303px !important;
 }
 .slick-slide div {
     height: 100%;
 }
 .slick-active {
     height: inherit !important;
-    /* width: 303px !important; */
-    /* display: none !important; */
 }
 .slick-active .slick-slide {
     height: inherit !important;
-    width: 303px !important;
 }
 
 .slick-active button {

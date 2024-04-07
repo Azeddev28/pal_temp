@@ -13,7 +13,6 @@ const initialState = {
     firebaseAuthObj: null,
     scrollContact: false,
     scrollWorking: false,
-    showMore: false,
 };
 
 // Actual Slice
@@ -52,9 +51,6 @@ export const authSlice = createSlice({
         setScrollStateWorking(state, action) {
             state.scrollWorking = action.payload;
         },
-        setShowMore(state, action) {
-            state.showMore = action.payload;
-        },
     },
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
@@ -76,7 +72,6 @@ export const {
     setFirebaseAuth,
     setScrollStateContact,
     setScrollStateWorking,
-    setShowMore,
 } = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;

@@ -1,7 +1,7 @@
-import Card from '@/components/Card';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
+import Card from '../Card';
 import theme from '../theme';
 const WorkDemonstration = ({ list }) => {
     var settings = {
@@ -11,12 +11,13 @@ const WorkDemonstration = ({ list }) => {
         slidesToShow: 4,
         initialSlide: 0,
         infinite: true,
+
         slidesToScroll: 1,
         responsive: [
             {
                 breakpoint: 1200,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 3,
                     slidesToScroll: 1,
                     dots: true,
                     arrows: false,
@@ -24,11 +25,19 @@ const WorkDemonstration = ({ list }) => {
             },
 
             {
-                breakpoint: 900,
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    dots: true,
+                    arrows: false,
+                },
+            },
+            {
+                breakpoint: 640,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    initialSlide: 1,
                     dots: true,
                     arrows: false,
                 },
@@ -41,13 +50,7 @@ const WorkDemonstration = ({ list }) => {
             <Slider {...settings}>
                 {list.map((item, index) => (
                     <div>
-                        <div
-                            className="flex flex-row items-center"
-                            style={{
-                                width: '100%',
-                                width: '313px',
-                            }}
-                        >
+                        <div className="flex flex-row items-center">
                             <Card
                                 text1={item.text1}
                                 text2={item.text2}
@@ -55,7 +58,7 @@ const WorkDemonstration = ({ list }) => {
                                 backgroundColor={theme.palette.white}
                             />
 
-                            <div className="border-2 border-dashed border-brandBlue w-[21%] !h-0.5"></div>
+                            <div className="border-2 hidden sm:block border-dashed border-brandBlue w-[21%] !h-0.5"></div>
                         </div>
                     </div>
                 ))}
