@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-
-import rootReducer from './reducers';
+import { profileReducer } from './reducers/profile';
+import { sessionReducer } from './reducers/session';
 
 const generateActionCreator = (type) => {
     return (payload) => ({ type, payload });
@@ -9,10 +8,10 @@ const generateActionCreator = (type) => {
 
 const initStore = (initialState) =>
     configureStore({
-        reducer: rootReducer,
-        preloadedState: initialState,
-        middleware: [thunk],
-        devTools: true,
+        reducer: {
+            profile: profileReducer,
+            session: sessionReducer,
+        },
     });
 
 let store;

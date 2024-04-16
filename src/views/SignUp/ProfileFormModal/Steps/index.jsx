@@ -259,7 +259,15 @@ const RoleSelector = () => {
 
 const CompanySelector = () => {
     const [companies, isLoading] = useStep('companies');
-    const { register, setValue } = useFormContext();
+    const {
+        register,
+        setValue,
+        control,
+        watch,
+        handleSubmit,
+        formState,
+        getValues,
+    } = useFormContext();
 
     const companyOptions = useMemo(() => {
         if (!companies) return [];
@@ -285,11 +293,20 @@ const CompanySelector = () => {
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
                     <>
-                        <SearchBar
-                            options={companyOptions}
-                            setValue={setValue}
+                        <Controller
                             name="company"
-                            register={register}
+                            control={control}
+                            render={({
+                                field: { onChange, onBlur, value },
+                            }) => (
+                                <SearchBar
+                                    formState={formState}
+                                    options={companyOptions}
+                                    handleChange={onChange}
+                                    setValue={setValue}
+                                    value={value}
+                                />
+                            )}
                         />
                     </>
                 )}
