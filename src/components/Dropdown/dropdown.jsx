@@ -1,5 +1,4 @@
 import ChevronDown from '@/Icons/ChevronDown';
-import ChevronUp from '@/Icons/ChevronUp';
 import { Component, forwardRef, useState } from 'react';
 import Select, { components } from 'react-select';
 import { Radio } from '../Input';
@@ -16,10 +15,14 @@ const selectStyles = {
     }),
     menu: () => ({
         boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)',
+        // border: '1px solid red',
+        maxHeight: '195px',
+        height: '195px',
     }),
     menuList: (base) => ({
         ...base,
-        maxHeight: '100px',
+        maxHeight: '195px',
+        // border: '1px solid yellow',
     }),
     option: (provided, state) => {
         return {
@@ -31,85 +34,7 @@ const selectStyles = {
         };
     },
 };
-const Menu = (props) => {
-    const shadow = 'hsla(218, 50%, 10%, 0.1)';
-    return (
-        <div
-            style={{
-                backgroundColor: 'white',
-                borderRadius: 4,
-                boxShadow: `0 0 0 1px ${shadow}, 0 4px 11px ${shadow}`,
-                marginTop: 8,
-                position: 'absolute',
-                zIndex: 2,
-                width: '100%',
-            }}
-            {...props}
-        />
-    );
-};
-class CustomDropdown extends Component {
-    state = { isOpen: false, value: this.props.index };
-    toggleOpen = () => {
-        this.setState((state) => ({ isOpen: !state.isOpen }));
-    };
-    onSelectChange = (value) => {
-        this.toggleOpen();
-        this.props.onChange(value.value);
-        this.setState({ value });
-    };
-    render() {
-        const { isOpen, value } = this.state;
 
-        return (
-            <Dropdown
-                isOpen={isOpen}
-                onClose={this.toggleOpen}
-                target={
-                    <div
-                        ref={(ref) => (this.targetRef = ref)}
-                        onClick={this.toggleOpen}
-                        className="p-2 lg:p-4 border-2 border-solid rounded-lg border-theme-border w-full flex items-center justify-between text-xs md:text-sm 2xl:text-base "
-                    >
-                        {value
-                            ? this.props.options[value]
-                                ? this.props.options[value].key
-                                : value.label
-                            : this.props.placeholder}
-
-                        {isOpen ? <ChevronUp /> : <ChevronDown />}
-                    </div>
-                }
-            >
-                <Select
-                    ref={this.props.innerRef}
-                    autoFocus={false}
-                    backspaceRemovesValue={false}
-                    components={{
-                        DropdownIndicator: null,
-                        IndicatorSeparator: null,
-                        Option: InputOption,
-                    }}
-                    controlShouldRenderValue={false}
-                    hideSelectedOptions={false}
-                    isClearable={false}
-                    menuIsOpen
-                    onChange={this.onSelectChange}
-                    options={this.props.options.map((option) => {
-                        return { label: option.key, value: option.value };
-                    })}
-                    placeholder="Search for..."
-                    styles={selectStyles}
-                    tabSelectsValue={false}
-                    value={value}
-                />
-            </Dropdown>
-        );
-    }
-}
-export default forwardRef((props, ref) => (
-    <CustomDropdown innerRef={ref} {...props} />
-));
 const InputOption = ({
     getStyles,
     Icon,
@@ -161,20 +86,6 @@ const InputOption = ({
     );
 };
 
-const Blanket = (props) => (
-    <div
-        style={{
-            bottom: 0,
-            left: 0,
-            top: 0,
-            right: 0,
-            position: 'fixed',
-            zIndex: 1,
-            width: '100%',
-        }}
-        {...props}
-    />
-);
 const Dropdown = ({ children, isOpen, target, onClose }) => (
     <div
         style={{
@@ -187,13 +98,101 @@ const Dropdown = ({ children, isOpen, target, onClose }) => (
         {isOpen ? <Blanket onClick={onClose} /> : null}
     </div>
 );
-const Svg = (p) => (
-    <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        focusable="false"
-        role="presentation"
-        {...p}
+
+const Menu = (props) => {
+    console.log('Menu Props', props);
+    const shadow = 'hsla(218, 50%, 10%, 0.1)';
+    return (
+        <div
+            style={{
+                backgroundColor: 'white',
+                // background: 'LightGray',
+                borderRadius: 4,
+                boxShadow: `0 0 0 1px ${shadow}, 0 4px 11px ${shadow}`,
+                marginTop: 8,
+                position: 'absolute',
+                zIndex: 2,
+                width: '100%',
+            }}
+            {...props}
+        />
+    );
+};
+const Blanket = (props) => (
+    <div
+        style={{
+            bottom: 0,
+            // border: '5px solid yellow',
+            left: 0,
+            top: 0,
+            // background: 'pink',
+            right: 0,
+            position: 'fixed',
+            zIndex: 1,
+            width: '100%',
+        }}
+        {...props}
     />
 );
+class CustomDropdown extends Component {
+    state = { isOpen: false, value: this.props.index };
+    toggleOpen = () => {
+        this.setState((state) => ({ isOpen: !state.isOpen }));
+    };
+    onSelectChange = (value) => {
+        this.toggleOpen();
+        this.props.onChange(value.value);
+        this.setState({ value });
+    };
+    render() {
+        const { isOpen, value } = this.state;
+
+        return (
+            <Dropdown
+                isOpen={isOpen}
+                onClose={this.toggleOpen}
+                target={
+                    <div
+                        ref={(ref) => (this.targetRef = ref)}
+                        onClick={this.toggleOpen}
+                        // style={{ border: '1px solid red' }}
+                        className="p-2 lg:p-4 border-2 border-solid rounded-lg border-theme-border w-full flex items-center justify-between text-xs md:text-sm 2xl:text-base "
+                    >
+                        {value
+                            ? this.props.options[value]
+                                ? this.props.options[value].key
+                                : value.label
+                            : this.props.placeholder}
+                        <ChevronDown isOpen={isOpen} />
+                    </div>
+                }
+            >
+                <Select
+                    ref={this.props.innerRef}
+                    autoFocus={false}
+                    backspaceRemovesValue={false}
+                    components={{
+                        DropdownIndicator: null,
+                        IndicatorSeparator: null,
+                        Option: InputOption,
+                    }}
+                    controlShouldRenderValue={false}
+                    hideSelectedOptions={false}
+                    isClearable={false}
+                    menuIsOpen
+                    onChange={this.onSelectChange}
+                    options={this.props.options.map((option) => {
+                        return { label: option.key, value: option.value };
+                    })}
+                    placeholder="Search for..."
+                    styles={selectStyles}
+                    tabSelectsValue={false}
+                    value={value}
+                />
+            </Dropdown>
+        );
+    }
+}
+export default forwardRef((props, ref) => (
+    <CustomDropdown innerRef={ref} {...props} />
+));

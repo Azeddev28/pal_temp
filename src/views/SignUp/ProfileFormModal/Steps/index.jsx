@@ -89,7 +89,7 @@ const CountrySelector = () => {
     const [countries, isLoadingCountries] = useStep('countries');
     const [languages, isLoadingLanguages] = useStep('languages');
 
-    const { register, setValue, watch, control } = useFormContext();
+    const { setValue, control } = useFormContext();
 
     const countryOptions = useMemo(() => {
         if (!countries) return [];
@@ -259,15 +259,7 @@ const RoleSelector = () => {
 
 const CompanySelector = () => {
     const [companies, isLoading] = useStep('companies');
-    const {
-        register,
-        setValue,
-        control,
-        watch,
-        handleSubmit,
-        formState,
-        getValues,
-    } = useFormContext();
+    const { setValue, control, formState } = useFormContext();
 
     const companyOptions = useMemo(() => {
         if (!companies) return [];
@@ -296,9 +288,7 @@ const CompanySelector = () => {
                         <Controller
                             name="company"
                             control={control}
-                            render={({
-                                field: { onChange, onBlur, value },
-                            }) => (
+                            render={({ field: { onChange, value } }) => (
                                 <SearchBar
                                     formState={formState}
                                     options={companyOptions}
@@ -375,7 +365,7 @@ const InterestedIndustrySelector = () => {
 
 const JobSelector = () => {
     const [userRoles, setUserRoles] = useState([]);
-    const { register, setValue, watch, control } = useFormContext();
+    const { setValue, control } = useFormContext();
 
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {

@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { profileReducer } from './reducers/profile';
-import { sessionReducer } from './reducers/session';
+import rootReducer from './reducers';
 
 const generateActionCreator = (type) => {
     return (payload) => ({ type, payload });
@@ -8,10 +7,10 @@ const generateActionCreator = (type) => {
 
 const initStore = (initialState) =>
     configureStore({
-        reducer: {
-            profile: profileReducer,
-            session: sessionReducer,
-        },
+        reducer: rootReducer,
+        preloadedState: initialState,
+        middleware: [thunk],
+        devTools: true,
     });
 
 let store;
