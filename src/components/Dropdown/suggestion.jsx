@@ -1,19 +1,10 @@
 import { useEffect, useState } from 'react';
-
-const SearchBar = ({
-    options,
-    name,
-    setValue,
-    value,
-    register,
-    handleChange,
-    formState,
-    getValues,
-}) => {
+import { useSelector } from 'react-redux';
+const SearchBar = ({ options, setValue, value, handleChange }) => {
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [optionSelected, setOptionSelected] = useState(false);
-
+    const { suggestionListVisibility } = useSelector((state) => state.auth);
     useEffect(() => {
         if (window) {
             const filteredSuggestions = options.filter((option) =>
@@ -27,6 +18,11 @@ const SearchBar = ({
         }
     }, [query, options]);
 
+    // useEffect for setting suggestion list empty
+
+    useEffect(() => {
+        setSuggestions([]);
+    }, [suggestionListVisibility]);
     const handleSelect = (selectedOption) => {
         setValue('company', selectedOption);
         setQuery(selectedOption);
