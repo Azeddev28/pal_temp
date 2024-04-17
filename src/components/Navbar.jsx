@@ -1,7 +1,6 @@
 import {
     setScrollStateContact,
     setScrollStateWorking,
-    setShowMore,
 } from '@/store/authSlice';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,11 +16,9 @@ function NavBar() {
 
     const dispatch = useDispatch();
     const handleScrollWorking = () => {
-        dispatch(setShowMore(true));
         dispatch(setScrollStateWorking(true));
     };
     const handleScrollContact = () => {
-        dispatch(setShowMore(true));
         dispatch(setScrollStateContact(true));
     };
     return (
