@@ -46,11 +46,28 @@ html {
     height: inherit !important;
 }
 
-.slick-active button {
-    width: 20px !important;
+.slick-dots li {
+    margin: 0px;
+    width: 8px !important;
+    height: 8px !important;
 }
-.slick-list {
-    padding: 0px !important;
+
+.slick-dots li button {
+    width: 8px !important;
+    height: 8px !important;
+}
+
+.slick-dots li.slick-active button:before {
+    width: 8px !important;
+    height: 8px !important;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #005382 !important;
+}
+
+.slick-dots li button:before {
+    color: #d9d9d9 !important;
 }
 
 @keyframes moveUpDown {
