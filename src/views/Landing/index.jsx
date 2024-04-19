@@ -178,8 +178,8 @@ const Landing = () => {
                         ))}
                     </div>
                 </div>
-                <div className="flex md:pt-5 md:pr-5 md:pb-4 md:pl-5  flex-col pt-0 pr-5 pb-4 pl-5">
-                    <div className="flex md:gap-16 lg:flex-row gap-8 md:p-2 flex-col-reverse w-full">
+                <div className="flex md:pt-5 md:pr-6 md:pb-4 lg:pl-14  flex-col pt-0 pr-6 pb-4 pl-6">
+                    <div className="flex md:gap-16 lg:flex-row gap-8 lg:p-2 flex-col-reverse w-full">
                         <div className="flex  lg:max-w-[46.5%] md:gap-[74px] gap-6 flex-col w-full justify-between">
                             <div className="flex md:gap-10 gap-4 flex-col">
                                 <p className="heading">
@@ -229,10 +229,10 @@ const Landing = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex md:flex-row flex-wrap flex-col lg:gap-[12px] gap-[12px] xl:gap-[60px] max-w-[1236px] px-5 m-auto md:pb-10 pb-5 box-content">
+                <div className="flex md:flex-row flex-wrap flex-col lg:gap-[12px] gap-[12px] xl:gap-[60px]  max-w-[100%] lg:max-w-[85%]  px-6  lg:px-0 m-auto md:pb-10 pb-5 box-content">
                     {PalPlug_Services.map((item, index) => (
                         <div
-                            className="md:w-[100%] lg:w-[46%] xl:w-[30%]  h-[122px] sm:h-[100px] lg:h-[99px] xl:h-auto"
+                            className="flex xl:flex-1 md:w-[100%] lg:w-[49%] xl:w-[29.6%]  h-[122px] sm:h-[100px] lg:h-[99px] xl:h-auto"
                             key={index}
                         >
                             <Card
