@@ -229,10 +229,10 @@ const Landing = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex md:flex-row flex-wrap flex-col gap-4 lg:gap-[60px] max-w-[1236px] px-5 m-auto md:pb-10 pb-5 box-content">
+                <div className="flex md:flex-row flex-wrap flex-col lg:gap-[12px] gap-[12px] xl:gap-[60px] max-w-[1236px] px-5 m-auto md:pb-10 pb-5 box-content">
                     {PalPlug_Services.map((item, index) => (
                         <div
-                            className="md:w-[100%] lg:w-[46%] xl:w-[30%]  "
+                            className="md:w-[100%] lg:w-[46%] xl:w-[30%]  h-[122px] sm:h-[100px] lg:h-[99px] xl:h-auto"
                             key={index}
                         >
                             <Card
