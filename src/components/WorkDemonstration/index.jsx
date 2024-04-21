@@ -10,8 +10,7 @@ const WorkDemonstration = ({ list }) => {
         speed: 500,
         slidesToShow: 4,
         initialSlide: 0,
-        infinite: true,
-
+        infinite: false,
         slidesToScroll: 1,
         responsive: [
             {
