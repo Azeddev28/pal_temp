@@ -5,6 +5,9 @@ module.exports = {
     content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
     theme: {
         extend: {
+            screens: {
+                screen_360: '360px',
+            },
             colors: {
                 trueWhite: '#FFFFFF',
                 blue: '#0000FF',

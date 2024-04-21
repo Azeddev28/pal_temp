@@ -24,18 +24,20 @@ function NavBar() {
     return (
         <div className="flex flex-row bg-white shadow-grey10 shadow-sm p-5 justify-between  fixed z-10 w-full">
             <Link href="/" onClick={handleLogoClick}>
-                <Image src={navLogo} alt="..." height={24} width={103} />
+                <div className="relative screen_360:h-[24px] screen_360:w-[103px] h-[25px] w-[80px]">
+                    <Image src={navLogo} alt="..." fill />
+                </div>
             </Link>
-            <div className="flex flex-row gap-3 items-center">
+            <div className="flex flex-row screen_360:gap-3 gap-2 items-center screen_360:w-full w-[58%] justify-end">
                 <p
-                    className="subHeading3 text-brandBlue cursor-pointer"
+                    className="screen_360:subHeading3 text-[10px]  text-brandBlue cursor-pointer"
                     onClick={handleScrollWorking}
                 >
                     How it works
                 </p>
-                <div className="h-[17px] w-0.5 bg-brandBlue "></div>
+                <div className="screen_360:h-[17px]  h-[14px] w-0.5 bg-brandBlue "></div>
                 <p
-                    className="subHeading3 text-brandBlue cursor-pointer"
+                    className="screen_360:subHeading3 text-[10px] text-brandBlue cursor-pointer"
                     onClick={handleScrollContact}
                 >
                     Contact Us
