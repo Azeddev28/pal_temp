@@ -28,7 +28,7 @@ const SignUp = () => {
         }
     };
     return (
-        <div className="flex justify-center items-center flex-col h-screen font-poppins px-4">
+        <div className="flex justify-center items-center flex-col h-screen font-poppins px-4 pt-16">
             <div className="flex flex-col gap-[3.125rem] max-w-[44.94rem] ">
                 <div className="flex flex-col items-center gap-[2.5rem]">
                     <Image src={AnnouncementRobo} />
