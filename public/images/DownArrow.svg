@@ -1,0 +1,17 @@
+ <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            className="hover:animate-bounce"
+        >
+           
+            <path
+                d="M5.19995 7.2002L7.79995 9.8002L10.4 7.2002"
+                stroke="#005382"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+</svg>

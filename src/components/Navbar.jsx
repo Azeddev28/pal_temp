@@ -1,44 +1,48 @@
+import {
+    setScrollStateContact,
+    setScrollStateWorking,
+} from '@/store/authSlice';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { useDispatch } from 'react-redux';
 import navLogo from '../../public/images/logo.svg';
-
 function NavBar() {
     const handleLogoClick = (e) => {
         e.prevetDefault();
         const target = e.target;
         redirect(target.href);
     };
+
+    const dispatch = useDispatch();
+    const handleScrollWorking = () => {
+        dispatch(setScrollStateWorking(true));
+    };
+    const handleScrollContact = () => {
+        dispatch(setScrollStateContact(true));
+    };
     return (
-        <div className="bg-white shadow-grey10 shadow-sm p-5">
-            <nav className="flex justify-between items-center w-[92%]">
-                <Link href="/" onClick={handleLogoClick}>
-                    <Image src={navLogo} alt="..." width={100} />
-                </Link>
-                <div className="nav-links duration-500 md:static absolute bg-grey0 md:min-h-fit min-h-[60vh] left-0 top-[-100%] md:w-auto  w-full flex items-center px-5">
-                    {/* <ul className="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
-                    <li>
-                        <a className="hover:text-gray-500" href="#">Products</a>
-                    </li>
-                    <li>
-                        <a className="hover:text-gray-500" href="#">Solution</a>
-                    </li>
-                    <li>
-                        <a className="hover:text-gray-500" href="#">Resource</a>
-                    </li>
-                    <li>
-                        <a className="hover:text-gray-500" href="#">Developers</a>
-                    </li>
-                    <li>
-                        <a className="hover:text-gray-500" href="#">Pricing</a>
-                    </li>
-                </ul> */}
+        <div className="flex flex-row bg-white shadow-grey10 shadow-sm p-5 justify-between  fixed z-10 w-full">
+            <Link href="/" onClick={handleLogoClick}>
+                <div className="relative screen_360:h-[24px] screen_360:w-[103px] h-[25px] w-[80px]">
+                    <Image src={navLogo} alt="..." fill />
                 </div>
-                {/* <div className="flex items-center gap-6">
-                <button className="bg-[#a6c1ee] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">Sign in</button>
-                <ion-icon onclick="onToggleMenu(this)" name="menu" className="text-3xl cursor-pointer md:hidden"></ion-icon>
-            </div> */}
-            </nav>
+            </Link>
+            <div className="flex flex-row screen_360:gap-3 gap-2 items-center screen_360:w-full w-[58%] justify-end">
+                <p
+                    className="screen_360:subHeading3 text-[10px]  text-brandBlue cursor-pointer"
+                    onClick={handleScrollWorking}
+                >
+                    How it works
+                </p>
+                <div className="screen_360:h-[17px]  h-[14px] w-0.5 bg-brandBlue "></div>
+                <p
+                    className="screen_360:subHeading3 text-[10px] text-brandBlue cursor-pointer"
+                    onClick={handleScrollContact}
+                >
+                    Contact Us
+                </p>
+            </div>
         </div>
     );
 }

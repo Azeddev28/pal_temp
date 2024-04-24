@@ -5,11 +5,10 @@ export const theme = {
     },
     palette: {
         black: {
-          black: '#151D23',  
+            black: '#151D23',
         },
         white: {
             trueWhite: '#FFFFFF',
-            
         },
         blue: {
             brandBlue: '#005382',
@@ -18,21 +17,20 @@ export const theme = {
             pressedBlue: '#002B43',
             disabledBlue: '#CCDDE6',
             blue: '#0000FF',
-            
         },
         grey: {
             grey0: '#F0F0F0',
             grey10: '#CACACA',
+            grey10V2: '#D5D4DC',
             grey20: '#939393',
             grey30: '#555555',
             grey40: '#2F2F2F',
         },
-        background: '#C5C6D0'
+        background: '#C5C6D0',
     },
     topNav: {
-        height: '120px'
-    }
+        height: '120px',
+    },
+};
 
-}
-
-export default theme
+export default theme;

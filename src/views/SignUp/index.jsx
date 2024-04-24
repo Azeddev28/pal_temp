@@ -1,10 +1,9 @@
-import { Button } from '@/components/Button';
-import { Typography } from '@/components/Typography';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import AnnouncementRobo from '../../../public/images/AnnouncementRobo.svg';
 import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
-
 const SignUp = () => {
     const { isUserRegistered, hasJoinedWaitList } = useSelector((state) => {
         return state.auth;
@@ -29,34 +28,31 @@ const SignUp = () => {
         }
     };
     return (
-        <div className="flex items-center justify-center h-[calc(100vh-69px)]">
-            <div className="flex flex-row w-auto mb-14">
-                <div className="max-w-[42rem] body-font flex flex-col font-poppins md:p-10">
-                    <div className="mb-8 text-center">
-                        <Typography
-                            variant={'h2'}
-                            className="mb-4 text-brandBlue dark:text-brandBlue"
-                        >
-                            Your spot is reserved! 🎉
-                        </Typography>
-                    </div>
-                    <div className="mb-10 text-center font-semibold p-3 md:p-0">
-                        <Typography variant={'h5'} className="text-grey20 ">
-                            You're on the list! We'll let you know when your
-                            spot to sign up is ready
-                        </Typography>
-                    </div>
-                    <div className="mb-6 text-center font-semibold p-5 md:p-0">
-                        <Typography variant={'h5'} className="text-grey40">
-                            If you'd like to move up in line, sign up and
-                            complete your profile set up now
-                        </Typography>
-                    </div>
-                    <div className="flex gap-4 justify-center">
-                        <Button size="sm" onClick={() => setIsModalOpen(true)}>
-                            <Typography variant={'body'}>Sign up</Typography>
-                        </Button>
-                    </div>
+        <div className="flex justify-center items-center flex-col h-screen font-poppins px-4 pt-16">
+            <div className="flex flex-col gap-[3.125rem] max-w-[44.94rem] ">
+                <div className="flex flex-col items-center gap-[2.5rem]">
+                    <Image src={AnnouncementRobo} />
+                    <p className="heading text-brandBlue text-center">
+                        Your spot is reserved! 🎉
+                    </p>
+
+                    <p className="subHeading2 text-grey20  text-center ">
+                        You're on the list! We'll let you know when your spot to
+                        sign up is ready
+                    </p>
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                    <p className="text-grey40 subHeading2  text-center">
+                        If you'd like to move up in line, sign up and complete
+                        your profile set up now
+                    </p>
+                    <button
+                        className="w-[156px] bg-brandBlue h-12 rounded-lg"
+                        size="sm"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        <p className="subHeading5">Sign up</p>
+                    </button>
                 </div>
             </div>
             {renderModal()}

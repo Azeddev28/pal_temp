@@ -1,7 +1,7 @@
 import * as ICONS from '@/Icons';
 
 const baseStyles =
-    'flex gap-4 h-fit items-center tracking-wide transition-colors duration-200 text-white whitespace-nowrap rounded-md font-semibold text-sm px-6 py-3';
+    'flex gap-4 h-fit items-center tracking-wide transition-colors duration-200 text-white whitespace-nowrap rounded-md font-semibold text-sm px-6 py-[14px]';
 const activeStyles = 'bg-brandBlue hover:bg-hoverBlue active:bg-pressedBlue';
 const disabledStyles = 'bg-disabledBlue cursor-none pointer-events-none';
 

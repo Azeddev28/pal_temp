@@ -28,3 +28,50 @@ html {
 .has-tooltip:hover .tooltip {
     @apply visible z-50;
 }
+
+.slick-track {
+    display: flex !important;
+}
+
+.slick-slide {
+    height: inherit !important;
+}
+.slick-slide div {
+    height: 100%;
+}
+.slick-active {
+    height: inherit !important;
+}
+.slick-active .slick-slide {
+    height: inherit !important;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #005382 !important;
+}
+
+.slick-dots li button:before {
+    color: #d9d9d9 !important;
+}
+
+.slick-dots li {
+    margin: 0px !important;
+}
+@keyframes moveUpDown {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(2px);
+    }
+}
+.animated-div {
+    width: 12px;
+    height: 12px;
+    animation: moveUpDown 1s linear infinite;
+}
+
+.animated-div:not(:hover) {
+    animation-play-state: paused;
+}

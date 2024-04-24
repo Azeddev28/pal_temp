@@ -11,6 +11,9 @@ const initialState = {
     lastName: '',
     email: '',
     firebaseAuthObj: null,
+    scrollContact: false,
+    scrollWorking: false,
+    suggestionListVisibility: true,
 };
 
 // Actual Slice
@@ -43,6 +46,15 @@ export const authSlice = createSlice({
         setFirebaseAuth(state, action) {
             state.firebaseAuthObj = action.payload;
         },
+        setScrollStateContact(state, action) {
+            state.scrollContact = action.payload;
+        },
+        setScrollStateWorking(state, action) {
+            state.scrollWorking = action.payload;
+        },
+        setSuggestionListVisibility(state) {
+            state.suggestionListVisibility = !state.suggestionListVisibility;
+        },
     },
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
@@ -62,6 +74,9 @@ export const {
     setIsUserRegistered,
     setHasJoinedWaitlist,
     setFirebaseAuth,
+    setScrollStateContact,
+    setScrollStateWorking,
+    setSuggestionListVisibility,
 } = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;

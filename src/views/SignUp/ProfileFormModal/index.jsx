@@ -5,18 +5,20 @@ import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
 import { useUserProfile } from '@/hooks/use-user-profile';
 import { getRoute } from '@/server';
+import { setSuggestionListVisibility } from '@/store/authSlice';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
 
 const StepForm = () => {
+    const dispatch = useDispatch();
     const { firstName, lastName, email } = useSelector((state) => state.auth);
     const { profile } = useUserProfile();
     const router = useRouter();
@@ -102,6 +104,10 @@ const StepForm = () => {
         setActiveStep(previousStep);
     };
 
+    const handleSuggestionListVisibility = () => {
+        dispatch(setSuggestionListVisibility());
+    };
+
     const FormStep = STEPS[activeStep].component;
 
     return (
@@ -130,6 +136,7 @@ const StepForm = () => {
                 </div>
                 <FormProvider {...methods}>
                     <form
+                        onClick={handleSuggestionListVisibility}
                         onSubmit={methods.handleSubmit(onSubmit)}
                         className="h-[93%] flex flex-col max-h-[398px] min-h-[398px] justify-between"
                     >

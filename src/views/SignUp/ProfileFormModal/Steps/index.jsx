@@ -50,7 +50,7 @@ const GenderSelector = () => {
                     label="Female"
                     onClick={() => setShowAnotherGender(false)}
                 />
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-baseline">
                     <Radio
                         {...register('gender')}
                         id="another"
@@ -89,7 +89,7 @@ const CountrySelector = () => {
     const [countries, isLoadingCountries] = useStep('countries');
     const [languages, isLoadingLanguages] = useStep('languages');
 
-    const { register, setValue, watch, control } = useFormContext();
+    const { setValue, control } = useFormContext();
 
     const countryOptions = useMemo(() => {
         if (!countries) return [];
@@ -259,7 +259,7 @@ const RoleSelector = () => {
 
 const CompanySelector = () => {
     const [companies, isLoading] = useStep('companies');
-    const { register, setValue } = useFormContext();
+    const { setValue, control, formState } = useFormContext();
 
     const companyOptions = useMemo(() => {
         if (!companies) return [];
@@ -285,11 +285,18 @@ const CompanySelector = () => {
                     <PulseLoader className="mx-auto" color="#00446A" />
                 ) : (
                     <>
-                        <SearchBar
-                            options={companyOptions}
-                            setValue={setValue}
+                        <Controller
                             name="company"
-                            register={register}
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <SearchBar
+                                    formState={formState}
+                                    options={companyOptions}
+                                    handleChange={onChange}
+                                    setValue={setValue}
+                                    value={value}
+                                />
+                            )}
                         />
                     </>
                 )}
@@ -358,7 +365,7 @@ const InterestedIndustrySelector = () => {
 
 const JobSelector = () => {
     const [userRoles, setUserRoles] = useState([]);
-    const { register, setValue, watch, control } = useFormContext();
+    const { setValue, control } = useFormContext();
 
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {

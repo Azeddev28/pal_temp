@@ -45,15 +45,8 @@ const Page = () => {
                                 type="text"
                                 placeholder={url}
                                 value={url}
-                                className="w-full p-3 bg-white border-2 border-solid rounded-lg outline-none   hover:bg-[#F5F8FF] active:border-[#8bb4ff] active:bg-[#F5F8FF] focus:border-brandBlue focus:bg-white "
+                                className="w-full  bg-white border-[1px] border-solid rounded-lg outline-none   hover:bg-[#F5F8FF] active:border-[#8bb4ff] active:bg-[#F5F8FF] focus:border-brandBlue focus:bg-white p-[11px] "
                             />
-                            {/* <Input
-                                type="text"
-                                placeholder={url}
-                                value={url}
-                                label={'Share Link'}
-                                readOnly={true}
-                            /> */}
                         </div>
 
                         <Button onClick={copyToClipboard}>
