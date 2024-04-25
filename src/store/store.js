@@ -3,22 +3,14 @@ import { authSlice } from "./authSlice";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { formDataSlice } from "./slices/formDataSlice";
 
 
 
 const rootReducer = combineReducers({
     [authSlice.name]: authSlice.reducer,
+    [formDataSlice.name]: formDataSlice.reducer
 });
-
-
-const makeConfiguredStore = () =>
-    configureStore({
-        reducer: {
-            [authSlice.name]: authSlice.reducer,
-        },
-        devTools: true,
-    });
-
 
 const masterReducer = (state, action) => {
     if (action.type === HYDRATE) {

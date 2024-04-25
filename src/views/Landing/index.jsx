@@ -6,14 +6,13 @@ import Footer from '@/components/Footer';
 import { Input } from '@/components/Input';
 import WorkDemonstration from '@/components/WorkDemonstration';
 import theme from '@/components/theme';
-import { getRoute } from '@/server';
+import { getRoute } from '@/api';
 import {
     FOR_REFERRER,
     For_Job_Seekers,
     PalPlug_Services,
     Social_Icons,
 } from '@/utils/constants';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -100,7 +99,6 @@ const Landing = () => {
     }, []);
     const router = useRouter();
     const dispatch = useDispatch();
-    const { user, error, isLoading } = useUser();
 
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
@@ -115,11 +113,6 @@ const Landing = () => {
             shallow: true,
         });
     };
-    if (!isLoading && user) {
-        console.log(user);
-        updateWaitListStatusAndRedirect();
-        dispatch(setIsUserRegistered());
-    }
 
     const onSubmit = ({ email }) => {
         postRequest(getRoute('joinWaitlist'), { email })
