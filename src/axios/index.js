@@ -1,9 +1,14 @@
-import { SERVER_URL } from '@/server';
 import axios from 'axios';
 
-export const setAuthToken = (token) => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-};
+// export const setAuthToken = (token) => {
+//     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+// };
+
+const axiosInstance = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_SERVER_URL // Set your base URL here
+    // timeout: 5000, // Optional: Set a timeout for requests (in milliseconds)
+});
+
 const failedResponse = (error) => {
     if (
         error.response &&
@@ -15,9 +20,8 @@ const failedResponse = (error) => {
     return Promise.reject(error);
 };
 export const getRequest = (route, data) => {
-    const completeRoute = `${SERVER_URL}${route}`;
-    return axios
-        .get(completeRoute, data)
+    return axiosInstance
+        .get(route, data)
         .then((response) => {
             return response.data;
         })
@@ -35,9 +39,8 @@ export const postRequest = (route, data, requireAccessToken) => {
             Authorization: `Bearer ${accessToken}`,
         };
     }
-    const completeRoute = `${SERVER_URL}${route}`;
-    return axios
-        .post(completeRoute, data, {
+    return axiosInstance
+        .post(route, data, {
             headers: requireAccessToken && authenticatedHeaders,
         })
         .then((response) => {
@@ -49,9 +52,8 @@ export const postRequest = (route, data, requireAccessToken) => {
 };
 
 export const deleteRequest = (route, data) => {
-    const completeRoute = `${SERVER_URL}${route}`;
-    return axios
-        .delete(completeRoute, data)
+    return axiosInstance
+        .delete(route, data)
         .then((response) => {
             return response.data;
         })
@@ -61,9 +63,8 @@ export const deleteRequest = (route, data) => {
 };
 
 export const putRequest = (route, data) => {
-    const completeRoute = `${SERVER_URL}${route}`;
-    return axios
-        .put(completeRoute, data)
+    return axiosInstance
+        .put(route, data)
         .then((response) => {
             return response;
         })

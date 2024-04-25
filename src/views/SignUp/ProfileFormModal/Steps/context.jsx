@@ -1,30 +1,30 @@
-import { useQuery } from '@/hooks/react-query';
-import { createContext, useContext } from 'react';
-
+import { fetchCompanies, fetchCountries, fetchIndustries, fetchLanguages } from '@/store/slices/formDataSlice';
+import React, { createContext, useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 const StepContext = createContext();
 
 const StepContextProvider = ({ children }) => {
-    const { data: companies, isLoading: isLoadingCompanies } = useQuery([
-        'companiesList',
-    ]);
+    const dispatch = useDispatch();
 
-    const { data: industries, isLoading: isLoadingIndustries } = useQuery([
-        'industriesList',
-    ]);
+    // Fetch data using Redux actions when the component mounts
+    useEffect(() => {
+        dispatch(fetchCompanies());
+        dispatch(fetchIndustries());
+        dispatch(fetchCountries());
+        dispatch(fetchLanguages());
+    }, [dispatch]);
 
-    const { data: countries, isLoading: isLoadingCountries } = useQuery([
-        'countriesList',
-    ]);
-
-    const { data: languages, isLoading: isLoadingLanguages } = useQuery([
-        'languagesList',
-    ]);
+    // Access fetched data from the Redux store
+    const companies = useSelector(state => state.formData.companies);
+    const industries = useSelector(state => state.formData.industries);
+    const countries = useSelector(state => state.formData.countries);
+    const languages = useSelector(state => state.formData.languages);
 
     const context = {
-        companies: [companies, isLoadingCompanies],
-        industries: [industries, isLoadingIndustries],
-        countries: [countries, isLoadingCountries],
-        languages: [languages, isLoadingLanguages],
+        companies,
+        industries,
+        countries,
+        languages,
     };
 
     return (

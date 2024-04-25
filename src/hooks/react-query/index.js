@@ -1,12 +1,12 @@
 import { request } from '@/http';
-import { getRoute } from '@/server';
+import { getRoute } from '@/api';
 import {
     useMutation as rqUseMutation,
     useQuery as rqUseQuery,
 } from '@tanstack/react-query';
 
 const useQuery = ([routeKey, query], options = {}) => {
-    const route = getRoute(routeKey);
+    const route = `https://palplug.com/d/api/${getRoute(routeKey)}`;
 
     if (!route) throw new Error('Invalid routeKey provided');
 

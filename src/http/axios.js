@@ -1,4 +1,4 @@
-import { SERVER_URL } from '@/server';
+import { SERVER_URL } from '@/api';
 import { Axios } from 'axios';
 
 const axiosClient = new Axios({

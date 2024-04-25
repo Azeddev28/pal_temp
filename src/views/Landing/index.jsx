@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import { Input } from '@/components/Input';
 import WorkDemonstration from '@/components/WorkDemonstration';
 import theme from '@/components/theme';
-import { getRoute } from '@/server';
+import { getRoute } from '@/api';
 import {
     FOR_REFERRER,
     For_Job_Seekers,

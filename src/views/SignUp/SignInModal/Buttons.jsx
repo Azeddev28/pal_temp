@@ -1,6 +1,6 @@
 import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
-import { getRoute } from '@/server';
+import { getRoute } from '@/api';
 import { setUserRegistrationInfo } from '@/store/authSlice';
 import {
     GithubAuthProvider,

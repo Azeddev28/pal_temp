@@ -3,7 +3,7 @@ import CustomDropdown from '@/components/Dropdown/dropdown';
 import SearchBar from '@/components/Dropdown/suggestion';
 import { Input, Radio } from '@/components/Input';
 import { Typography } from '@/components/Typography';
-import { getRoute } from '@/server';
+import { getRoute } from '@/api';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { PulseLoader } from 'react-spinners';
@@ -86,8 +86,11 @@ const GenderSelector = () => {
 };
 
 const CountrySelector = () => {
-    const [countries, isLoadingCountries] = useStep('countries');
-    const [languages, isLoadingLanguages] = useStep('languages');
+    // TODO: This is now changed to axios and have to send isLoading state from there
+    const isLoadingCountries = false;
+    const isLoadingLanguages = false;
+    const countries = useStep('countries');
+    const languages = useStep('languages');
 
     const { setValue, control } = useFormContext();
 
@@ -258,7 +261,8 @@ const RoleSelector = () => {
 };
 
 const CompanySelector = () => {
-    const [companies, isLoading] = useStep('companies');
+    const isLoading = false;
+    const companies = useStep('companies');
     const { setValue, control, formState } = useFormContext();
 
     const companyOptions = useMemo(() => {
@@ -306,7 +310,8 @@ const CompanySelector = () => {
 };
 
 const InterestedIndustrySelector = () => {
-    const [industries, isLoading] = useStep('industries');
+    const industries = useStep('industries')
+    const isLoading = false;
     const { register, setValue, watch, control } = useFormContext();
 
     const industryOptions = useMemo(() => {

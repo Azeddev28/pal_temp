@@ -3,7 +3,7 @@ import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
-import { getRoute } from '@/server';
+import { getRoute } from '@/api';
 import { setSuggestionListVisibility } from '@/store/authSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
