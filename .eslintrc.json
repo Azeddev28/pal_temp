@@ -1,18 +1,27 @@
 {
-    "plugins": ["@tanstack/query"],
+    "plugins": [
+        "@tanstack/query"
+    ],
     "extends": [
-      "next/core-web-vitals",
-      "plugin:@tanstack/eslint-plugin-query/recommended",
+        "next/core-web-vitals",
+        "plugin:@tanstack/eslint-plugin-query/recommended",
     ],
     "globals": {
-      "React": "readonly"
+        "React": "readonly"
     },
     "rules": {
-      "no-unused-vars": [
-        1,
-        { "args": "after-used", "argsIgnorePattern": "^_" }
-      ],
-      "no-trailing-spaces": ["error", { "ignoreComments": true }]
+        "no-unused-vars": [
+            1,
+            {
+                "args": "after-used",
+                "argsIgnorePattern": "^_"
+            }
+        ],
+        "no-trailing-spaces": [
+            "error",
+            {
+                "ignoreComments": true
+            }
+        ]
     }
-  }
-  
+}
