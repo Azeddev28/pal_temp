@@ -1,5 +1,4 @@
 import Layout from '@/components/layout';
-import { CustomQueryClientProvider } from '@/providers/react-query';
 import { UserProfileProvider } from '@/providers/user-profile';
 import { Poppins } from 'next/font/google';
 import { wrapper } from "../store/store";
@@ -20,12 +19,10 @@ function MyApp({ Component, ...pageProps }) {
             {/* TODO: Look for a better way to share state */}
                 {/* <SessionProvider> */}
                     <UserProfileProvider>
-                        <CustomQueryClientProvider>
                             <main className={poppins.className}>
                                 <Layout />
                                 <Component {...pageProps} />
                             </main>
-                        </CustomQueryClientProvider>
                     </UserProfileProvider>
                 {/* </SessionProvider> */}
         </div>
