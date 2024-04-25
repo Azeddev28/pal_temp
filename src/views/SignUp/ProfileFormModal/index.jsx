@@ -3,10 +3,8 @@ import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
-import { useUserProfile } from '@/hooks/use-user-profile';
 import { getRoute } from '@/server';
 import { setSuggestionListVisibility } from '@/store/authSlice';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -31,8 +29,6 @@ const StepForm = () => {
         resolver: yupResolver(schema[activeStep]),
     });
 
-    const { user, error, isLoading } = useUser();
-
     const isLastStep = typeof STEPS[activeStep]?.next === 'undefined';
 
     const getNextStep = () => {
@@ -48,7 +44,7 @@ const StepForm = () => {
             first_name: formData.firstName,
             last_name: formData.lastName,
             country: formData.country,
-            email: user ? user.email : formData.email,
+            email: formData.email,
             another_gender: formData.anotherGender,
             company: formData.company,
             gender: formData.gender,
