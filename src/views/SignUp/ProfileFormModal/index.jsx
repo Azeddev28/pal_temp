@@ -14,6 +14,8 @@ import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
+import { useUserProfile } from '@/hooks/use-user-profile';
+
 
 const StepForm = () => {
     const dispatch = useDispatch();
