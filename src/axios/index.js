@@ -1,11 +1,13 @@
 import axios from 'axios';
 
+// TODO: Check if we need this
 // export const setAuthToken = (token) => {
 //     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 // };
 
 const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL // Set your base URL here
+    // TODO: Maybe we need to set a timeout
     // timeout: 5000, // Optional: Set a timeout for requests (in milliseconds)
 });
 
