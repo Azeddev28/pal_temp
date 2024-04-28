@@ -26,7 +26,6 @@ export const authSlice = createSlice({
             state.authState = action.payload;
         },
         setUserRegistrationInfo(state, action) {
-            console.log('🚀 ~ setUserRegistrationInfo ~ action:', action);
             if (action.payload) {
                 state.firstName = action.payload.displayName.split(' ')[0];
                 state.email = action.payload.email;

@@ -1,13 +1,5 @@
-import {
-    CompanySelector,
-    CountrySelector,
-    GenderSelector,
-    InterestedIndustrySelector,
-    InterestedJobSelector,
-    JobSelector,
-    NameSelector,
-    RoleSelector,
-} from './Steps';
+
+import { CompanySelector, CountrySelector, GenderSelector, InterestedIndustrySelector, InterestedJobSelector, JobSelector, NameSelector, RoleSelector } from './Steps';
 import { withHorizontalSlide } from './withHorizontalSlide';
 
 export const STEP_COUNT = 6;

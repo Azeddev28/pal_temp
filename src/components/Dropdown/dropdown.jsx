@@ -100,7 +100,6 @@ const Dropdown = ({ children, isOpen, target, onClose }) => (
 );
 
 const Menu = (props) => {
-    console.log('Menu Props', props);
     const shadow = 'hsla(218, 50%, 10%, 0.1)';
     return (
         <div
