@@ -4,7 +4,7 @@ import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
 import { getRoute } from '@/api';
-import { setSuggestionListVisibility } from '@/store/authSlice';
+import { setSuggestionListVisibility } from '@/store/slices/authSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';

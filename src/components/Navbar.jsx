@@ -1,7 +1,7 @@
 import {
     setScrollStateContact,
     setScrollStateWorking,
-} from '@/store/authSlice';
+} from '@/store/slices/authSlice';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';

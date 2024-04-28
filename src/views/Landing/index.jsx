@@ -29,7 +29,8 @@ import {
     setIsUserRegistered,
     setScrollStateContact,
     setScrollStateWorking,
-} from '../../store/authSlice';
+    setUserRegistrationInfo,
+} from '../../store/slices/authSlice';
 import { wrapper } from '../../store/store';
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -127,8 +128,15 @@ const Landing = () => {
                     if (code === 'WAITLIST_JOINED') {
                         updateWaitListStatusAndRedirect();
                     }
-                    if (code === 'USER_ALREADY_REGISTERED') {
-                        dispatch(setIsUserRegistered());
+                    else if (code === 'USER_ALREADY_REGISTERED') {
+                        // TODO: Need to set certain info.
+                        dispatch(setUserRegistrationInfo({
+                            email: email,
+                            isUserRegistered: true
+                        }));
+                        updateWaitListStatusAndRedirect();
+                    }
+                    else if (code === 'PROFILE_ALREADY_REGISTERED') {
                         router.push('/congratulations', undefined, {
                             shallow: true,
                         });

@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AnnouncementRobo from '../../../public/images/AnnouncementRobo.svg';
 import { ProfileFormModal } from './ProfileFormModal';
 import { SignInModal } from './SignInModal';
+import { useRouter } from 'next/router';
 const SignUp = () => {
     const { isUserRegistered, hasJoinedWaitList } = useSelector((state) => {
         return state.auth;
@@ -27,6 +28,23 @@ const SignUp = () => {
             );
         }
     };
+    const socialAccountRegistered = useSelector((state) => state.auth.socialAccountAlreadyRegistered);
+    const profileAccountRegistered = useSelector((state) => state.auth.profileAlreadyRegistered);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (socialAccountRegistered === true) {
+            dispatch(setUserRegistrationInfo({
+                email: email,
+                isUserRegistered: true
+            }));
+        }
+        if (profileAccountRegistered === true) {
+            router.push('/congratulations', undefined, {
+                shallow: true,
+            });
+        }
+    }, [profileAccountRegistered]);
     return (
         <div className="flex justify-center items-center flex-col h-screen font-poppins px-4 pt-16">
             <div className="flex flex-col gap-[3.125rem] max-w-[44.94rem] ">
