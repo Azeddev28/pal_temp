@@ -10,6 +10,7 @@ import {
 import { useRouter } from 'next/router';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import { useDispatch, useSelector } from 'react-redux';
+import { firebaseAuth } from '@/utils/firebase';
 
 const submitDetails = async (signupMethod, email, code, router) => {
     var socialRegisterPayload = {
@@ -39,15 +40,19 @@ const submitDetails = async (signupMethod, email, code, router) => {
 };
 
 const GoogleButton = () => {
-    const { firebaseAuthObj } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const router = useRouter();
     const handleGoogleLogin = async () => {
         const provider = new GoogleAuthProvider();
         try {
-            const result = await signInWithPopup(firebaseAuthObj, provider);
+            const result = await signInWithPopup(firebaseAuth, provider);
             submitDetails('Google', result.user.email, undefined, router);
-            dispatch(setUserRegistrationInfo(result.user));
+            dispatch(setUserRegistrationInfo({
+                displayName: result.user.displayName,
+                email: result.user.email,
+                accessToken: result.user.accessToken,
+                isUserRegistered: result.user.accessToken ? true : false
+            }));
         } catch (error) {
             console.log('🚀 ~ handleGoogleLogin ~ error:', error);
         }
@@ -111,13 +116,13 @@ const LinkedInButton = () => {
 };
 
 const GithubButton = () => {
-    const { firebaseAuthObj } = useSelector((state) => state.auth);
+    const { firebaseAuth } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const router = useRouter();
     const handleGithubLogin = async () => {
         const provider = new GithubAuthProvider();
         try {
-            const result = await signInWithPopup(firebaseAuthObj, provider);
+            const result = await signInWithPopup(firebaseAuth, provider);
             submitDetails('Github', result.user.email, undefined, router);
             dispatch(setUserRegistrationInfo(result.user));
         } catch (error) {

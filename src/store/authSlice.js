@@ -10,7 +10,6 @@ const initialState = {
     firstName: '',
     lastName: '',
     email: '',
-    firebaseAuthObj: null,
     scrollContact: false,
     scrollWorking: false,
     suggestionListVisibility: true,
@@ -31,9 +30,7 @@ export const authSlice = createSlice({
                 state.email = action.payload.email;
                 state.lastName = action.payload.displayName.split(' ')[1];
                 state.accessToken = action.payload.accessToken;
-                state.isUserRegistered = action.payload.accessToken
-                    ? true
-                    : false;
+                state.isUserRegistered = action.payload.isUserRegistered;
             }
         },
         setIsUserRegistered(state) {
@@ -41,9 +38,6 @@ export const authSlice = createSlice({
         },
         setHasJoinedWaitlist(state) {
             state.hasJoinedWaitList = true;
-        },
-        setFirebaseAuth(state, action) {
-            state.firebaseAuthObj = action.payload;
         },
         setScrollStateContact(state, action) {
             state.scrollContact = action.payload;
@@ -72,7 +66,6 @@ export const {
     setUserRegistrationInfo,
     setIsUserRegistered,
     setHasJoinedWaitlist,
-    setFirebaseAuth,
     setScrollStateContact,
     setScrollStateWorking,
     setSuggestionListVisibility,
