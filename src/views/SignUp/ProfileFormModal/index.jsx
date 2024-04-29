@@ -56,7 +56,6 @@ const StepForm = () => {
             language: formData.language,
             role: formData.purpose,
         };
-        console.log('🚀 ~ onSubmit ~ dataToSend:', dataToSend);
         postRequest(getRoute('profileRegister'), dataToSend, true)
             .then((res) => {
                 router.push('/congratulations', undefined, { shallow: true });
@@ -80,8 +79,8 @@ const StepForm = () => {
         if (isLastStep) return;
         setSlideDirection('left');
         const nextStep = getNextStep();
-        const isAleadyVisitedStep = visitedSteps.includes(nextStep);
-        if (!isAleadyVisitedStep) setVisitedSteps([...visitedSteps, nextStep]);
+        const isAlreadyVisitedStep = visitedSteps.includes(nextStep);
+        if (!isAlreadyVisitedStep) setVisitedSteps([...visitedSteps, nextStep]);
         setActiveStep(nextStep);
     };
 
@@ -142,10 +141,16 @@ const StepForm = () => {
                             <FormStep slideDirection={slideDirection} />
                         </StepContextProvider>
                         <Button
-                            type={isLastStep ? 'submit' : 'button'}
+                            type='button'
                             disabled={!methods.formState.isValid}
                             className={'w-full'}
-                            onClick={onContinue}
+                            onClick={() => {
+                                if (isLastStep) {
+                                    onSubmit(methods.getValues());
+                                } else {
+                                    onContinue();
+                                }
+                            }}
                         >
                             {isLastStep ? 'Submit' : 'Continue'}
                         </Button>
