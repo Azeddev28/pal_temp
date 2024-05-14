@@ -10,10 +10,11 @@ const initialState = {
     firstName: '',
     lastName: '',
     email: '',
-    firebaseAuthObj: null,
     scrollContact: false,
     scrollWorking: false,
     suggestionListVisibility: true,
+    profileAlreadyRegistered: false,
+    socialAccountAlreadyRegistered: false,
 };
 
 // Actual Slice
@@ -26,15 +27,12 @@ export const authSlice = createSlice({
             state.authState = action.payload;
         },
         setUserRegistrationInfo(state, action) {
-            console.log('🚀 ~ setUserRegistrationInfo ~ action:', action);
             if (action.payload) {
-                state.firstName = action.payload.displayName.split(' ')[0];
+                state.firstName = action.payload.displayName ? action.payload.displayName.split(' ')[0] : "";
                 state.email = action.payload.email;
-                state.lastName = action.payload.displayName.split(' ')[1];
-                state.accessToken = action.payload.accessToken;
-                state.isUserRegistered = action.payload.accessToken
-                    ? true
-                    : false;
+                state.lastName = action.payload.displayName ? action.payload.displayName.split(' ')[1] : "";
+                state.accessToken = action.payload?.accessToken;
+                state.isUserRegistered = action.payload.isUserRegistered;
             }
         },
         setIsUserRegistered(state) {
@@ -42,9 +40,6 @@ export const authSlice = createSlice({
         },
         setHasJoinedWaitlist(state) {
             state.hasJoinedWaitList = true;
-        },
-        setFirebaseAuth(state, action) {
-            state.firebaseAuthObj = action.payload;
         },
         setScrollStateContact(state, action) {
             state.scrollContact = action.payload;
@@ -54,6 +49,13 @@ export const authSlice = createSlice({
         },
         setSuggestionListVisibility(state) {
             state.suggestionListVisibility = !state.suggestionListVisibility;
+        },
+        setProfileAlreadyRegistered(state) {
+            console.log("AJAO")
+            state.profileAlreadyRegistered = true;
+        },
+        setSocialAccountAlreadyRegistered(state) {
+            state.socialAccountAlreadyRegistered = true;
         },
     },
 
@@ -73,10 +75,11 @@ export const {
     setUserRegistrationInfo,
     setIsUserRegistered,
     setHasJoinedWaitlist,
-    setFirebaseAuth,
     setScrollStateContact,
     setScrollStateWorking,
     setSuggestionListVisibility,
+    setProfileAlreadyRegistered,
+    setSocialAccountAlreadyRegistered
 } = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;

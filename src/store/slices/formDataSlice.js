@@ -18,6 +18,10 @@ export const fetchLanguages = createAsyncThunk('data/fetchLanguages', async () =
     return getRequest(getRoute('languagesList'));
 });
 
+export const fetchUserRoles = createAsyncThunk('data/fetchUserRoles', async (_, { getState, dispatch }) => {
+    return getRequest(getRoute('userRoles'));
+});
+
 // Define a data slice using createSlice
 export const formDataSlice = createSlice({
     name: 'formData',
@@ -26,24 +30,22 @@ export const formDataSlice = createSlice({
         industries: [],
         countries: [],
         languages: [],
+        userRoles: [],
         loading: false,
         error: null,
     },
     reducers: {
-        // Reducer for handling loading state when async actions start
+        // Reducer functions for setting loading, error, and data for other actions (companies, industries, countries, languages)
         setLoading: (state) => {
             state.loading = true;
         },
-        // Reducer for handling loading state when async actions complete successfully
         setLoadingFalse: (state) => {
             state.loading = false;
         },
-        // Reducer for handling loading state when async actions encounter errors
         setError: (state, action) => {
             state.loading = false;
             state.error = action.payload;
         },
-        // Reducers for updating state with fetched data
         setCompanies: (state, action) => {
             state.companies = action.payload;
         },
@@ -55,6 +57,9 @@ export const formDataSlice = createSlice({
         },
         setLanguages: (state, action) => {
             state.languages = action.payload;
+        },
+        setUserRoles: (state, action) => {
+            state.userRoles = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -106,7 +111,33 @@ export const formDataSlice = createSlice({
             .addCase(fetchLanguages.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
+            })
+            // Handle actions for fetching user roles
+            .addCase(fetchUserRoles.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchUserRoles.fulfilled, (state, action) => {
+                state.loading = false;
+                state.userRoles = action.payload;
+            })
+            .addCase(fetchUserRoles.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
             });
     },
 });
+
+// Export action creators and reducer
+export const {
+    setLoading,
+    setLoadingFalse,
+    setError,
+    setCompanies,
+    setIndustries,
+    setCountries,
+    setLanguages,
+    setUserRoles,
+} = formDataSlice.actions;
+
+export default formDataSlice.reducer;
 
