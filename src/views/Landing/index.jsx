@@ -127,16 +127,16 @@ const Landing = () => {
                 }) => {
                     if (code === 'WAITLIST_JOINED') {
                         updateWaitListStatusAndRedirect();
-                    }
-                    else if (code === 'USER_ALREADY_REGISTERED') {
+                    } else if (code === 'USER_ALREADY_REGISTERED') {
                         // TODO: Need to set certain info.
-                        dispatch(setUserRegistrationInfo({
-                            email: email,
-                            isUserRegistered: true
-                        }));
+                        dispatch(
+                            setUserRegistrationInfo({
+                                email: email,
+                                isUserRegistered: true,
+                            })
+                        );
                         updateWaitListStatusAndRedirect();
-                    }
-                    else if (code === 'PROFILE_ALREADY_REGISTERED') {
+                    } else if (code === 'PROFILE_ALREADY_REGISTERED') {
                         router.push('/congratulations', undefined, {
                             shallow: true,
                         });
@@ -146,7 +146,7 @@ const Landing = () => {
     };
 
     return (
-        <div className="pt-[68px]">
+        <div className="pt-[64px]">
             <div className="bg-white">
                 <div className="relative flex overflow-x-hidden">
                     <div className="md:py-5 py-2 animate-marquee whitespace-nowrap flex flex-row gap-5">

@@ -30,14 +30,14 @@ function NavBar() {
             </Link>
             <div className="flex flex-row screen_360:gap-3 gap-2 items-center screen_360:w-full w-[58%] justify-end">
                 <p
-                    className="screen_360:subHeading3 text-[10px]  text-brandBlue cursor-pointer"
+                    className="screen_360:subHeading3 font-semibold text-[10px]  text-brandBlue cursor-pointer"
                     onClick={handleScrollWorking}
                 >
                     How it works
                 </p>
                 <div className="screen_360:h-[17px]  h-[14px] w-0.5 bg-brandBlue "></div>
                 <p
-                    className="screen_360:subHeading3 text-[10px] text-brandBlue cursor-pointer"
+                    className="screen_360:subHeading3 font-semibold text-[10px] text-brandBlue cursor-pointer"
                     onClick={handleScrollContact}
                 >
                     Contact Us
