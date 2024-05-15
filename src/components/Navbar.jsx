@@ -25,8 +25,15 @@ function NavBar() {
     const handleScrollContact = () => {
         dispatch(setScrollStateContact(true));
     };
+    const shadowClass =
+        currentUrl === '/'
+            ? ''
+            : 'shadow-[0_8px_20px_0px_rgba(184,180,180,0.10)]';
+
     return (
-        <div className="flex flex-row bg-white shadow-grey10 shadow-sm p-5 justify-between  fixed z-10 w-full">
+        <div
+            className={`flex flex-row bg-white ${shadowClass}   p-5 justify-between  fixed z-10 w-full`}
+        >
             <Link href="/" onClick={handleLogoClick}>
                 <div className="relative screen_360:h-[24px] screen_360:w-[103px] h-[25px] w-[80px]">
                     <Image src={navLogo} alt="..." fill />
