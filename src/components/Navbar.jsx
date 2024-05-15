@@ -7,7 +7,11 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import navLogo from '../../public/images/logo.svg';
+import { useRouter } from 'next/router';
 function NavBar() {
+    const router = useRouter();
+    const currentUrl = router.pathname;
+
     const handleLogoClick = (e) => {
         e.prevetDefault();
         const target = e.target;
@@ -28,21 +32,24 @@ function NavBar() {
                     <Image src={navLogo} alt="..." fill />
                 </div>
             </Link>
-            <div className="flex flex-row screen_360:gap-3 gap-2 items-center screen_360:w-full w-[58%] justify-end">
-                <p
-                    className="screen_360:subHeading3 font-semibold text-[10px]  text-brandBlue cursor-pointer"
-                    onClick={handleScrollWorking}
-                >
-                    How it works
-                </p>
-                <div className="screen_360:h-[17px]  h-[14px] w-0.5 bg-brandBlue "></div>
-                <p
-                    className="screen_360:subHeading3 font-semibold text-[10px] text-brandBlue cursor-pointer"
-                    onClick={handleScrollContact}
-                >
-                    Contact Us
-                </p>
-            </div>
+
+            {currentUrl === '/' && (
+                <div className="flex flex-row screen_360:gap-3 gap-2 items-center screen_360:w-full w-[58%] justify-end">
+                    <p
+                        className="screen_360:subHeading3 font-semibold text-[10px]  text-brandBlue cursor-pointer"
+                        onClick={handleScrollWorking}
+                    >
+                        How it works
+                    </p>
+                    <div className="screen_360:h-[17px]  h-[14px] w-0.5 bg-brandBlue "></div>
+                    <p
+                        className="screen_360:subHeading3 font-semibold text-[10px] text-brandBlue cursor-pointer"
+                        onClick={handleScrollContact}
+                    >
+                        Contact Us
+                    </p>
+                </div>
+            )}
         </div>
     );
 }
