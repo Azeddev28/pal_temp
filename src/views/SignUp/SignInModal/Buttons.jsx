@@ -32,6 +32,7 @@ const registerUser = async (
     }
     try {
         const res = await postRequest(socialRoute, socialRegisterPayload);
+        return res
     } catch (error) {
         if (error.response.data.code === 'SOCIAL_ACCOUNT_ALREADY_REGISTERED') {
             dispatch(setSocialAccountAlreadyRegistered());
@@ -43,12 +44,16 @@ const registerUser = async (
     }
 };
 
-const GoogleButton = () => {
+const GoogleButton = ({waitListEmail}) => {
     const dispatch = useDispatch();
     const handleGoogleLogin = async () => {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuth, provider);
+            if(result.email != waitListEmail){
+                alert('Email not recognized, please use the same email as waitlist')
+                return
+            }
             registerUser('Google', result.user.email, undefined, dispatch);
             dispatch(
                 setUserRegistrationInfo({
@@ -85,7 +90,7 @@ const GoogleButton = () => {
     );
 };
 
-const LinkedInButton = () => {
+const LinkedInButton = ({waitListEmail}) => {
     const dispatch = useDispatch();
 
     const { linkedInLogin } = useLinkedIn({
@@ -97,13 +102,18 @@ const LinkedInButton = () => {
 
         onSuccess: async (code) => {
             try {
-                registerUser('Linkedin', undefined, code)
-                    .then((data) => {
-                        dispatch(setUserRegistrationInfo(data));
-                    })
-                    .catch((error) => {
-                        console.log('🚀 ~ onSuccess: ~ error:', error);
-                    });
+                const result = registerUser('Linkedin', undefined, code, dispatch)
+                if(result.email != waitListEmail){
+                    alert('Email not recognized, please use the same email as waitlist')
+                    return
+                }
+                dispatch(
+                    setUserRegistrationInfo({
+                        displayName: result.name,
+                        email: result.email,
+                        accessToken: result.accessToken,
+                        isUserRegistered: result.accessToken ? true : false,
+                }));
             } catch (error) {
                 console.log(error);
             }
@@ -127,13 +137,18 @@ const LinkedInButton = () => {
     );
 };
 
-const GithubButton = () => {
+const GithubButton = ({waitListEmail}) => {
     const dispatch = useDispatch();
     const handleGithubLogin = async () => {
         const provider = new GithubAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuth, provider);
+            if(result.email != waitListEmail){
+                alert('Email not recognized, please use the same email as waitlist')
+                return
+            }
             registerUser('Github', result.user.email, undefined, dispatch);
+         
             dispatch(
                 setUserRegistrationInfo({
                     displayName: result.user.displayName,

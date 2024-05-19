@@ -107,8 +107,8 @@ const Landing = () => {
         },
         resolver: yupResolver(emailSchema),
     });
-    const updateWaitListStatusAndRedirect = () => {
-        dispatch(setHasJoinedWaitlist());
+    const updateWaitListStatusAndRedirect = (email) => {
+        dispatch(setHasJoinedWaitlist(email));
         router.push('/signup', undefined, {
             shallow: true,
         });
@@ -117,7 +117,7 @@ const Landing = () => {
     const onSubmit = ({ email }) => {
         postRequest(getRoute('joinWaitlist'), { email })
             .then((res) => {
-                updateWaitListStatusAndRedirect();
+                updateWaitListStatusAndRedirect(email);
             })
             .catch(
                 ({
@@ -126,7 +126,7 @@ const Landing = () => {
                     },
                 }) => {
                     if (code === 'WAITLIST_JOINED') {
-                        updateWaitListStatusAndRedirect();
+                        updateWaitListStatusAndRedirect(email);
                     } else if (code === 'USER_ALREADY_REGISTERED') {
                         // TODO: Need to set certain info.
                         dispatch(
@@ -135,7 +135,7 @@ const Landing = () => {
                                 isUserRegistered: true,
                             })
                         );
-                        updateWaitListStatusAndRedirect();
+                        updateWaitListStatusAndRedirect(email);
                     } else if (code === 'PROFILE_ALREADY_REGISTERED') {
                         router.push('/congratulations', undefined, {
                             shallow: true,

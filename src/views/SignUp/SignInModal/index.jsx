@@ -1,8 +1,10 @@
 import { Modal } from '@/components/Modal';
 import SignInPagePicture from '../../../../public/images/SignInPagePicture.svg';
 import { GithubButton, GoogleButton, LinkedInButton } from './Buttons';
+import { useSelector } from 'react-redux';
 
 const SignInModal = ({ isOpen, onClose }) => {
+    const waitListEmail = useSelector((state) => state.auth.waitListEmail);
     return (
         <Modal
             isOpen={isOpen}
@@ -11,9 +13,9 @@ const SignInModal = ({ isOpen, onClose }) => {
         >
             <div className="flex justify-center pt-9 pb-7">
                 <div className="flex flex-col gap-4 w-full px-10">
-                    <GoogleButton />
-                    <LinkedInButton />
-                    <GithubButton />
+                    <GoogleButton waitListEmail={waitListEmail}/>
+                    <LinkedInButton waitListEmail={waitListEmail}/>
+                    <GithubButton waitListEmail={waitListEmail}/>
                 </div>
             </div>
         </Modal>

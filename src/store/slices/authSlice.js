@@ -3,6 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 // Initial state
 const initialState = {
+    waitListEmail: '',
     authState: false,
     accessToken: null,
     isUserRegistered: false,
@@ -42,8 +43,9 @@ export const authSlice = createSlice({
         setIsUserRegistered(state) {
             state.isUserRegistered = true;
         },
-        setHasJoinedWaitlist(state) {
+        setHasJoinedWaitlist(state, action) {
             state.hasJoinedWaitList = true;
+            state.waitListEmail = action.payload
         },
         setScrollStateContact(state, action) {
             state.scrollContact = action.payload;
