@@ -15,13 +15,14 @@ const selectStyles = {
     }),
     menu: () => ({
         boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)',
+
         // border: '1px solid red',
-        maxHeight: '195px',
-        height: '195px',
+        // maxHeight: '195px',
+        // height: '195px',
     }),
     menuList: (base) => ({
         ...base,
-        maxHeight: '195px',
+        // maxHeight: '195px',
         // border: '1px solid yellow',
     }),
     option: (provided, state) => {
@@ -100,7 +101,6 @@ const Dropdown = ({ children, isOpen, target, onClose }) => (
 );
 
 const Menu = (props) => {
-    console.log('Menu Props', props);
     const shadow = 'hsla(218, 50%, 10%, 0.1)';
     return (
         <div

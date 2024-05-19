@@ -48,14 +48,18 @@ html {
 
 .slick-dots li.slick-active button:before {
     color: #005382 !important;
+    font-size: 10px !important;
+    opacity: 1 !important;
 }
 
 .slick-dots li button:before {
     color: #d9d9d9 !important;
+    font-size: 10px !important;
+    opacity: 1 !important;
 }
 
 .slick-dots li {
-    margin: 0px !important;
+    margin: -1px !important;
 }
 @keyframes moveUpDown {
     0%,

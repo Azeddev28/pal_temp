@@ -6,14 +6,13 @@ import Footer from '@/components/Footer';
 import { Input } from '@/components/Input';
 import WorkDemonstration from '@/components/WorkDemonstration';
 import theme from '@/components/theme';
-import { getRoute } from '@/server';
+import { getRoute } from '@/api';
 import {
     FOR_REFERRER,
     For_Job_Seekers,
     PalPlug_Services,
     Social_Icons,
 } from '@/utils/constants';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -30,7 +29,8 @@ import {
     setIsUserRegistered,
     setScrollStateContact,
     setScrollStateWorking,
-} from '../../store/authSlice';
+    setUserRegistrationInfo,
+} from '../../store/slices/authSlice';
 import { wrapper } from '../../store/store';
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -39,7 +39,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
             // we can set the initial state from here
 
             await store.dispatch(setAuthState(false));
-            console.log('State on server', store.getState());
             return {
                 props: {
                     authState: false,
@@ -100,7 +99,6 @@ const Landing = () => {
     }, []);
     const router = useRouter();
     const dispatch = useDispatch();
-    const { user, error, isLoading } = useUser();
 
     const { register, formState, handleSubmit, watch } = useForm({
         mode: 'onSubmit',
@@ -115,11 +113,6 @@ const Landing = () => {
             shallow: true,
         });
     };
-    if (!isLoading && user) {
-        console.log(user);
-        updateWaitListStatusAndRedirect();
-        dispatch(setIsUserRegistered());
-    }
 
     const onSubmit = ({ email }) => {
         postRequest(getRoute('joinWaitlist'), { email })
@@ -134,9 +127,16 @@ const Landing = () => {
                 }) => {
                     if (code === 'WAITLIST_JOINED') {
                         updateWaitListStatusAndRedirect();
-                    }
-                    if (code === 'USER_ALREADY_REGISTERED') {
-                        dispatch(setIsUserRegistered());
+                    } else if (code === 'USER_ALREADY_REGISTERED') {
+                        // TODO: Need to set certain info.
+                        dispatch(
+                            setUserRegistrationInfo({
+                                email: email,
+                                isUserRegistered: true,
+                            })
+                        );
+                        updateWaitListStatusAndRedirect();
+                    } else if (code === 'PROFILE_ALREADY_REGISTERED') {
                         router.push('/congratulations', undefined, {
                             shallow: true,
                         });
@@ -146,7 +146,7 @@ const Landing = () => {
     };
 
     return (
-        <div className="pt-[68px]">
+        <div className="pt-[64px]">
             <div className="bg-white">
                 <div className="relative flex overflow-x-hidden">
                     <div className="md:py-5 py-2 animate-marquee whitespace-nowrap flex flex-row gap-5">
@@ -163,7 +163,7 @@ const Landing = () => {
                             </span>
                         ))}
                     </div>
-                    <div className="absolute top-0 md:py-5 py-2 animate-marquee2 whitespace-nowrap flex flex-row gap-5">
+                    <div className="absolute top-0 md:py-5 py-2 animate-marquee2 whitespace-nowrap flex flex-row gap-5 ml-6">
                         {Social_Icons.map((item, index) => (
                             <span
                                 key={index}
@@ -178,6 +178,7 @@ const Landing = () => {
                         ))}
                     </div>
                 </div>
+
                 <div className="flex md:pt-5 md:pr-6 md:pb-4 lg:pl-14  flex-col pt-0 pr-6 pb-4 pl-6">
                     <div className="flex md:gap-16 lg:flex-row gap-8 lg:p-2 flex-col-reverse w-full">
                         <div className="flex  lg:max-w-[46.5%] md:gap-[74px] gap-6 flex-col w-full justify-between">

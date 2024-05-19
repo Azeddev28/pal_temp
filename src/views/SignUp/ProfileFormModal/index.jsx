@@ -3,10 +3,8 @@ import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { Step, Stepper } from '@/components/Stepper';
-import { useUserProfile } from '@/hooks/use-user-profile';
-import { getRoute } from '@/server';
-import { setSuggestionListVisibility } from '@/store/authSlice';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { getRoute } from '@/api';
+import { setSuggestionListVisibility } from '@/store/slices/authSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -16,6 +14,7 @@ import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
 import { STEPS, STEP_COUNT, STEP_TYPE } from './constants';
 import { schema } from './schema';
+import { useUserProfile } from '@/hooks/use-user-profile';
 
 const StepForm = () => {
     const dispatch = useDispatch();
@@ -30,8 +29,6 @@ const StepForm = () => {
         mode: 'onChange',
         resolver: yupResolver(schema[activeStep]),
     });
-
-    const { user, error, isLoading } = useUser();
 
     const isLastStep = typeof STEPS[activeStep]?.next === 'undefined';
 
@@ -48,7 +45,7 @@ const StepForm = () => {
             first_name: formData.firstName,
             last_name: formData.lastName,
             country: formData.country,
-            email: user ? user.email : formData.email,
+            email: formData.email,
             another_gender: formData.anotherGender,
             company: formData.company,
             gender: formData.gender,
@@ -58,7 +55,6 @@ const StepForm = () => {
             language: formData.language,
             role: formData.purpose,
         };
-        console.log('🚀 ~ onSubmit ~ dataToSend:', dataToSend);
         postRequest(getRoute('profileRegister'), dataToSend, true)
             .then((res) => {
                 router.push('/congratulations', undefined, { shallow: true });
@@ -82,8 +78,8 @@ const StepForm = () => {
         if (isLastStep) return;
         setSlideDirection('left');
         const nextStep = getNextStep();
-        const isAleadyVisitedStep = visitedSteps.includes(nextStep);
-        if (!isAleadyVisitedStep) setVisitedSteps([...visitedSteps, nextStep]);
+        const isAlreadyVisitedStep = visitedSteps.includes(nextStep);
+        if (!isAlreadyVisitedStep) setVisitedSteps([...visitedSteps, nextStep]);
         setActiveStep(nextStep);
     };
 
@@ -144,10 +140,16 @@ const StepForm = () => {
                             <FormStep slideDirection={slideDirection} />
                         </StepContextProvider>
                         <Button
-                            type={isLastStep ? 'submit' : 'button'}
+                            type="button"
                             disabled={!methods.formState.isValid}
                             className={'w-full'}
-                            onClick={onContinue}
+                            onClick={() => {
+                                if (isLastStep) {
+                                    onSubmit(methods.getValues());
+                                } else {
+                                    onContinue();
+                                }
+                            }}
                         >
                             {isLastStep ? 'Submit' : 'Continue'}
                         </Button>

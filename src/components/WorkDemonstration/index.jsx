@@ -56,8 +56,12 @@ const WorkDemonstration = ({ list }) => {
                                 id={item.id}
                                 backgroundColor={theme.palette.white}
                             />
-
-                            <div className="border-2 hidden sm:block border-dashed border-brandBlue w-[21%] !h-0.5"></div>
+                            {index !== list.length - 1 ? (
+                                <div className="border-2 hidden sm:block border-dashed border-brandBlue w-[21%] !h-0.5"></div>
+                            ) : (
+                                // ''
+                                <div className="border-2 hidden sm:block border-solid border-transparent w-[21%] !h-0.5"></div>
+                            )}
                         </div>
                     </div>
                 ))}

@@ -1,17 +1,26 @@
 import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
-import { getRoute } from '@/server';
-import { setUserRegistrationInfo } from '@/store/authSlice';
+import { getRoute } from '@/api';
+import {
+    setProfileAlreadyRegistered,
+    setSocialAccountAlreadyRegistered,
+    setUserRegistrationInfo,
+} from '@/store/slices/authSlice';
 import {
     GithubAuthProvider,
     GoogleAuthProvider,
     signInWithPopup,
 } from 'firebase/auth';
-import { useRouter } from 'next/router';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { firebaseAuth } from '@/utils/firebase';
 
-const submitDetails = async (signupMethod, email, code, router) => {
+const registerUser = async (
+    signupMethod,
+    email = null,
+    code = null,
+    dispatch
+) => {
     var socialRegisterPayload = {
         social_registration_type: signupMethod,
         email: email,
@@ -23,37 +32,44 @@ const submitDetails = async (signupMethod, email, code, router) => {
     }
     try {
         const res = await postRequest(socialRoute, socialRegisterPayload);
-        const dataToSave = {
-            displayName: res.given_name,
-            email: res.email,
-            accessToken: code,
-        };
-        return dataToSave;
     } catch (error) {
+        if (error.response.data.code === 'SOCIAL_ACCOUNT_ALREADY_REGISTERED') {
+            dispatch(setSocialAccountAlreadyRegistered());
+        }
+
         if (error.response.data.code === 'PROFILE_ALREADY_REGISTERED') {
-            router.push('/congratulations', undefined, {
-                shallow: true,
-            });
+            dispatch(setProfileAlreadyRegistered());
         }
     }
 };
 
 const GoogleButton = () => {
-    const { firebaseAuthObj } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    const router = useRouter();
     const handleGoogleLogin = async () => {
         const provider = new GoogleAuthProvider();
         try {
-            const result = await signInWithPopup(firebaseAuthObj, provider);
-            submitDetails('Google', result.user.email, undefined, router);
-            dispatch(setUserRegistrationInfo(result.user));
+            const result = await signInWithPopup(firebaseAuth, provider);
+            registerUser('Google', result.user.email, undefined, dispatch);
+            dispatch(
+                setUserRegistrationInfo({
+                    displayName: result.user.displayName,
+                    email: result.user.email,
+                    accessToken: result.user.accessToken,
+                    isUserRegistered: result.user.accessToken ? true : false,
+                })
+            );
         } catch (error) {
-            console.log('🚀 ~ handleGoogleLogin ~ error:', error);
+            if (
+                error.code === 'auth/account-exists-with-different-credential'
+            ) {
+                // TODO: Handle this error
+            } else {
+                // Other error occurred
+                console.error('Error signing in:', error);
+            }
         }
     };
 
-    // <a href={'/api/auth/login'}>
     return (
         <Button
             style={{
@@ -67,31 +83,33 @@ const GoogleButton = () => {
             Sign in with Google
         </Button>
     );
-    // </a>
 };
 
 const LinkedInButton = () => {
     const dispatch = useDispatch();
+
     const { linkedInLogin } = useLinkedIn({
         clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID,
-        scope: 'openid,profile,email',
+        scope: process.env.NEXT_PUBLIC_LINKEDIN_SCOPE,
         redirectUri: `${
             typeof window === 'object' && window.location.origin
         }/linkedin`,
+
         onSuccess: async (code) => {
             try {
-                submitDetails('Linkedin', undefined, code)
+                registerUser('Linkedin', undefined, code)
                     .then((data) => {
                         dispatch(setUserRegistrationInfo(data));
                     })
                     .catch((error) => {
                         console.log('🚀 ~ onSuccess: ~ error:', error);
                     });
-            } catch (error) {}
+            } catch (error) {
+                console.log(error);
+            }
         },
         closePopupMessage: 'Successfully logged in',
     });
-    // <a href={getRoute('linkedInLink')} target="_blank">
     return (
         <Button
             style={{
@@ -107,25 +125,35 @@ const LinkedInButton = () => {
             Sign in with LinkedIn
         </Button>
     );
-    // </a>
 };
 
 const GithubButton = () => {
-    const { firebaseAuthObj } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    const router = useRouter();
     const handleGithubLogin = async () => {
         const provider = new GithubAuthProvider();
         try {
-            const result = await signInWithPopup(firebaseAuthObj, provider);
-            submitDetails('Github', result.user.email, undefined, router);
-            dispatch(setUserRegistrationInfo(result.user));
+            const result = await signInWithPopup(firebaseAuth, provider);
+            registerUser('Github', result.user.email, undefined, dispatch);
+            dispatch(
+                setUserRegistrationInfo({
+                    displayName: result.user.displayName,
+                    email: result.user.email,
+                    accessToken: result.user.accessToken,
+                    isUserRegistered: result.user.accessToken ? true : false,
+                })
+            );
         } catch (error) {
-            console.log('🚀 ~ handleGithubLogin ~ error:', error);
+            if (
+                error.code === 'auth/account-exists-with-different-credential'
+            ) {
+                // TODO: Handle this error
+            } else {
+                // Other error occurred
+                console.error('Error signing in:', error);
+            }
         }
     };
 
-    // <a href={getRoute('githubLink')} target="_blank">
     return (
         <Button
             style={{
@@ -139,7 +167,6 @@ const GithubButton = () => {
             Sign in with Github
         </Button>
     );
-    // </a>
 };
 
 export { GithubButton, GoogleButton, LinkedInButton };
