@@ -52,7 +52,10 @@ const SignUp = () => {
         }
     }, [profileAccountRegistered]);
     return (
-        <div className="flex justify-center bg-trueWhite  items-center flex-col h-screen font-poppins px-4 pt-16">
+        <div
+            className="flex justify-center bg-trueWhite items-center flex-col h-screen w-screen font-poppins px-4 pt-16 "
+            style={{ overflow: 'hidden', position: 'fixed' }}
+        >
             <div className="flex flex-col gap-[3.125rem] max-w-[44.94rem] screen_360:pt-0 pt-5 ">
                 <div className="flex flex-col items-center gap-[2.5rem]">
                     <Image src={AnnouncementRobo} />

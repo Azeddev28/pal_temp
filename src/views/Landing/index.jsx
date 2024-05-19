@@ -163,7 +163,7 @@ const Landing = () => {
                             </span>
                         ))}
                     </div>
-                    <div className="absolute top-0 md:py-5 py-2 animate-marquee2 whitespace-nowrap flex flex-row gap-5">
+                    <div className="absolute top-0 md:py-5 py-2 animate-marquee2 whitespace-nowrap flex flex-row gap-5 ml-6">
                         {Social_Icons.map((item, index) => (
                             <span
                                 key={index}
@@ -178,6 +178,7 @@ const Landing = () => {
                         ))}
                     </div>
                 </div>
+
                 <div className="flex md:pt-5 md:pr-6 md:pb-4 lg:pl-14  flex-col pt-0 pr-6 pb-4 pl-6">
                     <div className="flex md:gap-16 lg:flex-row gap-8 lg:p-2 flex-col-reverse w-full">
                         <div className="flex  lg:max-w-[46.5%] md:gap-[74px] gap-6 flex-col w-full justify-between">

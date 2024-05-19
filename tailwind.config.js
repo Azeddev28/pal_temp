@@ -34,6 +34,7 @@ module.exports = {
                 whiteSmoke: '#F5F5F5',
                 neutralBlack: '#0B0B0B',
                 bluishCyan: '#005382',
+                transparent: 'transparent',
             },
             animation: {
                 marquee: 'marquee 25s linear infinite',

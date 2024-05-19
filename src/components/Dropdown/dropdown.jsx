@@ -15,13 +15,14 @@ const selectStyles = {
     }),
     menu: () => ({
         boxShadow: 'inset 0 0px 0 rgba(0, 0, 0, 0.1)',
+
         // border: '1px solid red',
-        maxHeight: '195px',
-        height: '195px',
+        // maxHeight: '195px',
+        // height: '195px',
     }),
     menuList: (base) => ({
         ...base,
-        maxHeight: '195px',
+        // maxHeight: '195px',
         // border: '1px solid yellow',
     }),
     option: (provided, state) => {
@@ -139,6 +140,7 @@ class CustomDropdown extends Component {
         this.setState((state) => ({ isOpen: !state.isOpen }));
     };
     onSelectChange = (value) => {
+        console.log('onSelectChange');
         this.toggleOpen();
         this.props.onChange(value.value);
         this.setState({ value });

@@ -1,7 +1,11 @@
 import { postRequest } from '@/axios';
 import { Button } from '@/components/Button';
 import { getRoute } from '@/api';
-import { setProfileAlreadyRegistered, setSocialAccountAlreadyRegistered, setUserRegistrationInfo } from '@/store/slices/authSlice';
+import {
+    setProfileAlreadyRegistered,
+    setSocialAccountAlreadyRegistered,
+    setUserRegistrationInfo,
+} from '@/store/slices/authSlice';
 import {
     GithubAuthProvider,
     GoogleAuthProvider,
@@ -11,8 +15,12 @@ import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import { useDispatch } from 'react-redux';
 import { firebaseAuth } from '@/utils/firebase';
 
-
-const registerUser = async (signupMethod, email=null, code=null, dispatch) => {
+const registerUser = async (
+    signupMethod,
+    email = null,
+    code = null,
+    dispatch
+) => {
     var socialRegisterPayload = {
         social_registration_type: signupMethod,
         email: email,
@@ -26,11 +34,11 @@ const registerUser = async (signupMethod, email=null, code=null, dispatch) => {
         const res = await postRequest(socialRoute, socialRegisterPayload);
     } catch (error) {
         if (error.response.data.code === 'SOCIAL_ACCOUNT_ALREADY_REGISTERED') {
-            dispatch(setSocialAccountAlreadyRegistered())
+            dispatch(setSocialAccountAlreadyRegistered());
         }
 
         if (error.response.data.code === 'PROFILE_ALREADY_REGISTERED') {
-            dispatch(setProfileAlreadyRegistered())
+            dispatch(setProfileAlreadyRegistered());
         }
     }
 };
@@ -42,19 +50,23 @@ const GoogleButton = () => {
         try {
             const result = await signInWithPopup(firebaseAuth, provider);
             registerUser('Google', result.user.email, undefined, dispatch);
-            dispatch(setUserRegistrationInfo({
-                displayName: result.user.displayName,
-                email: result.user.email,
-                accessToken: result.user.accessToken,
-                isUserRegistered: result.user.accessToken ? true : false
-            }));
+            dispatch(
+                setUserRegistrationInfo({
+                    displayName: result.user.displayName,
+                    email: result.user.email,
+                    accessToken: result.user.accessToken,
+                    isUserRegistered: result.user.accessToken ? true : false,
+                })
+            );
         } catch (error) {
-            if (error.code === 'auth/account-exists-with-different-credential') {
+            if (
+                error.code === 'auth/account-exists-with-different-credential'
+            ) {
                 // TODO: Handle this error
-              } else {
+            } else {
                 // Other error occurred
                 console.error('Error signing in:', error);
-              }        
+            }
         }
     };
 
@@ -75,12 +87,19 @@ const GoogleButton = () => {
 
 const LinkedInButton = () => {
     const dispatch = useDispatch();
+    // console.log(
+    //     process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID,
+    //     process.env.NEXT_PUBLIC_LINKEDIN_SCOPE,
+    //     typeof window === 'object' && window.location.origin,
+    //     'ffffffff'
+    // );
     const { linkedInLogin } = useLinkedIn({
         clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID,
         scope: process.env.NEXT_PUBLIC_LINKEDIN_SCOPE,
         redirectUri: `${
             typeof window === 'object' && window.location.origin
         }/linkedin`,
+
         onSuccess: async (code) => {
             try {
                 registerUser('Linkedin', undefined, code)
@@ -90,7 +109,9 @@ const LinkedInButton = () => {
                     .catch((error) => {
                         console.log('🚀 ~ onSuccess: ~ error:', error);
                     });
-            } catch (error) {}
+            } catch (error) {
+                console.log(error);
+            }
         },
         closePopupMessage: 'Successfully logged in',
     });
@@ -118,19 +139,23 @@ const GithubButton = () => {
         try {
             const result = await signInWithPopup(firebaseAuth, provider);
             registerUser('Github', result.user.email, undefined, dispatch);
-            dispatch(setUserRegistrationInfo({
-                displayName: result.user.displayName,
-                email: result.user.email,
-                accessToken: result.user.accessToken,
-                isUserRegistered: result.user.accessToken ? true : false
-            }));
+            dispatch(
+                setUserRegistrationInfo({
+                    displayName: result.user.displayName,
+                    email: result.user.email,
+                    accessToken: result.user.accessToken,
+                    isUserRegistered: result.user.accessToken ? true : false,
+                })
+            );
         } catch (error) {
-            if (error.code === 'auth/account-exists-with-different-credential') {
-              // TODO: Handle this error
-              } else {
+            if (
+                error.code === 'auth/account-exists-with-different-credential'
+            ) {
+                // TODO: Handle this error
+            } else {
                 // Other error occurred
                 console.error('Error signing in:', error);
-              }
+            }
         }
     };
 
