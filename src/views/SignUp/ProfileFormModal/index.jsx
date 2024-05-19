@@ -41,7 +41,6 @@ const StepForm = () => {
     };
 
     const onSubmit = async (formData) => {
-        console.log('formData', JSON.stringify(formData, null, 2));
         const dataToSend = {
             first_name: formData.firstName,
             last_name: formData.lastName,
@@ -79,7 +78,6 @@ const StepForm = () => {
         if (isLastStep) return;
         setSlideDirection('left');
         const nextStep = getNextStep();
-        console.log('nextStep', JSON.stringify(nextStep, null, 2));
         const isAlreadyVisitedStep = visitedSteps.includes(nextStep);
         if (!isAlreadyVisitedStep) setVisitedSteps([...visitedSteps, nextStep]);
         setActiveStep(nextStep);

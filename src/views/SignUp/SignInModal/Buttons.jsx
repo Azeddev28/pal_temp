@@ -87,12 +87,7 @@ const GoogleButton = () => {
 
 const LinkedInButton = () => {
     const dispatch = useDispatch();
-    // console.log(
-    //     process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID,
-    //     process.env.NEXT_PUBLIC_LINKEDIN_SCOPE,
-    //     typeof window === 'object' && window.location.origin,
-    //     'ffffffff'
-    // );
+
     const { linkedInLogin } = useLinkedIn({
         clientId: process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID,
         scope: process.env.NEXT_PUBLIC_LINKEDIN_SCOPE,

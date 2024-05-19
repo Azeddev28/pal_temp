@@ -140,7 +140,6 @@ class CustomDropdown extends Component {
         this.setState((state) => ({ isOpen: !state.isOpen }));
     };
     onSelectChange = (value) => {
-        console.log('onSelectChange');
         this.toggleOpen();
         this.props.onChange(value.value);
         this.setState({ value });

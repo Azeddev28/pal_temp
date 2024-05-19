@@ -28,9 +28,13 @@ export const authSlice = createSlice({
         },
         setUserRegistrationInfo(state, action) {
             if (action.payload) {
-                state.firstName = action.payload.displayName ? action.payload.displayName.split(' ')[0] : "";
+                state.firstName = action.payload.displayName
+                    ? action.payload.displayName.split(' ')[0]
+                    : '';
                 state.email = action.payload.email;
-                state.lastName = action.payload.displayName ? action.payload.displayName.split(' ')[1] : "";
+                state.lastName = action.payload.displayName
+                    ? action.payload.displayName.split(' ')[1]
+                    : '';
                 state.accessToken = action.payload?.accessToken;
                 state.isUserRegistered = action.payload.isUserRegistered;
             }
@@ -51,7 +55,6 @@ export const authSlice = createSlice({
             state.suggestionListVisibility = !state.suggestionListVisibility;
         },
         setProfileAlreadyRegistered(state) {
-            console.log("AJAO")
             state.profileAlreadyRegistered = true;
         },
         setSocialAccountAlreadyRegistered(state) {
@@ -79,7 +82,7 @@ export const {
     setScrollStateWorking,
     setSuggestionListVisibility,
     setProfileAlreadyRegistered,
-    setSocialAccountAlreadyRegistered
+    setSocialAccountAlreadyRegistered,
 } = authSlice.actions;
 
 export const selectAuthState = (state) => state.auth.authState;
