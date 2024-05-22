@@ -50,7 +50,7 @@ const GoogleButton = ({waitListEmail}) => {
         const provider = new GoogleAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuth, provider);
-            if(result.email != waitListEmail){
+            if(result.user.email !== waitListEmail){
                 alert('Email not recognized, please use the same email as waitlist')
                 return
             }
@@ -102,8 +102,8 @@ const LinkedInButton = ({waitListEmail}) => {
 
         onSuccess: async (code) => {
             try {
-                const result = registerUser('Linkedin', undefined, code, dispatch)
-                if(result.email != waitListEmail){
+                const result = await registerUser('Linkedin', undefined, code, dispatch)
+                if(result.email !== waitListEmail){
                     alert('Email not recognized, please use the same email as waitlist')
                     return
                 }
@@ -111,8 +111,8 @@ const LinkedInButton = ({waitListEmail}) => {
                     setUserRegistrationInfo({
                         displayName: result.name,
                         email: result.email,
-                        accessToken: result.accessToken,
-                        isUserRegistered: result.accessToken ? true : false,
+                        accessToken: result.access_token,
+                        isUserRegistered: result.access_token ? true : false,
                 }));
             } catch (error) {
                 console.log(error);
@@ -143,7 +143,7 @@ const GithubButton = ({waitListEmail}) => {
         const provider = new GithubAuthProvider();
         try {
             const result = await signInWithPopup(firebaseAuth, provider);
-            if(result.email != waitListEmail){
+            if(result.user.email !== waitListEmail){
                 alert('Email not recognized, please use the same email as waitlist')
                 return
             }
