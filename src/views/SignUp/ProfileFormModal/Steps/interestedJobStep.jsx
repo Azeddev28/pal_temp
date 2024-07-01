@@ -1,13 +1,12 @@
-import { Controller, useFormContext } from "react-hook-form";
-import { Typography } from "@/components/Typography";
+import { Controller, useFormContext } from 'react-hook-form';
+import { Typography } from '@/components/Typography';
 import CustomDropdown from '@/components/Dropdown/dropdown';
-import { useStep } from "./context";
-
+import { useStep } from './context';
 
 export const InterestedJobSelector = () => {
-    const userRoles = useStep('userRoles').map(role => ({
+    const userRoles = useStep('userRoles').map((role) => ({
         key: role.title,
-        value: role.uuid
+        value: role.uuid,
     }));
     const { register, setValue, watch, control } = useFormContext();
 
@@ -33,11 +32,14 @@ export const InterestedJobSelector = () => {
                     control={control}
                     render={({ field }) => (
                         <CustomDropdown
+                            watch={watch}
+                            name="interestedJobTitle"
                             placeholder={'Select your interested title'}
-                            onChange={(option) => {
+                            onSelect={(option) => {
+                                field.onChange(option);
                                 handleDropDownChange(
                                     'interestedJobTitle',
-                                    option.value
+                                    option
                                 );
                             }}
                             options={userRoles}

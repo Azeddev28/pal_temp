@@ -1,12 +1,11 @@
-import { Controller, useFormContext } from "react-hook-form";
-import { useStep } from "./context";
-import { Typography } from "@/components/Typography";
-import { useMemo } from "react";
+import { Controller, useFormContext } from 'react-hook-form';
+import { useStep } from './context';
+import { Typography } from '@/components/Typography';
+import { useMemo } from 'react';
 import CustomDropdown from '@/components/Dropdown/dropdown';
 
-
 export const InterestedIndustrySelector = () => {
-    const industries = useStep('industries')
+    const industries = useStep('industries');
     const isLoading = false;
     const { register, setValue, watch, control } = useFormContext();
 
@@ -44,11 +43,15 @@ export const InterestedIndustrySelector = () => {
                             control={control}
                             render={({ field }) => (
                                 <CustomDropdown
+                                    watch={watch}
+                                    name="industry"
                                     placeholder={'Select your industry'}
-                                    onChange={(option) => {
+                                    onSelect={(option) => {
+                                        field.onChange(option);
+
                                         handleDropDownChange(
                                             'industry',
-                                            option.value
+                                            option
                                         );
                                     }}
                                     options={industryOptions}

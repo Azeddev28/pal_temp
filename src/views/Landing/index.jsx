@@ -136,6 +136,7 @@ const Landing = () => {
                             })
                         );
                         updateWaitListStatusAndRedirect(email);
+                        //  dispatch(setErrorMessage(detail)); need to improve this case
                     } else if (code === 'PROFILE_ALREADY_REGISTERED') {
                         router.push('/congratulations', undefined, {
                             shallow: true,

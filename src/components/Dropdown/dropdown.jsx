@@ -141,9 +141,13 @@ class CustomDropdown extends Component {
     };
     onSelectChange = (value) => {
         this.toggleOpen();
-        this.props.onChange(value.value);
+        const handler = this.props.onSelect || this.props.onChange;
+        if (handler) {
+            handler(value);
+        }
         this.setState({ value });
     };
+
     render() {
         const { isOpen, value } = this.state;
 
@@ -158,11 +162,15 @@ class CustomDropdown extends Component {
                         // style={{ border: '1px solid red' }}
                         className="p-2 lg:p-4 border-2 border-solid rounded-lg border-theme-border w-full flex items-center justify-between text-xs md:text-sm 2xl:text-base "
                     >
-                        {value
-                            ? this.props.options[value]
-                                ? this.props.options[value].key
-                                : value.label
-                            : this.props.placeholder}
+                        {this.props.watch && this.props.watch(this.props.name)
+                            ? this.props.watch(this.props.name).key ||
+                              this.props.watch(this.props.name).label
+                            : value
+                              ? this.props.options[value]
+                                  ? this.props.options[value].key
+                                  : value.label
+                              : this.props.placeholder}
+
                         <ChevronDown isOpen={isOpen} />
                     </div>
                 }
@@ -187,7 +195,7 @@ class CustomDropdown extends Component {
                     placeholder="Search for..."
                     styles={selectStyles}
                     tabSelectsValue={false}
-                    value={value}
+                    value={this.props.value || value}
                 />
             </Dropdown>
         );

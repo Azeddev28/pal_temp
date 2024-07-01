@@ -1,9 +1,9 @@
-import { Controller, useFormContext } from "react-hook-form";
-import { useStep } from "./context";
-import { Typography } from "@/components/Typography";
-import { PulseLoader } from "react-spinners";
-import SearchBar from "@/components/Dropdown/suggestion";
-import { useMemo } from "react";
+import { Controller, useFormContext } from 'react-hook-form';
+import { useStep } from './context';
+import { Typography } from '@/components/Typography';
+import { PulseLoader } from 'react-spinners';
+import SearchBar from '@/components/Dropdown/suggestion';
+import { useMemo } from 'react';
 
 export const CompanySelector = () => {
     const isLoading = false;
@@ -14,8 +14,8 @@ export const CompanySelector = () => {
         if (!companies) return [];
 
         return companies.map((company) => ({
-            label: company.name,
-            value: company.uuid,
+            label: company?.name,
+            value: company?.uuid,
         }));
     }, [companies]);
 

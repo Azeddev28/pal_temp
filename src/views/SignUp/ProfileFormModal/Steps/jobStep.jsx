@@ -1,23 +1,21 @@
-import { Typography } from "@/components/Typography";
+import { Typography } from '@/components/Typography';
 import { Controller, useFormContext } from 'react-hook-form';
 import CustomDropdown from '@/components/Dropdown/dropdown';
 import { useStep } from './context';
 
-
 export const JobSelector = () => {
-    const userRoles = useStep('userRoles').map(role => ({
+    const userRoles = useStep('userRoles').map((role) => ({
         key: role.title,
-        value: role.uuid
+        value: role.uuid,
     }));
-    
-    const { setValue, control } = useFormContext();
+
+    const { setValue, control, watch } = useFormContext();
 
     const handleDropDownChange = (name, value) =>
         setValue(name, value, {
             shouldValidate: true,
             shouldDirty: true,
         });
-
 
     return (
         <div className="pt-10">
@@ -35,9 +33,12 @@ export const JobSelector = () => {
                     control={control}
                     render={({ field }) => (
                         <CustomDropdown
+                            watch={watch}
+                            name="jobTitle"
                             placeholder={'Select your job title'}
-                            onChange={(option) => {
-                                handleDropDownChange('jobTitle', option.value);
+                            onSelect={(option) => {
+                                field.onChange(option);
+                                handleDropDownChange('jobTitle', option);
                             }}
                             options={userRoles}
                             inputRef={field.ref}
