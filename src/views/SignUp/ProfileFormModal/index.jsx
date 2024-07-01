@@ -7,8 +7,8 @@ import { getRoute } from '@/api';
 import { setSuggestionListVisibility } from '@/store/slices/authSlice';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { StepContextProvider } from './Steps/context';
 import { Welcome } from './Welcome';
@@ -44,17 +44,18 @@ const StepForm = () => {
         const dataToSend = {
             first_name: formData.firstName,
             last_name: formData.lastName,
-            country: formData.country,
+            country: formData.country?.value,
             email: formData.email,
             another_gender: formData.anotherGender,
             company: formData.company,
             gender: formData.gender,
-            industry: formData.industry,
-            interested_job_title: formData.interestedJobTitle,
-            job_title: formData.jobTitle,
-            language: formData.language,
+            industry: formData.industry?.value,
+            interested_job_title: formData.interestedJobTitle?.value,
+            job_title: formData.jobTitle?.value,
+            language: formData.language?.value,
             role: formData.purpose,
         };
+
         postRequest(getRoute('profileRegister'), dataToSend, true)
             .then((res) => {
                 router.push('/congratulations', undefined, { shallow: true });
@@ -104,8 +105,23 @@ const StepForm = () => {
         dispatch(setSuggestionListVisibility());
     };
 
-    const FormStep = STEPS[activeStep].component;
+    const FormStep = STEPS[activeStep]?.component;
 
+    const handleValidations = () => {
+        const values = methods.getValues();
+
+        const validationMap = {
+            0: () => !values.gender,
+            1: () => !(values.country && values.language),
+            2: () => !(values.firstName && values.lastName),
+            3: () => !values.purpose,
+            4: () => !(values.company || values.jobTitle),
+            5: () => !(values.industry || values.interestedJobTitle),
+        };
+
+        const validate = validationMap[activeStep];
+        return validate ? validate() : false;
+    };
     return (
         <>
             <div>
@@ -118,10 +134,10 @@ const StepForm = () => {
             </div>
             <div className="p-10 h-full flex flex-col justify-between">
                 <div className="flex flex-row w-32 md:w-48 mx-auto">
-                    <Stepper activeStep={visitedSteps.indexOf(activeStep)}>
+                    <Stepper activeStep={visitedSteps?.indexOf(activeStep)}>
                         {Array(STEP_COUNT)
-                            .fill(0)
-                            .map((_, index) => (
+                            ?.fill(0)
+                            ?.map((_, index) => (
                                 <Step
                                     onClick={() => onStepClick(index)}
                                     key={index}
@@ -141,7 +157,7 @@ const StepForm = () => {
                         </StepContextProvider>
                         <Button
                             type="button"
-                            disabled={!methods.formState.isValid}
+                            disabled={handleValidations()}
                             className={'w-full'}
                             onClick={() => {
                                 if (isLastStep) {

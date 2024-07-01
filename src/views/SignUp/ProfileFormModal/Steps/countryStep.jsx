@@ -1,10 +1,9 @@
-import { Controller, useFormContext } from "react-hook-form";
-import { useStep } from "./context";
-import { useMemo } from "react";
-import { Typography } from "@/components/Typography";
-import { PulseLoader } from "react-spinners";
+import { Controller, useFormContext } from 'react-hook-form';
+import { useStep } from './context';
+import { useEffect, useMemo } from 'react';
+import { Typography } from '@/components/Typography';
+import { PulseLoader } from 'react-spinners';
 import CustomDropdown from '@/components/Dropdown/dropdown';
-
 
 export const CountrySelector = () => {
     // TODO: This is now changed to axios and have to send isLoading state from there
@@ -13,25 +12,25 @@ export const CountrySelector = () => {
     const countries = useStep('countries');
     const languages = useStep('languages');
 
-    const { setValue, control } = useFormContext();
+    const { setValue, control, watch } = useFormContext();
 
     const countryOptions = useMemo(() => {
         if (!countries) return [];
-        const options = countries.map((country) => ({
-            key: country.name,
-            value: country.code,
+        const options = countries?.map((country) => ({
+            key: country?.name,
+            value: country?.code,
         }));
-        setValue('country', options[234]?.value);
+        !watch('country') && setValue('country', options[234]);
         return options;
     }, [countries]);
 
     const languageOptions = useMemo(() => {
         if (!languages) return [];
-        const options = languages.map((language) => ({
-            key: language.name,
-            value: language.code,
+        const options = languages?.map((language) => ({
+            key: language?.name,
+            value: language?.code,
         }));
-        setValue('language', options[24]?.value);
+        !watch('language') && setValue('language', options[24]);
         return options;
     }, [languages]);
 
@@ -41,7 +40,6 @@ export const CountrySelector = () => {
             shouldDirty: true,
         });
     };
-
     return (
         <div className="pt-10">
             <div className="mb-12">
@@ -59,15 +57,18 @@ export const CountrySelector = () => {
                 ) : (
                     <>
                         <Controller
-                            name="jobTitle"
+                            name="language"
                             control={control}
                             render={({ field }) => (
                                 <CustomDropdown
+                                    name="language"
                                     placeholder="Choose your language"
-                                    onChange={(option) => {
+                                    watch={watch}
+                                    onSelect={(option) => {
+                                        field.onChange(option);
                                         handleDropDownChange(
                                             'language',
-                                            option.value
+                                            option
                                         );
                                     }}
                                     options={languageOptions}
@@ -78,16 +79,16 @@ export const CountrySelector = () => {
                             )}
                         />
                         <Controller
-                            name="jobTitle"
+                            name="country"
                             control={control}
                             render={({ field }) => (
                                 <CustomDropdown
+                                    name="country"
+                                    watch={watch}
                                     placeholder="Choose your country"
-                                    onChange={(option) => {
-                                        handleDropDownChange(
-                                            'country',
-                                            option.value
-                                        );
+                                    onSelect={(option) => {
+                                        field.onChange(option);
+                                        handleDropDownChange('country', option);
                                     }}
                                     options={countryOptions}
                                     index={234}

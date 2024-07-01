@@ -7,10 +7,10 @@ const SearchBar = ({ options, setValue, value, handleChange }) => {
     const { suggestionListVisibility } = useSelector((state) => state.auth);
     useEffect(() => {
         if (window) {
-            const filteredSuggestions = options.filter((option) =>
-                option.label
-                    .toLowerCase()
-                    .startsWith(
+            const filteredSuggestions = options?.filter((option) =>
+                option?.label
+                    ?.toLowerCase()
+                    ?.startsWith(
                         (query.label ? query.label : query).toLowerCase()
                     )
             );
@@ -29,8 +29,7 @@ const SearchBar = ({ options, setValue, value, handleChange }) => {
         setOptionSelected(true);
         setSuggestions([]);
     };
-
-    const optionMatched = !optionSelected && query && suggestions.length > 0;
+    const optionMatched = !optionSelected && query && suggestions?.length > 0;
 
     return (
         <div className="search-bar">
@@ -50,12 +49,12 @@ const SearchBar = ({ options, setValue, value, handleChange }) => {
             {optionMatched && (
                 <div className="border-2 border-solid !border-t-0 rounded-b-lg border-theme-border w-full p-2 lg:p-4 cursor-pointer">
                     <ul className="suggestions">
-                        {suggestions.map((suggestion) => (
+                        {suggestions?.map((suggestion) => (
                             <li
-                                key={suggestion.value}
-                                onClick={() => handleSelect(suggestion.label)}
+                                key={suggestion?.value}
+                                onClick={() => handleSelect(suggestion?.label)}
                             >
-                                {suggestion.label}
+                                {suggestion?.label}
                             </li>
                         ))}
                     </ul>
